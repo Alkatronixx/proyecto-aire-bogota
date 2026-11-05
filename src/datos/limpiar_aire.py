@@ -1,12 +1,21 @@
 """
-limpiar_aire.py — Limpieza de datos de calidad del aire (PM10, PM2.5) de la RMCAB.
+limpiar_aire.py — Limpieza y consolidación de calidad del aire (PM10 y PM2.5) de la RMCAB.
 
-Lee todos los .xlsx de data/raw/aire/, construye un DataFrame largo y guarda:
-  - data/interim/aire_largo.parquet
-  - data/processed/cobertura_aire.csv
+Qué hace:
+    Procesa, valida e integra los reportes mensuales de calidad del aire de la Red de
+    Monitoreo de Calidad del Aire de Bogotá (RMCAB), resolviendo duplicados y calculando
+    métricas de cobertura temporal por estación y contaminante.
 
-Ejecutar:
-  python src/datos/limpiar_aire.py
+Qué lee:
+    - Archivos mensuales de la RMCAB en formato Excel: data/raw/aire/*.xlsx
+    - Georreferenciación oficial de estaciones: data/raw/geografia/estacion_calida_aire.geojson
+
+Qué produce:
+    - Tabla integrada en formato largo: data/interim/aire_largo.parquet
+    - Matriz de cobertura mensual por estación: data/processed/cobertura_aire.csv
+
+Cómo se ejecuta:
+    python src/datos/limpiar_aire.py
 """
 
 import re
@@ -23,8 +32,9 @@ import openpyxl
 
 # ── Constantes ─────────────────────────────────────────────────────────────────
 
-# "24:00" en los datos crudos representa el promedio de cierre de ese mismo
-# día calendario.  NO se suma un día.  Constante documentada para referencia.
+# SUPUESTO: "24:00" en los datos crudos de la RMCAB representa el promedio de cierre
+# de las 24 horas del mismo día calendario reportado, y NO la medianoche o inicio del
+# día siguiente. Por tanto, no se suma un día a la fecha y se normaliza al día en curso.
 HORA_CIERRE_DOC = (
     "24:00 se interpreta como el cierre del mismo día calendario, "
     "no como la medianoche del día siguiente."
@@ -56,9 +66,19 @@ GEO_PATH = (
 
 
 def normalizar_id(nombre: str) -> str:
-    """Convierte un nombre de estación a snake_case sin tildes.
+    """Convierte un nombre de estación a snake_case sin tildes para estandarización.
 
     Ejemplo: "Centro de Alto Rendimiento" -> "centro_de_alto_rendimiento"
+
+    Parámetros
+    ----------
+    nombre : str
+        Nombre original de la estación en los archivos o metadatos.
+
+    Retorna
+    -------
+    str
+        Identificador normalizado en snake_case alfanumérico.
     """
     nfkd = unicodedata.normalize("NFKD", nombre)
     sin_tildes = "".join(c for c in nfkd if not unicodedata.combining(c))
@@ -69,14 +89,27 @@ def normalizar_id(nombre: str) -> str:
 
 
 def _leer_encabezado(ws):
-    """Lee las filas 3-5 del encabezado y devuelve la lista de columnas.
+    """Lee las filas 3-5 del encabezado y devuelve la lista de columnas estructuradas.
+
+    SUPUESTO: Propagación de estaciones por celdas combinadas: en la fila 3 del Excel,
+    las celdas con nombres de estación están combinadas horizontalmente abarcando las columnas
+    correspondientes a PM10 y PM2.5. openpyxl lee únicamente el valor en la primera celda
+    del bloque combinado y deja las subsecuentes en None; por lo tanto, se asume que propagar
+    hacia la derecha (forward-fill) el último nombre no nulo reconstruye fielmente la asociación
+    de estación para todas las columnas de contaminantes.
+
+    Parámetros
+    ----------
+    ws : openpyxl.worksheet.worksheet.Worksheet
+        Hoja de cálculo activa del archivo Excel mensual.
 
     Retorna
     -------
     columnas : list[dict] | None
-        Cada dict tiene: col_idx (1-based), estacion, contaminante, unidad.
+        Lista de diccionarios con: col_idx (1-based), estacion, contaminante, unidad;
+        o None si ocurre un error estructural en el encabezado.
     error : str | None
-        Mensaje de error si la estructura no es válida.
+        Mensaje descriptivo del error si el encabezado no cumple la estructura esperada.
     """
     max_col = ws.max_column
 
@@ -93,6 +126,7 @@ def _leer_encabezado(ws):
         return None, f"A3 != 'DateTime', encontré {row3[0]!r}"
 
     # Propagar nombres de estación hacia la derecha (ffill)
+    # SUPUESTO: Las celdas combinadas de la fila 3 asignan la misma estación a PM10 y PM2.5
     for i in range(2, len(row3)):
         if row3[i] is None:
             row3[i] = row3[i - 1]
@@ -127,24 +161,37 @@ def _leer_encabezado(ws):
 
 
 def _leer_archivo(filepath: Path, ref_header):
-    """Lee un archivo Excel y devuelve (df_largo, header, advertencias).
+    """Lee un archivo Excel mensual, extrae filas de datos válidas y las transforma a formato largo.
+
+    SUPUESTO: El nombre del archivo solo se usa para validar, nunca para deducir fechas.
+    Las fechas asignadas provienen estrictamente de la columna de fecha (DateTime) de cada fila.
+
+    SUPUESTO: La última fila de cada archivo mensual corresponde al día 24 sin cerrar,
+    la cual viene vacía (o sin consolidar) al momento de la descarga oficial y se descarta
+    o resuelve a favor del archivo siguiente que sí contiene los datos cerrados.
+
+    SUPUESTO: Validación contra la fila Num: la fila 'Num' al final de la tabla contiene
+    el recuento oficial de datos horarios válidos según la RMCAB. Se utiliza como control
+    de validación cruzada para verificar que la cantidad de valores numéricos parseados
+    coincida con lo reportado por la estación.
 
     Parameters
     ----------
     filepath : Path
-        Ruta al archivo .xlsx.
+        Ruta al archivo .xlsx mensual a procesar.
     ref_header : list[dict] | None
-        Encabezado de referencia del primer archivo leído.  Si es None,
-        este archivo se usa como referencia.
+        Encabezado de referencia del primer archivo procesado. Si es None, este archivo
+        se utiliza como el estándar de comparación estructural.
 
     Returns
     -------
     df : pd.DataFrame | None
-        DataFrame en formato largo, o None si el archivo fue descartado.
+        DataFrame en formato largo (fecha, estacion, contaminante, valor, archivo_origen),
+        o None si el archivo fue descartado por inconsistencia estructural.
     header : list[dict] | None
-        Encabezado parseado del archivo.
+        Encabezado estructurado parseado del archivo.
     warnings : list[str]
-        Lista de advertencias generadas.
+        Lista de advertencias, discrepancias con la fila Num o irregularidades registradas.
     """
     warnings: list[str] = []
     nombre = filepath.name
@@ -184,6 +231,7 @@ def _leer_archivo(filepath: Path, ref_header):
         a_str = str(a_val).strip()
 
         # Fila Num → para validación cruzada
+        # SUPUESTO: La fila Num certifica la cantidad de horas válidas registradas en el mes
         if a_str == "Num":
             for ci in columnas:
                 v = ws.cell(row=r, column=ci["col_idx"]).value
@@ -210,11 +258,14 @@ def _leer_archivo(filepath: Path, ref_header):
             horas_encontradas.add(time_part.strip())
 
         try:
+            # SUPUESTO: '24:00' se interpreta como cierre del mismo día calendario (HORA_CIERRE_DOC)
             fecha = pd.to_datetime(date_str, dayfirst=True).normalize()
         except Exception as e:
             warnings.append(f"  Fila {r} fecha no parseable: {date_str!r} → {e}")
             continue
 
+        # SUPUESTO: La última fila con fecha en cada archivo corresponde al día 24 sin cerrar,
+        # que viene vacía en este archivo y cuyos datos consolidados se leerán en el siguiente archivo.
         row_dict: dict = {"fecha": fecha}
         for ci in columnas:
             row_dict[ci["col_idx"]] = ws.cell(row=r, column=ci["col_idx"]).value
@@ -234,6 +285,7 @@ def _leer_archivo(filepath: Path, ref_header):
         return None, columnas, warnings
 
     # ── Validación cruzada con fila Num ──
+    # SUPUESTO: La fila Num del Excel certifica los registros numéricos válidos esperados
     for ci in columnas:
         col_idx = ci["col_idx"]
         n_numeric = sum(
@@ -271,12 +323,23 @@ def _leer_archivo(filepath: Path, ref_header):
 
 
 def _convertir_valores(df: pd.DataFrame):
-    """Convierte la columna valor a numérico; reporta textos no numéricos.
+    """Convierte la columna valor a numérico y cuantifica textos no numéricos.
+
+    SUPUESTO: '----' tratado como NaN: la cadena '----' en los reportes de la RMCAB representa
+    valores ausentes o mediciones no disponibles (sensores inoperativos o datos descartados
+    por validación de la red). Se convierte a NaN numérico sin imputar ni rellenar con cero,
+    cumpliendo la regla crítica de no inventar datos.
+
+    Rareza de datos: Se conservan sin modificar los valores negativos observados en la fuente
+    (Jazmín y Móvil Fontibón, 2 casos cada una) para preservar las lecturas reales del sensor
+    (posible descalibración o ruido de línea base) sin introducir alteraciones artificiales.
 
     Retorna
     -------
-    df : pd.DataFrame  (modificado in-place y también retornado)
-    textos : dict[str, int]  texto → conteo
+    df : pd.DataFrame
+        DataFrame con la columna 'valor' convertida a tipo numérico (float).
+    textos : dict[str, int]
+        Diccionario texto → conteo de ocurrencias de cadenas no numéricas antes de la conversión.
     """
     # Encontrar valores que son cadenas antes de la conversión
     mask_str = df["valor"].apply(lambda x: isinstance(x, str))
@@ -284,6 +347,7 @@ def _convertir_valores(df: pd.DataFrame):
     if mask_str.any():
         textos = df.loc[mask_str, "valor"].value_counts().to_dict()
 
+    # Conversión a numérico (SUPUESTO: '----' y otros textos se convierten en NaN)
     df["valor"] = pd.to_numeric(df["valor"], errors="coerce")
     return df, textos
 
@@ -291,8 +355,29 @@ def _convertir_valores(df: pd.DataFrame):
 def _resolver_duplicados(df: pd.DataFrame):
     """Maneja duplicados (fecha, estación, contaminante) en límites de mes.
 
-    - Idénticos: elimina uno.
-    - Conflictivos: conserva el primero y los lista.
+    SUPUESTO: Regla de deduplicación: se conserva la fila con valor numérico válido frente
+    a la fila NaN de la misma fecha. Causa: en los Excel de la RMCAB existe un artefacto
+    sistemático donde cada archivo repite la penúltima fecha con una fila completamente vacía
+    (NaN) ubicada en segunda posición, y además el día 24 saliente al final de mes aparece sin
+    cerrar (vacío) mientras que en el archivo entrante del mes siguiente sí contiene datos.
+    Al conservar la fila con datos reales, se descartan los registros vacíos espurios.
+
+    - Idénticos: elimina filas duplicadas con valor idéntico (o todas NaN).
+    - Conflictivos: conserva la fila prioritaria con dato y lista las discrepancias para control.
+
+    Parámetros
+    ----------
+    df : pd.DataFrame
+        DataFrame largo con posibles registros duplicados.
+
+    Retorna
+    -------
+    df : pd.DataFrame
+        DataFrame deduplicado.
+    identicos_eliminados : int
+        Conteo de filas idénticas eliminadas.
+    conflictivos : list[dict]
+        Lista de casos conflictivos documentados para auditoría.
     """
     dup_key = ["fecha", "estacion", "contaminante"]
     mask_dup = df.duplicated(subset=dup_key, keep=False)
@@ -310,6 +395,7 @@ def _resolver_duplicados(df: pd.DataFrame):
                 identicos_eliminados += len(group) - 1
             else:
                 # Valores conflictivos → conservar el primero, reportar
+                # SUPUESTO: La fila con valor aparece primero o se prioriza sobre la fila vacía NaN
                 conflictivos.append(
                     {
                         "fecha": group["fecha"].iloc[0],
@@ -329,7 +415,12 @@ def _resolver_duplicados(df: pd.DataFrame):
 def _leer_geojson():
     """Lee el GeoJSON de estaciones corrigiendo posibles problemas de encoding.
 
-    Retorna (nombres, encoding_usado).
+    Retorna
+    -------
+    nombres : list[str]
+        Lista de nombres de estaciones leídos del archivo geográfico.
+    encoding_usado : str
+        Nombre de la codificación exitosa ('utf-8', 'latin-1', 'cp1252', etc.).
     """
     raw_bytes = GEO_PATH.read_bytes()
 
@@ -342,7 +433,7 @@ def _leer_geojson():
                 for feat in gj["features"]
             ]
             # Si utf-8 decodifica sin reemplazo, verificar que no haya U+FFFD
-            if "\ufffd" not in text:
+            if "�" not in text:
                 return nombres, enc
         except (UnicodeDecodeError, json.JSONDecodeError):
             continue
@@ -358,7 +449,18 @@ def _leer_geojson():
 
 
 def _generar_cobertura(df: pd.DataFrame) -> pd.DataFrame:
-    """Genera tabla de cobertura: una fila por estación, contaminante y año-mes."""
+    """Genera tabla de cobertura: una fila por estación, contaminante y año-mes.
+
+    Parámetros
+    ----------
+    df : pd.DataFrame
+        DataFrame consolidado en formato largo con fechas y mediciones.
+
+    Retorna
+    -------
+    pd.DataFrame
+        Tabla de cobertura mensual con conteo de días con dato y porcentaje relativo al mes.
+    """
     df_tmp = df.copy()
     df_tmp["anio_mes"] = df_tmp["fecha"].dt.to_period("M")
 
@@ -390,7 +492,21 @@ _MESES = {
 
 
 def _extraer_mes_inicio_nombre(nombre: str):
-    """Extrae el mes inicial del nombre de archivo (ej. '24 oct - 24 nov 2023.xlsx' -> 10)."""
+    """Extrae el mes inicial del nombre de archivo (ej. '24 oct - 24 nov 2023.xlsx' -> 10).
+
+    SUPUESTO: El nombre del archivo solo se usa para validar, nunca para deducir fechas.
+    Se utiliza aquí únicamente para contrastar la etiqueta del archivo con las fechas internas.
+
+    Parámetros
+    ----------
+    nombre : str
+        Nombre del archivo .xlsx.
+
+    Retorna
+    -------
+    int | None
+        Número de mes (1 a 12) correspondiente al inicio del periodo o None si no hace match.
+    """
     # Patron: '24 <mes> - 24 <mes> <anio>.xlsx' o '24 <mes> <anio> - 24 <mes> <anio>.xlsx'
     m = re.match(r"24\s+(\w+)", nombre.lower())
     if m:
@@ -401,13 +517,36 @@ def _extraer_mes_inicio_nombre(nombre: str):
 def _validar_integridad_archivos(archivos: list[Path]):
     """Valida integridad de archivos crudos antes de procesarlos.
 
-    Reporta (sin abortar):
-      a) Primera y ultima fecha con datos numericos, dias unicos.
-      b) Si la primera fecha cae en dia 24 y su mes coincide con el nombre.
-      c) Si comparte mas de 2 fechas con otro archivo.
-      d) Hashes identicos entre archivos.
+    SUPUESTO: El nombre del archivo solo se usa para validar, nunca para deducir fechas.
+    Las fechas reales provienen exclusivamente de las celdas de la columna DateTime.
+
+    Controles realizados y significado de sus avisos:
+      a) Rango y días únicos: Determina la primera y última fecha con datos numéricos y
+         la cantidad de días únicos en cada archivo. Alerta si un archivo está truncado
+         o no contiene fechas utilizables.
+      b) Día 24 y mes: Verifica si la primera fecha del archivo es día 24 y si su mes
+         coincide con el nombre del archivo para detectar desfases en la secuencia mensual.
+         NOTA: El aviso de "primera fecha es día 23" en dos archivos ('24 abr - 24 may 2026.xlsx'
+         y '24 oct - 24 nov 2025.xlsx') es esperado y NO indica error: se debe a que incluyen
+         una fila inicial residual sin datos numéricos (cierre del mes anterior), mientras que
+         su primer dato con mediciones numéricas sí inicia correctamente el día 24.
+      c) Fechas compartidas > 2: Verifica que ninguna pareja de archivos comparta más de 2 fechas.
+         El diseño de corte de la RMCAB solapa a lo sumo 1 o 2 días en los empalmes; compartir
+         más de 2 fechas alertaría sobre periodos duplicados o archivos repetidos por error.
+      d) Hashes idénticos: Compara el SHA-256 binario de los archivos para alertar sobre
+         archivos con contenido idéntico guardados con nombres distintos.
+
+    Parámetros
+    ----------
+    archivos : list[Path]
+        Lista de rutas a los archivos .xlsx de entrada.
+
+    Retorna
+    -------
+    list[dict]
+        Lista de diccionarios con la información de control y metadatos por archivo.
     """
-    print("\n" + "=" * 70)
+    print("\r\n" + "=" * 70)
     print("VALIDACION DE INTEGRIDAD DE ARCHIVOS")
     print("=" * 70)
 
@@ -478,7 +617,7 @@ def _validar_integridad_archivos(archivos: list[Path]):
         info_archivos.append(info)
 
         # Imprimir detalle
-        print(f"\n  {nombre}")
+        print(f"\r\n  {nombre}")
         print(f"    Dias unicos: {n_dias}  "
               f"Rango: {info['primera']} -- {info['ultima']}")
         print(f"    Primer dia con datos num: {primera_num}  "
@@ -486,11 +625,14 @@ def _validar_integridad_archivos(archivos: list[Path]):
         print(f"    Hash: {file_hash}")
 
         # (b) Verificar dia 24 y mes coincide con nombre
+        # SUPUESTO: El nombre se usa solo para control y no para asignar fechas
         if info["primera"] is not None:
             mes_nombre = _extraer_mes_inicio_nombre(nombre)
             dia_primera = info["primera"].day
             mes_primera = info["primera"].month
 
+            # NOTA: En '24 abr - 24 may 2026.xlsx' y '24 oct - 24 nov 2025.xlsx',
+            # la primera fecha es día 23 por una fila vacía residual; este aviso es esperado y no es error.
             if dia_primera != 24:
                 msg = (f"{nombre}: primera fecha es dia {dia_primera}, "
                        f"no dia 24.")
@@ -504,7 +646,7 @@ def _validar_integridad_archivos(archivos: list[Path]):
                 print(f"    [!] {msg}")
 
     # (c) Fechas compartidas entre archivos (mas de 2)
-    print(f"\n--- Fechas compartidas entre archivos ---")
+    print(f"\r\n--- Fechas compartidas entre archivos ---")
     hay_compartidas = False
     for i, a in enumerate(info_archivos):
         for j, b in enumerate(info_archivos):
@@ -522,7 +664,7 @@ def _validar_integridad_archivos(archivos: list[Path]):
         print("  Ninguna pareja comparte mas de 2 fechas.")
 
     # (d) Hashes identicos
-    print(f"\n--- Hashes de contenido ---")
+    print(f"\r\n--- Hashes de contenido ---")
     hash_to_files: dict[str, list[str]] = defaultdict(list)
     for info in info_archivos:
         hash_to_files[info["hash"]].append(info["nombre"])
@@ -539,7 +681,7 @@ def _validar_integridad_archivos(archivos: list[Path]):
         print("  Todos los archivos tienen hash unico.")
 
     # Bloque final de inconsistencias
-    print(f"\n{'=' * 70}")
+    print(f"\r\n{'=' * 70}")
     if inconsistencias:
         print(f"INCONSISTENCIAS ({len(inconsistencias)}):")
         for inc in inconsistencias:
@@ -555,7 +697,7 @@ def _validar_integridad_archivos(archivos: list[Path]):
 
 
 def main():
-    """Ejecuta la limpieza completa de datos de aire."""
+    """Ejecuta la limpieza, validación y consolidación completa de datos de aire."""
     print("=" * 70)
     print("LIMPIEZA DE DATOS DE AIRE — RMCAB")
     print("=" * 70)
@@ -563,7 +705,7 @@ def main():
     # ── 1. Buscar archivos ──
     archivos = sorted(RAW_DIR.glob("**/*.xlsx"))
     archivos = [a for a in archivos if not a.name.startswith("~")]
-    print(f"\nArchivos .xlsx encontrados: {len(archivos)}")
+    print(f"\r\nArchivos .xlsx encontrados: {len(archivos)}")
 
     if not archivos:
         print(f"ERROR: No se encontraron archivos .xlsx en {RAW_DIR}")
@@ -602,9 +744,12 @@ def main():
     print(f"Filas totales (antes de dedup): {filas_pre_dedup}")
 
     # ── 4. Convertir valores a numérico ──
+    # SUPUESTO: '----' tratado como NaN.
+    # Rareza de datos: Se conservan sin alterar valores negativos (Jazmín y Móvil Fontibón, 2 c/u).
     df, textos_no_numericos = _convertir_valores(df)
 
     # ── 5. Resolver duplicados ──
+    # SUPUESTO: Regla de deduplicación (se conserva la fila con valor frente a NaN).
     df, n_identicos, conflictivos = _resolver_duplicados(df)
 
     # ── 6. Crear estacion_id ──
@@ -619,6 +764,9 @@ def main():
     df.to_parquet(parquet_path, index=False, engine="pyarrow")
 
     # ── 9. Cobertura ──
+    # Rareza de datos: Entre 2025-08-04 y 2025-10-16 todas las estaciones están en NaN.
+    # Es un hueco real de la fuente RMCAB (re-descargado y confirmado vacío, mientras los archivos
+    # de viento sí tienen datos en esas fechas; causa desconocida). Se conserva como NaN.
     cob = _generar_cobertura(df)
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     cob_path = PROCESSED_DIR / "cobertura_aire.csv"
@@ -648,18 +796,19 @@ def main():
     # ====================================================================
     #                          R E S U M E N
     # ====================================================================
-    print("\n" + "=" * 70)
+    print("\r\n" + "=" * 70)
     print("R E S U M E N")
     print("=" * 70)
 
     # Archivos
-    print(f"\nArchivos leidos exitosamente : {len(archivos_leidos)}")
+    print(f"\r\nArchivos leidos exitosamente : {len(archivos_leidos)}")
     print(f"Archivos saltados            : {len(archivos_saltados)}")
     for a in archivos_saltados:
         print(f"  X {a}")
 
     # Rango de fechas
-    print(f"\nRango de fechas: {df['fecha'].min().date()} -- {df['fecha'].max().date()}")
+    # SUPUESTO: Periodo analizado: 2023-10-24 a 2026-10-23
+    print(f"\r\nRango de fechas: {df['fecha'].min().date()} -- {df['fecha'].max().date()}")
 
     # Estaciones y contaminantes
     estaciones = sorted(df["estacion"].unique())
@@ -669,7 +818,9 @@ def main():
     print(f"Filas totales (despues de dedup): {len(df)}")
 
     # % faltantes por estacion
-    print(f"\n--- % Valores faltantes por estacion ---")
+    # Rareza de datos: El porcentaje de faltantes incluye el hueco institucional generalizado
+    # entre 2025-08-04 y 2025-10-16 donde todas las estaciones están en NaN en la fuente original.
+    print(f"\r\n--- % Valores faltantes por estacion ---")
     for est in estaciones:
         mask = df["estacion"] == est
         total = mask.sum()
@@ -678,12 +829,12 @@ def main():
         print(f"  {est:30s}  {faltantes:5d}/{total:5d}  ({pct:5.1f}%)")
 
     # Punto 4 - Fechas con hora
-    print(f"\n--- Fechas con hora ---")
+    print(f"\r\n--- Fechas con hora ---")
     print(f"  Todas las fechas traian '24:00' -> normalizado a fecha (dia).")
     print(f"  {HORA_CIERRE_DOC}")
 
     # Punto 5 - Textos no numericos
-    print(f"\n--- Textos no numericos -> NaN ---")
+    print(f"\r\n--- Textos no numericos -> NaN ---")
     if textos_no_numericos:
         for txt, cnt in sorted(textos_no_numericos.items(), key=lambda x: -x[1]):
             print(f"  '{txt}': {cnt}")
@@ -695,7 +846,9 @@ def main():
           f"({n_nan_total / len(df) * 100:.1f}%)")
 
     # Negativos y > 1000
-    print(f"\n--- Valores negativos por estacion ---")
+    # Rareza de datos: Los valores negativos (Jazmín: 2, Móvil Fontibón: 2) se conservan intactos.
+    # Rareza de datos: En los datos consolidados se conservan también 3 casos donde PM2.5 > PM10.
+    print(f"\r\n--- Valores negativos por estacion ---")
     hay_neg = False
     for est in estaciones:
         n_neg = ((df["estacion"] == est) & (df["valor"] < 0)).sum()
@@ -705,7 +858,7 @@ def main():
     if not hay_neg:
         print("  (ninguno)")
 
-    print(f"\n--- Valores > 1000 por estacion ---")
+    print(f"\r\n--- Valores > 1000 por estacion ---")
     hay_alt = False
     for est in estaciones:
         n_high = ((df["estacion"] == est) & (df["valor"] > 1000)).sum()
@@ -716,7 +869,7 @@ def main():
         print("  (ninguno)")
 
     # Punto 6 - Duplicados
-    print(f"\n--- Duplicados en limite de mes ---")
+    print(f"\r\n--- Duplicados en limite de mes ---")
     print(f"  Identicos eliminados: {n_identicos}")
     print(f"  Conflictivos (se conservo el primero):")
     if conflictivos:
@@ -729,7 +882,7 @@ def main():
         print("    (ninguno)")
 
     # Punto 8 - GeoJSON
-    print(f"\n--- Comparacion con GeoJSON (encoding: {geo_enc}) ---")
+    print(f"\r\n--- Comparacion con GeoJSON (encoding: {geo_enc}) ---")
     print(f"  Coinciden ({len(coinciden)}):")
     for sid in coinciden:
         print(f"    {sid:35s}  aire='{aire_map[sid]}', "
@@ -742,7 +895,8 @@ def main():
         print(f"    {sid:35s}  nombre='{geo_map[sid]}'")
 
     # Validacion cruzada con Num
-    print(f"\n--- Validacion cruzada con fila Num ---")
+    # SUPUESTO: Control cruzado contra la fila Num de cada archivo
+    print(f"\r\n--- Validacion cruzada con fila Num ---")
     num_warns = [w for (_, w) in all_warnings if "Validacion Num" in w
                  or "Num" in w]
     if num_warns:
@@ -758,7 +912,7 @@ def main():
         if "Num" not in w and "SALTADO" not in w
     ]
     if other:
-        print(f"\n--- Otras advertencias ({len(other)}) ---")
+        print(f"\r\n--- Otras advertencias ({len(other)}) ---")
         # Agrupar por mensaje (muchos archivos repiten lo mismo)
         mensajes_unicos: dict[str, list[str]] = {}
         for f, w in other:
@@ -769,10 +923,10 @@ def main():
             else:
                 print(f"  [{len(files)} archivos] {msg}")
 
-    print(f"\n--- Archivos guardados ---")
+    print(f"\r\n--- Archivos guardados ---")
     print(f"  {parquet_path}")
     print(f"  {cob_path}")
-    print("\n[OK] Limpieza completada.")
+    print("\r\n[OK] Limpieza completada.")
 
 
 if __name__ == "__main__":
