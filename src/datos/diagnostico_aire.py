@@ -1,11 +1,20 @@
 """
-diagnostico_aire.py -- Diagnostico de solo lectura sobre los datos de aire.
+diagnostico_aire.py — Diagnóstico y auditoría forense de calidad de datos de aire.
 
-Lee los archivos crudos y el parquet generado para investigar discrepancias.
-NO modifica ningun archivo.
+Qué hace:
+    Realiza una inspección exhaustiva de solo lectura para auditar inconsistencias,
+    duplicados por archivo, fechas faltantes en el parquet, periodos con valores nulos
+    generalizados y pares físicos anómalos donde PM2.5 > PM10. NO modifica ningún archivo.
 
-Ejecutar:
-  python src/datos/diagnostico_aire.py
+Qué lee:
+    - Archivos crudos de entrada: data/raw/aire/*.xlsx
+    - Tabla integrada intermedia: data/interim/aire_largo.parquet
+
+Qué produce:
+    - Reporte detallado de diagnóstico estructurado en 6 secciones emitido a consola.
+
+Cómo se ejecuta:
+    python src/datos/diagnostico_aire.py
 """
 
 import re
@@ -27,7 +36,26 @@ RE_FECHA = re.compile(r"^(\d{1,2}-\d{1,2}-\d{4})(?:\s+(.+))?$")
 
 
 def _leer_archivo_crudo(filepath: Path):
-    """Lee un archivo Excel SIN deduplicar. Devuelve lista de (fecha, fila_excel, raw_values_dict)."""
+    """Lee un archivo Excel crudo sin aplicar deduplicación para diagnóstico forense.
+
+    SUPUESTO: Propagación de estaciones por celdas combinadas: en la fila 3, las celdas
+    combinadas aplican el nombre de estación a las columnas de contaminantes mediante forward-fill.
+
+    SUPUESTO: El nombre del archivo solo se usa para trazabilidad y reporte, nunca para
+    deducir fechas; las fechas se obtienen únicamente de la columna DateTime.
+
+    Parámetros
+    ----------
+    filepath : Path
+        Ruta al archivo .xlsx mensual.
+
+    Retorna
+    -------
+    filas : list[dict]
+        Lista de diccionarios con: fecha, fila_excel y diccionario de valores crudos.
+    columnas : list[dict]
+        Lista de columnas identificadas (col_idx, estacion, contaminante).
+    """
     wb = openpyxl.load_workbook(filepath, data_only=True, read_only=False)
     ws = wb[wb.sheetnames[0]]
     max_col = ws.max_column
@@ -36,7 +64,7 @@ def _leer_archivo_crudo(filepath: Path):
     row3 = [ws.cell(row=3, column=c).value for c in range(1, max_col + 1)]
     row4 = [ws.cell(row=4, column=c).value for c in range(1, max_col + 1)]
 
-    # ffill estaciones
+    # ffill estaciones (SUPUESTO: propagación de estaciones por celdas combinadas)
     for i in range(2, len(row3)):
         if row3[i] is None:
             row3[i] = row3[i - 1]
@@ -67,6 +95,7 @@ def _leer_archivo_crudo(filepath: Path):
 
         date_str = match.group(1)
         try:
+            # SUPUESTO: '24:00' interpretado como cierre del mismo día calendario
             fecha = pd.to_datetime(date_str, dayfirst=True).normalize().date()
         except Exception:
             continue
@@ -83,7 +112,18 @@ def _leer_archivo_crudo(filepath: Path):
 
 
 def _agrupar_rangos(fechas_sorted):
-    """Agrupa una lista de dates ordenadas en rangos contiguos."""
+    """Agrupa una lista de fechas ordenadas en bloques de rangos continuos contiguos.
+
+    Parámetros
+    ----------
+    fechas_sorted : list[datetime.date]
+        Lista ordenada de fechas calendario.
+
+    Retorna
+    -------
+    list[tuple[datetime.date, datetime.date]]
+        Lista de tuplas (inicio, fin) que describen cada intervalo continuo.
+    """
     if not fechas_sorted:
         return []
     rangos = []
@@ -101,6 +141,7 @@ def _agrupar_rangos(fechas_sorted):
 
 
 def main():
+    """Ejecuta las seis secciones de auditoría de diagnóstico sobre datos de aire."""
     print("=" * 70)
     print("DIAGNOSTICO DE DATOS DE AIRE")
     print("=" * 70)
@@ -111,7 +152,8 @@ def main():
     # ================================================================
     # 1. Por archivo crudo: filas, rango, fechas repetidas
     # ================================================================
-    print("\n" + "=" * 70)
+    # SUPUESTO: El nombre del archivo solo se usa para validar, nunca para deducir fechas.
+    print("\r\n" + "=" * 70)
     print("1. DETALLE POR ARCHIVO CRUDO (sin deduplicar)")
     print("=" * 70)
 
@@ -134,7 +176,7 @@ def main():
         primera = min(fechas) if fechas else None
         ultima = max(fechas) if fechas else None
 
-        print(f"\n  {nombre}")
+        print(f"\r\n  {nombre}")
         print(f"    Filas de datos: {len(filas)}")
         print(f"    Rango: {primera} -- {ultima}")
         if repetidas:
@@ -147,7 +189,8 @@ def main():
     # ================================================================
     # 2. Fechas faltantes en el parquet
     # ================================================================
-    print("\n" + "=" * 70)
+    # SUPUESTO: El periodo analizado debe cubrir continuamente del 2023-10-24 al 2026-10-23
+    print("\r\n" + "=" * 70)
     print("2. FECHAS FALTANTES EN aire_largo.parquet")
     print("=" * 70)
 
@@ -165,7 +208,7 @@ def main():
     fechas_en_parquet = set(df["fecha"].dt.date.unique())
     faltantes = sorted(todas_esperadas - fechas_en_parquet)
 
-    print(f"\n  Dias esperados: {len(todas_esperadas)}")
+    print(f"\r\n  Dias esperados: {len(todas_esperadas)}")
     print(f"  Dias en parquet: {len(fechas_en_parquet)}")
     print(f"  Dias faltantes: {len(faltantes)}")
 
@@ -197,7 +240,11 @@ def main():
     # ================================================================
     # 3. Fechas donde TODAS las estaciones son NaN
     # ================================================================
-    print("\n" + "=" * 70)
+    # Rareza de datos: Entre 2025-08-04 y 2025-10-16 todas las estaciones están en NaN.
+    # Este hueco es real de la fuente oficial RMCAB: se verificó redescargando los archivos
+    # que permanecen vacíos en contaminantes, mientras que los archivos de viento sí tienen datos
+    # para esas mismas fechas. Causa institucional desconocida; se conserva como NaN sin imputar.
+    print("\r\n" + "=" * 70)
     print("3. FECHAS DONDE TODAS LAS ESTACIONES SON NaN")
     print("=" * 70)
 
@@ -209,7 +256,7 @@ def main():
         todas_nan = pivot[pivot.isna().all(axis=1)].index
         fechas_nan = sorted([f.date() for f in todas_nan])
 
-        print(f"\n  {cont}: {len(fechas_nan)} fechas con todas las estaciones NaN")
+        print(f"\r\n  {cont}: {len(fechas_nan)} fechas con todas las estaciones NaN")
         if fechas_nan:
             rangos = _agrupar_rangos(fechas_nan)
             for inicio, fin in rangos:
@@ -219,7 +266,7 @@ def main():
     # ================================================================
     # 4. Grupos con dos valores NUMERICOS distintos
     # ================================================================
-    print("\n" + "=" * 70)
+    print("\r\n" + "=" * 70)
     print("4. DUPLICADOS CON DOS VALORES NUMERICOS DISTINTOS (esperado: 0)")
     print("=" * 70)
 
@@ -260,7 +307,7 @@ def main():
                     "filas": group["fila_excel"].tolist(),
                 })
 
-    print(f"\n  Grupos con 2+ valores numericos distintos: {len(conflictos)}")
+    print(f"\r\n  Grupos con 2+ valores numericos distintos: {len(conflictos)}")
     if conflictos:
         print(f"  Primeros {min(20, len(conflictos))}:")
         for c in conflictos[:20]:
@@ -270,7 +317,9 @@ def main():
     # ================================================================
     # 5. Patron "fila con datos + fila NaN con la misma fecha"
     # ================================================================
-    print("\n" + "=" * 70)
+    # SUPUESTO: Regla de deduplicación: se conserva la fila con valor frente a la fila NaN.
+    # Los archivos crudos de la RMCAB repiten la penúltima fecha con una fila vacía (NaN).
+    print("\r\n" + "=" * 70)
     print("5. PATRON: FILA CON DATOS + FILA NaN EN LA MISMA FECHA")
     print("=" * 70)
 
@@ -287,6 +336,7 @@ def main():
             if len(grupo) < 2:
                 continue
             # Revisar si una fila tiene datos y otra es todo NaN/----
+            # SUPUESTO: '----' tratado como NaN
             for i, f1 in enumerate(grupo):
                 for f2 in grupo[i + 1:]:
                     # Contar cuantas columnas tienen valor numerico en cada fila
@@ -309,18 +359,18 @@ def main():
                         })
 
     total_patron = sum(len(v) for v in patron_por_archivo.values())
-    print(f"\n  Archivos con este patron: {len(patron_por_archivo)}")
+    print(f"\r\n  Archivos con este patron: {len(patron_por_archivo)}")
     print(f"  Total ocurrencias: {total_patron}")
 
     for nombre in sorted(patron_por_archivo):
         ocurrencias = patron_por_archivo[nombre]
-        print(f"\n  {nombre} ({len(ocurrencias)} fecha(s)):")
+        print(f"\r\n  {nombre} ({len(ocurrencias)} fecha(s)):")
         for occ in ocurrencias:
             print(f"    {occ['fecha']}  fila_datos={occ['fila_datos']}  "
                   f"fila_nan={occ['fila_nan']}  cols_con_dato={occ['n_datos']}/38")
 
     # Tambien reportar archivos con fechas repetidas que NO siguen este patron
-    print(f"\n  --- Fechas repetidas que NO siguen el patron datos+NaN ---")
+    print(f"\r\n  --- Fechas repetidas que NO siguen el patron datos+NaN ---")
     otros_repetidos = 0
     for nombre, filas in datos_por_archivo.items():
         por_fecha = defaultdict(list)
@@ -337,7 +387,7 @@ def main():
             if not es_patron:
                 def _count_numeric(vals):
                     return sum(1 for v in vals.values()
-                               if isinstance(v, (int, float)) and not isinstance(v, bool))
+                                if isinstance(v, (int, float)) and not isinstance(v, bool))
                 nums = [_count_numeric(f["valores"]) for f in grupo]
                 print(f"  {nombre}: {fecha} x{len(grupo)} "
                       f"(cols numericas por fila: {nums})")
@@ -349,7 +399,10 @@ def main():
     # ================================================================
     # 6. PM2.5 > PM10 en la misma estacion y fecha
     # ================================================================
-    print("\n" + "=" * 70)
+    # Rareza de datos: Se encontraron 3 casos donde PM2.5 > PM10 sobre 15.232 pares observados.
+    # Se conservan sin modificar por considerarse ruido instrumental de baja magnitud
+    # sin justificación concluyente para su eliminación o forzado (ver docs/decisiones.md).
+    print("\r\n" + "=" * 70)
     print("6. PM2.5 > PM10 EN LA MISMA ESTACION Y FECHA")
     print("=" * 70)
 
@@ -362,17 +415,17 @@ def main():
     merged = merged.dropna(subset=["pm25", "pm10"])
     invertidos = merged[merged["pm25"] > merged["pm10"]]
 
-    print(f"\n  Pares (fecha, estacion) con ambos valores no-NaN: {len(merged)}")
+    print(f"\r\n  Pares (fecha, estacion) con ambos valores no-NaN: {len(merged)}")
     print(f"  De esos, PM2.5 > PM10: {len(invertidos)} ({len(invertidos)/len(merged)*100:.1f}%)")
 
     if not invertidos.empty:
-        print(f"\n  Por estacion:")
+        print(f"\r\n  Por estacion:")
         conteo_est = invertidos.groupby("estacion").size().sort_values(ascending=False)
         for est, n in conteo_est.items():
             total_est = len(merged[merged["estacion"] == est])
             print(f"    {est:30s}  {n:4d} / {total_est:4d}  ({n/total_est*100:.1f}%)")
 
-        print(f"\n  Muestra (primeras 15 filas):")
+        print(f"\r\n  Muestra (primeras 15 filas):")
         muestra = invertidos.sort_values("fecha").head(15)
         for _, row in muestra.iterrows():
             diff = row["pm25"] - row["pm10"]
@@ -380,7 +433,7 @@ def main():
                   f"PM2.5={row['pm25']:6.1f}  PM10={row['pm10']:6.1f}  "
                   f"diff={diff:+.1f}")
 
-    print(f"\n{'=' * 70}")
+    print(f"\r\n{'=' * 70}")
     print("FIN DEL DIAGNOSTICO")
     print("=" * 70)
 

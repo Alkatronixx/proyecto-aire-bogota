@@ -22,3 +22,17 @@
 ## 2026-11-05: Exclusión de la última fila de cada archivo
 - *Decisión:* se descarta la última fila de cada archivo.
 - *Motivo:* corresponde al día 24 del mes y contiene un registro vacío, todavía sin cerrar.
+
+## 2026-11-05: Hueco de datos entre agosto y octubre de 2025
+- **Decisión:** se mantiene como NaN el periodo comprendido entre el 2025-08-04 y el 2025-10-16.
+- **Motivo:** el hueco es real en la fuente original, confirmado mediante una nueva descarga y por la presencia de datos de viento para esas mismas fechas.
+- **Aclaración:** la causa de la ausencia de datos es desconocida y no se realizan imputaciones.
+
+## 2026-11-05: Criterio de cobertura para la selección de estaciones
+- **Decisión:** el cálculo de cobertura se realiza excluyendo el hueco de datos comprendido entre el 2025-08-04 y el 2025-10-16.
+- **Motivo:** evitar que una ausencia confirmada en la fuente distorsione el porcentaje de cobertura y condicione incorrectamente la selección de estaciones.
+
+## 2026-11-05: Limitación de la dirección del viento
+- **Decisión:** se conserva la dirección del viento tal como aparece en la fuente, considerando su posible limitación metodológica.
+- **Motivo:** es posible que la fuente calcule los promedios de dirección mediante una media aritmética convencional, en lugar de utilizar un promedio circular.
+- **Aclaración:** esto puede generar valores representativos incorrectos cuando las direcciones se encuentran próximas a 0° y 360°.
