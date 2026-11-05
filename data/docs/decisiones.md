@@ -36,3 +36,19 @@
 - **Decisión:** se conserva la dirección del viento tal como aparece en la fuente, considerando su posible limitación metodológica.
 - **Motivo:** es posible que la fuente calcule los promedios de dirección mediante una media aritmética convencional, en lugar de utilizar un promedio circular.
 - **Aclaración:** esto puede generar valores representativos incorrectos cuando las direcciones se encuentran próximas a 0° y 360°.
+
+## 2026-11-05: Evidencia de operación durante el hueco de PM de 2025
+- *Decisión:* se incorpora la nueva evidencia de la columna `Num` de viento, que muestra que las estaciones operaban durante agosto y septiembre de 2025.
+- *Motivo:* esta información permite reconsiderar el hueco de datos de PM identificado para ese periodo y aporta evidencia adicional sobre la disponibilidad de las estaciones.
+
+## 2026-11-05: Normalización de rótulos 10M de Guaymaral
+- *Decisión:* se normalizan los rótulos 10M de Guaymaral utilizando el prefijo correspondiente.
+- *Motivo:* unificar la identificación de los registros. Se deja documentada la duda sobre la altura real del sensor para evitar asumir que la etiqueta confirma su ubicación física.
+
+## 2026-11-05: Dirección del viento promediada desde la fuente
+- *Decisión:* se conserva la dirección del viento tal como viene promediada desde la fuente.
+- *Motivo:* la información disponible ya contiene valores promediados, por lo que no es posible reconstruir la dirección original. Esta limitación queda documentada para tenerla en cuenta durante el análisis.
+
+## 2026-11-05: Datos de viento faltantes en estaciones móviles de Fontibón y Usme
+- *Decisión:* queda pendiente definir el criterio para asignar datos de viento a las estaciones móviles de Fontibón y Usme, que no cuentan con mediciones propias. Se propone utilizar los datos de la estación más cercana que tenga información disponible.
+- *Motivo:* evitar dejar sin información de viento a las estaciones móviles y establecer un criterio espacial consistente. La propuesta requiere validación antes de su implementación.
