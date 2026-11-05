@@ -5,10 +5,10 @@ Análisis de calidad del aire en Bogotá (PM2.5 y PM10) y sus factores (viento, 
 ¿Qué variables meteorológicas y de calendario influyen más en el PM2.5 en Bogotá y cuánto cambia con distintos escenarios (lluvia, día de la semana, temporada, localidad)? Sirve a autoridades ambientales y a ciudadanos.
 
 # Decisiones de alcance (no cambiar sin avisar)
-- Periodo: 2023-10-24 a 2026-10-24.
+- Periodo: 2023-10-23 a 2026-10-23.
 - Grano: una fila por estación y día. Llave única: (fecha, estacion_id).
 - La humedad relativa NO entra al modelo (no hay datos de 2025); solo exploración.
-- Tráfico (aforos): extra opcional. Los Excel traen latitud y longitud de cada nodo. Se usan solo aforos dentro del periodo 2023-10-24 a 2026-10-24. Se asigna cada nodo a la estación de aire más cercana dentro de un radio de 1.5 km y se calcula el flujo medio por tipo de vehículo como variable fija por estación (no es una serie diaria). Los tipos de vehículo (columnas L, B, M, BI, C, etc.) cambian entre archivos: pasarlos a formato largo (tipo_vehiculo, conteo) y mapearlos a categorías comunes usando la leyenda de cada archivo. No inventar el mapeo: si una categoría es ambigua, dejar un TODO.
+- Tráfico (aforos): extra opcional. Los Excel traen latitud y longitud de cada nodo. Se usan solo aforos dentro del periodo 2023-10-23 a 2026-10-23. Se asigna cada nodo a la estación de aire más cercana dentro de un radio de 1.5 km y se calcula el flujo medio por tipo de vehículo como variable fija por estación (no es una serie diaria). Los tipos de vehículo (columnas L, B, M, BI, C, etc.) cambian entre archivos: pasarlos a formato largo (tipo_vehiculo, conteo) y mapearlos a categorías comunes usando la leyenda de cada archivo. No inventar el mapeo: si una categoría es ambigua, dejar un TODO.
 - Estaciones móviles: confirmar ubicación antes de usarlas; si no, excluir.
 
 # Estructura de carpetas
@@ -53,6 +53,14 @@ Cada estación de aire se asigna a la estación IDEAM más cercana y se guarda l
 - Cada decisión de datos o de modelo que tomes o propongas se registra al final de docs/decisiones.md con este formato: fecha, decisión, motivo, alternativas descartadas. No borrar entradas anteriores.
 - Cada fuente nueva se anota en data/docs/fuentes.md y cada columna nueva en data/docs/diccionario_datos.md.
 - Si el usuario te pide un cambio que contradice una decisión de alcance, avisa antes de hacerlo.
+
+# Comentarios y documentación del código
+- Comentarios y docstrings en español. Comentar el POR QUÉ (supuestos, decisiones, rarezas de los datos), no lo obvio (nada de "# suma uno").
+- Cada archivo empieza con un docstring de 3 a 5 líneas: qué hace, qué lee y qué produce.
+- Cada función lleva docstring corta: qué hace, parámetros y qué devuelve.
+- Los supuestos se marcan con "SUPUESTO:" y las dudas con "TODO:". Cada SUPUESTO relevante debe tener su entrada en docs/decisiones.md.
+- Al modificar código, actualizar los comentarios afectados; no dejar comentarios desactualizados.
+- Los comentarios deben permitir que alguien que no escribió el código pueda explicarlo en una exposición oral.
 
 # Convenciones
 - Python 3.11, pandas, scikit-learn, plotly, pydeck, streamlit, geopandas, openpyxl, pyarrow.

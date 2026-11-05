@@ -1,0 +1,1407 @@
+estacion,estacion_id,contaminante,anio_mes,n_dias_con_dato,n_dias_del_mes,porcentaje
+Bolivia,bolivia,PM10,2023-10,8,31,25.8
+Bolivia,bolivia,PM10,2023-11,30,30,100.0
+Bolivia,bolivia,PM10,2023-12,29,31,93.5
+Bolivia,bolivia,PM10,2024-01,31,31,100.0
+Bolivia,bolivia,PM10,2024-02,29,29,100.0
+Bolivia,bolivia,PM10,2024-03,30,31,96.8
+Bolivia,bolivia,PM10,2024-04,30,30,100.0
+Bolivia,bolivia,PM10,2024-05,30,31,96.8
+Bolivia,bolivia,PM10,2024-06,30,30,100.0
+Bolivia,bolivia,PM10,2024-07,31,31,100.0
+Bolivia,bolivia,PM10,2024-08,31,31,100.0
+Bolivia,bolivia,PM10,2024-09,27,30,90.0
+Bolivia,bolivia,PM10,2024-10,31,31,100.0
+Bolivia,bolivia,PM10,2024-11,13,30,43.3
+Bolivia,bolivia,PM10,2024-12,28,31,90.3
+Bolivia,bolivia,PM10,2025-01,28,31,90.3
+Bolivia,bolivia,PM10,2025-02,24,28,85.7
+Bolivia,bolivia,PM10,2025-03,31,31,100.0
+Bolivia,bolivia,PM10,2025-04,30,30,100.0
+Bolivia,bolivia,PM10,2025-05,31,31,100.0
+Bolivia,bolivia,PM10,2025-06,30,30,100.0
+Bolivia,bolivia,PM10,2025-07,30,31,96.8
+Bolivia,bolivia,PM10,2025-08,3,31,9.7
+Bolivia,bolivia,PM10,2025-09,0,30,0.0
+Bolivia,bolivia,PM10,2025-10,9,31,29.0
+Bolivia,bolivia,PM10,2025-11,28,30,93.3
+Bolivia,bolivia,PM10,2025-12,31,31,100.0
+Bolivia,bolivia,PM10,2026-01,2,31,6.5
+Bolivia,bolivia,PM10,2026-02,28,28,100.0
+Bolivia,bolivia,PM10,2026-03,28,31,90.3
+Bolivia,bolivia,PM10,2026-04,29,30,96.7
+Bolivia,bolivia,PM10,2026-05,31,31,100.0
+Bolivia,bolivia,PM10,2026-06,27,30,90.0
+Bolivia,bolivia,PM10,2026-07,31,31,100.0
+Bolivia,bolivia,PM10,2026-08,30,31,96.8
+Bolivia,bolivia,PM10,2026-09,30,30,100.0
+Bolivia,bolivia,PM10,2026-10,21,31,67.7
+Bolivia,bolivia,PM2.5,2023-10,8,31,25.8
+Bolivia,bolivia,PM2.5,2023-11,30,30,100.0
+Bolivia,bolivia,PM2.5,2023-12,31,31,100.0
+Bolivia,bolivia,PM2.5,2024-01,18,31,58.1
+Bolivia,bolivia,PM2.5,2024-02,0,29,0.0
+Bolivia,bolivia,PM2.5,2024-03,0,31,0.0
+Bolivia,bolivia,PM2.5,2024-04,14,30,46.7
+Bolivia,bolivia,PM2.5,2024-05,30,31,96.8
+Bolivia,bolivia,PM2.5,2024-06,30,30,100.0
+Bolivia,bolivia,PM2.5,2024-07,30,31,96.8
+Bolivia,bolivia,PM2.5,2024-08,31,31,100.0
+Bolivia,bolivia,PM2.5,2024-09,26,30,86.7
+Bolivia,bolivia,PM2.5,2024-10,31,31,100.0
+Bolivia,bolivia,PM2.5,2024-11,7,30,23.3
+Bolivia,bolivia,PM2.5,2024-12,29,31,93.5
+Bolivia,bolivia,PM2.5,2025-01,7,31,22.6
+Bolivia,bolivia,PM2.5,2025-02,28,28,100.0
+Bolivia,bolivia,PM2.5,2025-03,31,31,100.0
+Bolivia,bolivia,PM2.5,2025-04,30,30,100.0
+Bolivia,bolivia,PM2.5,2025-05,31,31,100.0
+Bolivia,bolivia,PM2.5,2025-06,28,30,93.3
+Bolivia,bolivia,PM2.5,2025-07,31,31,100.0
+Bolivia,bolivia,PM2.5,2025-08,3,31,9.7
+Bolivia,bolivia,PM2.5,2025-09,0,30,0.0
+Bolivia,bolivia,PM2.5,2025-10,9,31,29.0
+Bolivia,bolivia,PM2.5,2025-11,30,30,100.0
+Bolivia,bolivia,PM2.5,2025-12,31,31,100.0
+Bolivia,bolivia,PM2.5,2026-01,2,31,6.5
+Bolivia,bolivia,PM2.5,2026-02,28,28,100.0
+Bolivia,bolivia,PM2.5,2026-03,31,31,100.0
+Bolivia,bolivia,PM2.5,2026-04,29,30,96.7
+Bolivia,bolivia,PM2.5,2026-05,24,31,77.4
+Bolivia,bolivia,PM2.5,2026-06,27,30,90.0
+Bolivia,bolivia,PM2.5,2026-07,29,31,93.5
+Bolivia,bolivia,PM2.5,2026-08,29,31,93.5
+Bolivia,bolivia,PM2.5,2026-09,30,30,100.0
+Bolivia,bolivia,PM2.5,2026-10,22,31,71.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2023-10,8,31,25.8
+Carvajal - Sevillana,carvajal_sevillana,PM10,2023-11,30,30,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2023-12,24,31,77.4
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-01,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-02,29,29,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-03,28,31,90.3
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-04,27,30,90.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-05,19,31,61.3
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-06,28,30,93.3
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-07,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-08,30,31,96.8
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-09,23,30,76.7
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-10,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-11,24,30,80.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2024-12,26,31,83.9
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-01,16,31,51.6
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-02,24,28,85.7
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-03,4,31,12.9
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-04,21,30,70.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-05,30,31,96.8
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-06,30,30,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-07,19,31,61.3
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-08,0,31,0.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-09,0,30,0.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-10,4,31,12.9
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-11,30,30,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2025-12,28,31,90.3
+Carvajal - Sevillana,carvajal_sevillana,PM10,2026-01,0,31,0.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2026-02,0,28,0.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2026-03,0,31,0.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2026-04,0,30,0.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2026-05,23,31,74.2
+Carvajal - Sevillana,carvajal_sevillana,PM10,2026-06,27,30,90.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2026-07,30,31,96.8
+Carvajal - Sevillana,carvajal_sevillana,PM10,2026-08,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2026-09,30,30,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM10,2026-10,23,31,74.2
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2023-10,8,31,25.8
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2023-11,30,30,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2023-12,27,31,87.1
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-01,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-02,29,29,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-03,28,31,90.3
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-04,27,30,90.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-05,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-06,29,30,96.7
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-07,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-08,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-09,22,30,73.3
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-10,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-11,20,30,66.7
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2024-12,22,31,71.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-01,16,31,51.6
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-02,24,28,85.7
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-03,4,31,12.9
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-04,21,30,70.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-05,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-06,30,30,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-07,19,31,61.3
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-08,0,31,0.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-09,0,30,0.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-10,4,31,12.9
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-11,30,30,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2025-12,28,31,90.3
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2026-01,0,31,0.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2026-02,17,28,60.7
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2026-03,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2026-04,29,30,96.7
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2026-05,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2026-06,27,30,90.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2026-07,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2026-08,31,31,100.0
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2026-09,26,30,86.7
+Carvajal - Sevillana,carvajal_sevillana,PM2.5,2026-10,23,31,74.2
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2023-10,8,31,25.8
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2023-11,28,30,93.3
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2023-12,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-01,26,31,83.9
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-02,29,29,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-03,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-04,30,30,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-05,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-06,28,30,93.3
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-07,26,31,83.9
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-08,30,31,96.8
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-09,28,30,93.3
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-10,19,31,61.3
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-11,26,30,86.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2024-12,30,31,96.8
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-01,10,31,32.3
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-02,27,28,96.4
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-03,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-04,29,30,96.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-05,30,31,96.8
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-06,24,30,80.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-07,29,31,93.5
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-08,2,31,6.5
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-09,0,30,0.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-10,8,31,25.8
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-11,28,30,93.3
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2025-12,30,31,96.8
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2026-01,21,31,67.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2026-02,28,28,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2026-03,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2026-04,29,30,96.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2026-05,27,31,87.1
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2026-06,26,30,86.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2026-07,30,31,96.8
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2026-08,29,31,93.5
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2026-09,30,30,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM10,2026-10,22,31,71.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2023-10,8,31,25.8
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2023-11,30,30,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2023-12,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-01,23,31,74.2
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-02,29,29,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-03,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-04,26,30,86.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-05,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-06,29,30,96.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-07,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-08,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-09,27,30,90.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-10,19,31,61.3
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-11,26,30,86.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2024-12,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-01,21,31,67.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-02,17,28,60.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-03,28,31,90.3
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-04,26,30,86.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-05,28,31,90.3
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-06,30,30,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-07,30,31,96.8
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-08,2,31,6.5
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-09,0,30,0.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-10,8,31,25.8
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-11,30,30,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2025-12,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2026-01,21,31,67.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2026-02,28,28,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2026-03,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2026-04,26,30,86.7
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2026-05,28,31,90.3
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2026-06,25,30,83.3
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2026-07,30,31,96.8
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2026-08,31,31,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2026-09,30,30,100.0
+Centro de Alto Rendimiento,centro_de_alto_rendimiento,PM2.5,2026-10,23,31,74.2
+Ciudad Bolivar,ciudad_bolivar,PM10,2023-10,8,31,25.8
+Ciudad Bolivar,ciudad_bolivar,PM10,2023-11,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2023-12,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-01,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-02,29,29,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-03,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-04,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-05,19,31,61.3
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-06,29,30,96.7
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-07,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-08,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-09,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-10,8,31,25.8
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-11,5,30,16.7
+Ciudad Bolivar,ciudad_bolivar,PM10,2024-12,22,31,71.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-01,15,31,48.4
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-02,26,28,92.9
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-03,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-04,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-05,30,31,96.8
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-06,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-07,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-08,2,31,6.5
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-09,0,30,0.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-10,8,31,25.8
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-11,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2025-12,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2026-01,14,31,45.2
+Ciudad Bolivar,ciudad_bolivar,PM10,2026-02,28,28,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2026-03,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2026-04,29,30,96.7
+Ciudad Bolivar,ciudad_bolivar,PM10,2026-05,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2026-06,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2026-07,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2026-08,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2026-09,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM10,2026-10,21,31,67.7
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2023-10,8,31,25.8
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2023-11,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2023-12,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-01,28,31,90.3
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-02,29,29,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-03,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-04,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-05,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-06,29,30,96.7
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-07,28,31,90.3
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-08,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-09,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-10,16,31,51.6
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-11,14,30,46.7
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2024-12,24,31,77.4
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-01,15,31,48.4
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-02,26,28,92.9
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-03,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-04,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-05,30,31,96.8
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-06,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-07,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-08,2,31,6.5
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-09,0,30,0.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-10,8,31,25.8
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-11,30,30,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2025-12,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2026-01,12,31,38.7
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2026-02,24,28,85.7
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2026-03,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2026-04,28,30,93.3
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2026-05,31,31,100.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2026-06,27,30,90.0
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2026-07,23,31,74.2
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2026-08,5,31,16.1
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2026-09,25,30,83.3
+Ciudad Bolivar,ciudad_bolivar,PM2.5,2026-10,21,31,67.7
+Colina,colina,PM10,2023-10,8,31,25.8
+Colina,colina,PM10,2023-11,29,30,96.7
+Colina,colina,PM10,2023-12,30,31,96.8
+Colina,colina,PM10,2024-01,31,31,100.0
+Colina,colina,PM10,2024-02,26,29,89.7
+Colina,colina,PM10,2024-03,31,31,100.0
+Colina,colina,PM10,2024-04,28,30,93.3
+Colina,colina,PM10,2024-05,26,31,83.9
+Colina,colina,PM10,2024-06,29,30,96.7
+Colina,colina,PM10,2024-07,31,31,100.0
+Colina,colina,PM10,2024-08,30,31,96.8
+Colina,colina,PM10,2024-09,26,30,86.7
+Colina,colina,PM10,2024-10,29,31,93.5
+Colina,colina,PM10,2024-11,25,30,83.3
+Colina,colina,PM10,2024-12,29,31,93.5
+Colina,colina,PM10,2025-01,14,31,45.2
+Colina,colina,PM10,2025-02,22,28,78.6
+Colina,colina,PM10,2025-03,30,31,96.8
+Colina,colina,PM10,2025-04,27,30,90.0
+Colina,colina,PM10,2025-05,16,31,51.6
+Colina,colina,PM10,2025-06,14,30,46.7
+Colina,colina,PM10,2025-07,30,31,96.8
+Colina,colina,PM10,2025-08,3,31,9.7
+Colina,colina,PM10,2025-09,0,30,0.0
+Colina,colina,PM10,2025-10,0,31,0.0
+Colina,colina,PM10,2025-11,0,30,0.0
+Colina,colina,PM10,2025-12,0,31,0.0
+Colina,colina,PM10,2026-01,1,31,3.2
+Colina,colina,PM10,2026-02,27,28,96.4
+Colina,colina,PM10,2026-03,30,31,96.8
+Colina,colina,PM10,2026-04,24,30,80.0
+Colina,colina,PM10,2026-05,27,31,87.1
+Colina,colina,PM10,2026-06,22,30,73.3
+Colina,colina,PM10,2026-07,21,31,67.7
+Colina,colina,PM10,2026-08,27,31,87.1
+Colina,colina,PM10,2026-09,26,30,86.7
+Colina,colina,PM10,2026-10,22,31,71.0
+Colina,colina,PM2.5,2023-10,8,31,25.8
+Colina,colina,PM2.5,2023-11,30,30,100.0
+Colina,colina,PM2.5,2023-12,28,31,90.3
+Colina,colina,PM2.5,2024-01,31,31,100.0
+Colina,colina,PM2.5,2024-02,26,29,89.7
+Colina,colina,PM2.5,2024-03,31,31,100.0
+Colina,colina,PM2.5,2024-04,29,30,96.7
+Colina,colina,PM2.5,2024-05,25,31,80.6
+Colina,colina,PM2.5,2024-06,26,30,86.7
+Colina,colina,PM2.5,2024-07,31,31,100.0
+Colina,colina,PM2.5,2024-08,31,31,100.0
+Colina,colina,PM2.5,2024-09,28,30,93.3
+Colina,colina,PM2.5,2024-10,24,31,77.4
+Colina,colina,PM2.5,2024-11,28,30,93.3
+Colina,colina,PM2.5,2024-12,28,31,90.3
+Colina,colina,PM2.5,2025-01,14,31,45.2
+Colina,colina,PM2.5,2025-02,23,28,82.1
+Colina,colina,PM2.5,2025-03,31,31,100.0
+Colina,colina,PM2.5,2025-04,29,30,96.7
+Colina,colina,PM2.5,2025-05,0,31,0.0
+Colina,colina,PM2.5,2025-06,19,30,63.3
+Colina,colina,PM2.5,2025-07,31,31,100.0
+Colina,colina,PM2.5,2025-08,3,31,9.7
+Colina,colina,PM2.5,2025-09,0,30,0.0
+Colina,colina,PM2.5,2025-10,0,31,0.0
+Colina,colina,PM2.5,2025-11,0,30,0.0
+Colina,colina,PM2.5,2025-12,0,31,0.0
+Colina,colina,PM2.5,2026-01,2,31,6.5
+Colina,colina,PM2.5,2026-02,28,28,100.0
+Colina,colina,PM2.5,2026-03,31,31,100.0
+Colina,colina,PM2.5,2026-04,23,30,76.7
+Colina,colina,PM2.5,2026-05,31,31,100.0
+Colina,colina,PM2.5,2026-06,30,30,100.0
+Colina,colina,PM2.5,2026-07,30,31,96.8
+Colina,colina,PM2.5,2026-08,26,31,83.9
+Colina,colina,PM2.5,2026-09,25,30,83.3
+Colina,colina,PM2.5,2026-10,22,31,71.0
+Fontibon,fontibon,PM10,2023-10,8,31,25.8
+Fontibon,fontibon,PM10,2023-11,30,30,100.0
+Fontibon,fontibon,PM10,2023-12,31,31,100.0
+Fontibon,fontibon,PM10,2024-01,31,31,100.0
+Fontibon,fontibon,PM10,2024-02,29,29,100.0
+Fontibon,fontibon,PM10,2024-03,31,31,100.0
+Fontibon,fontibon,PM10,2024-04,30,30,100.0
+Fontibon,fontibon,PM10,2024-05,30,31,96.8
+Fontibon,fontibon,PM10,2024-06,29,30,96.7
+Fontibon,fontibon,PM10,2024-07,30,31,96.8
+Fontibon,fontibon,PM10,2024-08,24,31,77.4
+Fontibon,fontibon,PM10,2024-09,24,30,80.0
+Fontibon,fontibon,PM10,2024-10,28,31,90.3
+Fontibon,fontibon,PM10,2024-11,30,30,100.0
+Fontibon,fontibon,PM10,2024-12,31,31,100.0
+Fontibon,fontibon,PM10,2025-01,15,31,48.4
+Fontibon,fontibon,PM10,2025-02,25,28,89.3
+Fontibon,fontibon,PM10,2025-03,31,31,100.0
+Fontibon,fontibon,PM10,2025-04,27,30,90.0
+Fontibon,fontibon,PM10,2025-05,31,31,100.0
+Fontibon,fontibon,PM10,2025-06,29,30,96.7
+Fontibon,fontibon,PM10,2025-07,31,31,100.0
+Fontibon,fontibon,PM10,2025-08,1,31,3.2
+Fontibon,fontibon,PM10,2025-09,0,30,0.0
+Fontibon,fontibon,PM10,2025-10,10,31,32.3
+Fontibon,fontibon,PM10,2025-11,5,30,16.7
+Fontibon,fontibon,PM10,2025-12,13,31,41.9
+Fontibon,fontibon,PM10,2026-01,18,31,58.1
+Fontibon,fontibon,PM10,2026-02,26,28,92.9
+Fontibon,fontibon,PM10,2026-03,31,31,100.0
+Fontibon,fontibon,PM10,2026-04,25,30,83.3
+Fontibon,fontibon,PM10,2026-05,21,31,67.7
+Fontibon,fontibon,PM10,2026-06,28,30,93.3
+Fontibon,fontibon,PM10,2026-07,31,31,100.0
+Fontibon,fontibon,PM10,2026-08,29,31,93.5
+Fontibon,fontibon,PM10,2026-09,29,30,96.7
+Fontibon,fontibon,PM10,2026-10,21,31,67.7
+Fontibon,fontibon,PM2.5,2023-10,8,31,25.8
+Fontibon,fontibon,PM2.5,2023-11,30,30,100.0
+Fontibon,fontibon,PM2.5,2023-12,31,31,100.0
+Fontibon,fontibon,PM2.5,2024-01,31,31,100.0
+Fontibon,fontibon,PM2.5,2024-02,29,29,100.0
+Fontibon,fontibon,PM2.5,2024-03,31,31,100.0
+Fontibon,fontibon,PM2.5,2024-04,30,30,100.0
+Fontibon,fontibon,PM2.5,2024-05,29,31,93.5
+Fontibon,fontibon,PM2.5,2024-06,29,30,96.7
+Fontibon,fontibon,PM2.5,2024-07,26,31,83.9
+Fontibon,fontibon,PM2.5,2024-08,31,31,100.0
+Fontibon,fontibon,PM2.5,2024-09,28,30,93.3
+Fontibon,fontibon,PM2.5,2024-10,27,31,87.1
+Fontibon,fontibon,PM2.5,2024-11,30,30,100.0
+Fontibon,fontibon,PM2.5,2024-12,31,31,100.0
+Fontibon,fontibon,PM2.5,2025-01,15,31,48.4
+Fontibon,fontibon,PM2.5,2025-02,26,28,92.9
+Fontibon,fontibon,PM2.5,2025-03,27,31,87.1
+Fontibon,fontibon,PM2.5,2025-04,27,30,90.0
+Fontibon,fontibon,PM2.5,2025-05,31,31,100.0
+Fontibon,fontibon,PM2.5,2025-06,30,30,100.0
+Fontibon,fontibon,PM2.5,2025-07,31,31,100.0
+Fontibon,fontibon,PM2.5,2025-08,1,31,3.2
+Fontibon,fontibon,PM2.5,2025-09,0,30,0.0
+Fontibon,fontibon,PM2.5,2025-10,10,31,32.3
+Fontibon,fontibon,PM2.5,2025-11,30,30,100.0
+Fontibon,fontibon,PM2.5,2025-12,31,31,100.0
+Fontibon,fontibon,PM2.5,2026-01,0,31,0.0
+Fontibon,fontibon,PM2.5,2026-02,26,28,92.9
+Fontibon,fontibon,PM2.5,2026-03,31,31,100.0
+Fontibon,fontibon,PM2.5,2026-04,23,30,76.7
+Fontibon,fontibon,PM2.5,2026-05,27,31,87.1
+Fontibon,fontibon,PM2.5,2026-06,30,30,100.0
+Fontibon,fontibon,PM2.5,2026-07,30,31,96.8
+Fontibon,fontibon,PM2.5,2026-08,31,31,100.0
+Fontibon,fontibon,PM2.5,2026-09,28,30,93.3
+Fontibon,fontibon,PM2.5,2026-10,22,31,71.0
+Guaymaral,guaymaral,PM10,2023-10,8,31,25.8
+Guaymaral,guaymaral,PM10,2023-11,30,30,100.0
+Guaymaral,guaymaral,PM10,2023-12,28,31,90.3
+Guaymaral,guaymaral,PM10,2024-01,31,31,100.0
+Guaymaral,guaymaral,PM10,2024-02,29,29,100.0
+Guaymaral,guaymaral,PM10,2024-03,31,31,100.0
+Guaymaral,guaymaral,PM10,2024-04,30,30,100.0
+Guaymaral,guaymaral,PM10,2024-05,29,31,93.5
+Guaymaral,guaymaral,PM10,2024-06,28,30,93.3
+Guaymaral,guaymaral,PM10,2024-07,31,31,100.0
+Guaymaral,guaymaral,PM10,2024-08,31,31,100.0
+Guaymaral,guaymaral,PM10,2024-09,14,30,46.7
+Guaymaral,guaymaral,PM10,2024-10,29,31,93.5
+Guaymaral,guaymaral,PM10,2024-11,30,30,100.0
+Guaymaral,guaymaral,PM10,2024-12,31,31,100.0
+Guaymaral,guaymaral,PM10,2025-01,2,31,6.5
+Guaymaral,guaymaral,PM10,2025-02,25,28,89.3
+Guaymaral,guaymaral,PM10,2025-03,26,31,83.9
+Guaymaral,guaymaral,PM10,2025-04,28,30,93.3
+Guaymaral,guaymaral,PM10,2025-05,31,31,100.0
+Guaymaral,guaymaral,PM10,2025-06,30,30,100.0
+Guaymaral,guaymaral,PM10,2025-07,27,31,87.1
+Guaymaral,guaymaral,PM10,2025-08,2,31,6.5
+Guaymaral,guaymaral,PM10,2025-09,0,30,0.0
+Guaymaral,guaymaral,PM10,2025-10,9,31,29.0
+Guaymaral,guaymaral,PM10,2025-11,30,30,100.0
+Guaymaral,guaymaral,PM10,2025-12,31,31,100.0
+Guaymaral,guaymaral,PM10,2026-01,5,31,16.1
+Guaymaral,guaymaral,PM10,2026-02,24,28,85.7
+Guaymaral,guaymaral,PM10,2026-03,31,31,100.0
+Guaymaral,guaymaral,PM10,2026-04,29,30,96.7
+Guaymaral,guaymaral,PM10,2026-05,31,31,100.0
+Guaymaral,guaymaral,PM10,2026-06,27,30,90.0
+Guaymaral,guaymaral,PM10,2026-07,29,31,93.5
+Guaymaral,guaymaral,PM10,2026-08,31,31,100.0
+Guaymaral,guaymaral,PM10,2026-09,30,30,100.0
+Guaymaral,guaymaral,PM10,2026-10,23,31,74.2
+Guaymaral,guaymaral,PM2.5,2023-10,8,31,25.8
+Guaymaral,guaymaral,PM2.5,2023-11,30,30,100.0
+Guaymaral,guaymaral,PM2.5,2023-12,31,31,100.0
+Guaymaral,guaymaral,PM2.5,2024-01,31,31,100.0
+Guaymaral,guaymaral,PM2.5,2024-02,29,29,100.0
+Guaymaral,guaymaral,PM2.5,2024-03,31,31,100.0
+Guaymaral,guaymaral,PM2.5,2024-04,30,30,100.0
+Guaymaral,guaymaral,PM2.5,2024-05,30,31,96.8
+Guaymaral,guaymaral,PM2.5,2024-06,26,30,86.7
+Guaymaral,guaymaral,PM2.5,2024-07,25,31,80.6
+Guaymaral,guaymaral,PM2.5,2024-08,31,31,100.0
+Guaymaral,guaymaral,PM2.5,2024-09,13,30,43.3
+Guaymaral,guaymaral,PM2.5,2024-10,31,31,100.0
+Guaymaral,guaymaral,PM2.5,2024-11,30,30,100.0
+Guaymaral,guaymaral,PM2.5,2024-12,29,31,93.5
+Guaymaral,guaymaral,PM2.5,2025-01,2,31,6.5
+Guaymaral,guaymaral,PM2.5,2025-02,25,28,89.3
+Guaymaral,guaymaral,PM2.5,2025-03,26,31,83.9
+Guaymaral,guaymaral,PM2.5,2025-04,30,30,100.0
+Guaymaral,guaymaral,PM2.5,2025-05,30,31,96.8
+Guaymaral,guaymaral,PM2.5,2025-06,30,30,100.0
+Guaymaral,guaymaral,PM2.5,2025-07,27,31,87.1
+Guaymaral,guaymaral,PM2.5,2025-08,2,31,6.5
+Guaymaral,guaymaral,PM2.5,2025-09,0,30,0.0
+Guaymaral,guaymaral,PM2.5,2025-10,9,31,29.0
+Guaymaral,guaymaral,PM2.5,2025-11,30,30,100.0
+Guaymaral,guaymaral,PM2.5,2025-12,31,31,100.0
+Guaymaral,guaymaral,PM2.5,2026-01,5,31,16.1
+Guaymaral,guaymaral,PM2.5,2026-02,24,28,85.7
+Guaymaral,guaymaral,PM2.5,2026-03,31,31,100.0
+Guaymaral,guaymaral,PM2.5,2026-04,29,30,96.7
+Guaymaral,guaymaral,PM2.5,2026-05,31,31,100.0
+Guaymaral,guaymaral,PM2.5,2026-06,27,30,90.0
+Guaymaral,guaymaral,PM2.5,2026-07,31,31,100.0
+Guaymaral,guaymaral,PM2.5,2026-08,31,31,100.0
+Guaymaral,guaymaral,PM2.5,2026-09,26,30,86.7
+Guaymaral,guaymaral,PM2.5,2026-10,17,31,54.8
+Jazmin,jazmin,PM10,2023-10,8,31,25.8
+Jazmin,jazmin,PM10,2023-11,30,30,100.0
+Jazmin,jazmin,PM10,2023-12,30,31,96.8
+Jazmin,jazmin,PM10,2024-01,31,31,100.0
+Jazmin,jazmin,PM10,2024-02,28,29,96.6
+Jazmin,jazmin,PM10,2024-03,31,31,100.0
+Jazmin,jazmin,PM10,2024-04,27,30,90.0
+Jazmin,jazmin,PM10,2024-05,30,31,96.8
+Jazmin,jazmin,PM10,2024-06,19,30,63.3
+Jazmin,jazmin,PM10,2024-07,30,31,96.8
+Jazmin,jazmin,PM10,2024-08,26,31,83.9
+Jazmin,jazmin,PM10,2024-09,28,30,93.3
+Jazmin,jazmin,PM10,2024-10,29,31,93.5
+Jazmin,jazmin,PM10,2024-11,30,30,100.0
+Jazmin,jazmin,PM10,2024-12,28,31,90.3
+Jazmin,jazmin,PM10,2025-01,20,31,64.5
+Jazmin,jazmin,PM10,2025-02,28,28,100.0
+Jazmin,jazmin,PM10,2025-03,31,31,100.0
+Jazmin,jazmin,PM10,2025-04,25,30,83.3
+Jazmin,jazmin,PM10,2025-05,24,31,77.4
+Jazmin,jazmin,PM10,2025-06,30,30,100.0
+Jazmin,jazmin,PM10,2025-07,30,31,96.8
+Jazmin,jazmin,PM10,2025-08,0,31,0.0
+Jazmin,jazmin,PM10,2025-09,0,30,0.0
+Jazmin,jazmin,PM10,2025-10,14,31,45.2
+Jazmin,jazmin,PM10,2025-11,30,30,100.0
+Jazmin,jazmin,PM10,2025-12,31,31,100.0
+Jazmin,jazmin,PM10,2026-01,0,31,0.0
+Jazmin,jazmin,PM10,2026-02,25,28,89.3
+Jazmin,jazmin,PM10,2026-03,31,31,100.0
+Jazmin,jazmin,PM10,2026-04,29,30,96.7
+Jazmin,jazmin,PM10,2026-05,31,31,100.0
+Jazmin,jazmin,PM10,2026-06,29,30,96.7
+Jazmin,jazmin,PM10,2026-07,29,31,93.5
+Jazmin,jazmin,PM10,2026-08,29,31,93.5
+Jazmin,jazmin,PM10,2026-09,30,30,100.0
+Jazmin,jazmin,PM10,2026-10,22,31,71.0
+Jazmin,jazmin,PM2.5,2023-10,8,31,25.8
+Jazmin,jazmin,PM2.5,2023-11,30,30,100.0
+Jazmin,jazmin,PM2.5,2023-12,31,31,100.0
+Jazmin,jazmin,PM2.5,2024-01,31,31,100.0
+Jazmin,jazmin,PM2.5,2024-02,29,29,100.0
+Jazmin,jazmin,PM2.5,2024-03,31,31,100.0
+Jazmin,jazmin,PM2.5,2024-04,27,30,90.0
+Jazmin,jazmin,PM2.5,2024-05,30,31,96.8
+Jazmin,jazmin,PM2.5,2024-06,12,30,40.0
+Jazmin,jazmin,PM2.5,2024-07,27,31,87.1
+Jazmin,jazmin,PM2.5,2024-08,31,31,100.0
+Jazmin,jazmin,PM2.5,2024-09,29,30,96.7
+Jazmin,jazmin,PM2.5,2024-10,30,31,96.8
+Jazmin,jazmin,PM2.5,2024-11,30,30,100.0
+Jazmin,jazmin,PM2.5,2024-12,28,31,90.3
+Jazmin,jazmin,PM2.5,2025-01,20,31,64.5
+Jazmin,jazmin,PM2.5,2025-02,27,28,96.4
+Jazmin,jazmin,PM2.5,2025-03,28,31,90.3
+Jazmin,jazmin,PM2.5,2025-04,30,30,100.0
+Jazmin,jazmin,PM2.5,2025-05,31,31,100.0
+Jazmin,jazmin,PM2.5,2025-06,29,30,96.7
+Jazmin,jazmin,PM2.5,2025-07,30,31,96.8
+Jazmin,jazmin,PM2.5,2025-08,0,31,0.0
+Jazmin,jazmin,PM2.5,2025-09,0,30,0.0
+Jazmin,jazmin,PM2.5,2025-10,14,31,45.2
+Jazmin,jazmin,PM2.5,2025-11,30,30,100.0
+Jazmin,jazmin,PM2.5,2025-12,31,31,100.0
+Jazmin,jazmin,PM2.5,2026-01,0,31,0.0
+Jazmin,jazmin,PM2.5,2026-02,25,28,89.3
+Jazmin,jazmin,PM2.5,2026-03,29,31,93.5
+Jazmin,jazmin,PM2.5,2026-04,28,30,93.3
+Jazmin,jazmin,PM2.5,2026-05,31,31,100.0
+Jazmin,jazmin,PM2.5,2026-06,30,30,100.0
+Jazmin,jazmin,PM2.5,2026-07,31,31,100.0
+Jazmin,jazmin,PM2.5,2026-08,29,31,93.5
+Jazmin,jazmin,PM2.5,2026-09,24,30,80.0
+Jazmin,jazmin,PM2.5,2026-10,22,31,71.0
+Kennedy,kennedy,PM10,2023-10,8,31,25.8
+Kennedy,kennedy,PM10,2023-11,30,30,100.0
+Kennedy,kennedy,PM10,2023-12,30,31,96.8
+Kennedy,kennedy,PM10,2024-01,31,31,100.0
+Kennedy,kennedy,PM10,2024-02,29,29,100.0
+Kennedy,kennedy,PM10,2024-03,31,31,100.0
+Kennedy,kennedy,PM10,2024-04,30,30,100.0
+Kennedy,kennedy,PM10,2024-05,31,31,100.0
+Kennedy,kennedy,PM10,2024-06,29,30,96.7
+Kennedy,kennedy,PM10,2024-07,30,31,96.8
+Kennedy,kennedy,PM10,2024-08,19,31,61.3
+Kennedy,kennedy,PM10,2024-09,20,30,66.7
+Kennedy,kennedy,PM10,2024-10,29,31,93.5
+Kennedy,kennedy,PM10,2024-11,26,30,86.7
+Kennedy,kennedy,PM10,2024-12,28,31,90.3
+Kennedy,kennedy,PM10,2025-01,17,31,54.8
+Kennedy,kennedy,PM10,2025-02,26,28,92.9
+Kennedy,kennedy,PM10,2025-03,31,31,100.0
+Kennedy,kennedy,PM10,2025-04,30,30,100.0
+Kennedy,kennedy,PM10,2025-05,30,31,96.8
+Kennedy,kennedy,PM10,2025-06,30,30,100.0
+Kennedy,kennedy,PM10,2025-07,31,31,100.0
+Kennedy,kennedy,PM10,2025-08,1,31,3.2
+Kennedy,kennedy,PM10,2025-09,0,30,0.0
+Kennedy,kennedy,PM10,2025-10,3,31,9.7
+Kennedy,kennedy,PM10,2025-11,15,30,50.0
+Kennedy,kennedy,PM10,2025-12,31,31,100.0
+Kennedy,kennedy,PM10,2026-01,2,31,6.5
+Kennedy,kennedy,PM10,2026-02,23,28,82.1
+Kennedy,kennedy,PM10,2026-03,31,31,100.0
+Kennedy,kennedy,PM10,2026-04,29,30,96.7
+Kennedy,kennedy,PM10,2026-05,31,31,100.0
+Kennedy,kennedy,PM10,2026-06,28,30,93.3
+Kennedy,kennedy,PM10,2026-07,30,31,96.8
+Kennedy,kennedy,PM10,2026-08,28,31,90.3
+Kennedy,kennedy,PM10,2026-09,30,30,100.0
+Kennedy,kennedy,PM10,2026-10,23,31,74.2
+Kennedy,kennedy,PM2.5,2023-10,8,31,25.8
+Kennedy,kennedy,PM2.5,2023-11,30,30,100.0
+Kennedy,kennedy,PM2.5,2023-12,23,31,74.2
+Kennedy,kennedy,PM2.5,2024-01,26,31,83.9
+Kennedy,kennedy,PM2.5,2024-02,29,29,100.0
+Kennedy,kennedy,PM2.5,2024-03,31,31,100.0
+Kennedy,kennedy,PM2.5,2024-04,30,30,100.0
+Kennedy,kennedy,PM2.5,2024-05,29,31,93.5
+Kennedy,kennedy,PM2.5,2024-06,30,30,100.0
+Kennedy,kennedy,PM2.5,2024-07,31,31,100.0
+Kennedy,kennedy,PM2.5,2024-08,20,31,64.5
+Kennedy,kennedy,PM2.5,2024-09,20,30,66.7
+Kennedy,kennedy,PM2.5,2024-10,30,31,96.8
+Kennedy,kennedy,PM2.5,2024-11,29,30,96.7
+Kennedy,kennedy,PM2.5,2024-12,31,31,100.0
+Kennedy,kennedy,PM2.5,2025-01,17,31,54.8
+Kennedy,kennedy,PM2.5,2025-02,22,28,78.6
+Kennedy,kennedy,PM2.5,2025-03,31,31,100.0
+Kennedy,kennedy,PM2.5,2025-04,30,30,100.0
+Kennedy,kennedy,PM2.5,2025-05,30,31,96.8
+Kennedy,kennedy,PM2.5,2025-06,30,30,100.0
+Kennedy,kennedy,PM2.5,2025-07,28,31,90.3
+Kennedy,kennedy,PM2.5,2025-08,1,31,3.2
+Kennedy,kennedy,PM2.5,2025-09,0,30,0.0
+Kennedy,kennedy,PM2.5,2025-10,4,31,12.9
+Kennedy,kennedy,PM2.5,2025-11,16,30,53.3
+Kennedy,kennedy,PM2.5,2025-12,31,31,100.0
+Kennedy,kennedy,PM2.5,2026-01,2,31,6.5
+Kennedy,kennedy,PM2.5,2026-02,23,28,82.1
+Kennedy,kennedy,PM2.5,2026-03,31,31,100.0
+Kennedy,kennedy,PM2.5,2026-04,27,30,90.0
+Kennedy,kennedy,PM2.5,2026-05,31,31,100.0
+Kennedy,kennedy,PM2.5,2026-06,27,30,90.0
+Kennedy,kennedy,PM2.5,2026-07,30,31,96.8
+Kennedy,kennedy,PM2.5,2026-08,31,31,100.0
+Kennedy,kennedy,PM2.5,2026-09,30,30,100.0
+Kennedy,kennedy,PM2.5,2026-10,22,31,71.0
+Las Ferias,las_ferias,PM10,2023-10,5,31,16.1
+Las Ferias,las_ferias,PM10,2023-11,27,30,90.0
+Las Ferias,las_ferias,PM10,2023-12,17,31,54.8
+Las Ferias,las_ferias,PM10,2024-01,20,31,64.5
+Las Ferias,las_ferias,PM10,2024-02,28,29,96.6
+Las Ferias,las_ferias,PM10,2024-03,31,31,100.0
+Las Ferias,las_ferias,PM10,2024-04,28,30,93.3
+Las Ferias,las_ferias,PM10,2024-05,22,31,71.0
+Las Ferias,las_ferias,PM10,2024-06,29,30,96.7
+Las Ferias,las_ferias,PM10,2024-07,23,31,74.2
+Las Ferias,las_ferias,PM10,2024-08,18,31,58.1
+Las Ferias,las_ferias,PM10,2024-09,26,30,86.7
+Las Ferias,las_ferias,PM10,2024-10,15,31,48.4
+Las Ferias,las_ferias,PM10,2024-11,25,30,83.3
+Las Ferias,las_ferias,PM10,2024-12,19,31,61.3
+Las Ferias,las_ferias,PM10,2025-01,24,31,77.4
+Las Ferias,las_ferias,PM10,2025-02,28,28,100.0
+Las Ferias,las_ferias,PM10,2025-03,31,31,100.0
+Las Ferias,las_ferias,PM10,2025-04,30,30,100.0
+Las Ferias,las_ferias,PM10,2025-05,31,31,100.0
+Las Ferias,las_ferias,PM10,2025-06,28,30,93.3
+Las Ferias,las_ferias,PM10,2025-07,16,31,51.6
+Las Ferias,las_ferias,PM10,2025-08,2,31,6.5
+Las Ferias,las_ferias,PM10,2025-09,0,30,0.0
+Las Ferias,las_ferias,PM10,2025-10,8,31,25.8
+Las Ferias,las_ferias,PM10,2025-11,22,30,73.3
+Las Ferias,las_ferias,PM10,2025-12,19,31,61.3
+Las Ferias,las_ferias,PM10,2026-01,12,31,38.7
+Las Ferias,las_ferias,PM10,2026-02,22,28,78.6
+Las Ferias,las_ferias,PM10,2026-03,31,31,100.0
+Las Ferias,las_ferias,PM10,2026-04,29,30,96.7
+Las Ferias,las_ferias,PM10,2026-05,27,31,87.1
+Las Ferias,las_ferias,PM10,2026-06,24,30,80.0
+Las Ferias,las_ferias,PM10,2026-07,24,31,77.4
+Las Ferias,las_ferias,PM10,2026-08,23,31,74.2
+Las Ferias,las_ferias,PM10,2026-09,29,30,96.7
+Las Ferias,las_ferias,PM10,2026-10,22,31,71.0
+Las Ferias,las_ferias,PM2.5,2023-10,0,31,0.0
+Las Ferias,las_ferias,PM2.5,2023-11,28,30,93.3
+Las Ferias,las_ferias,PM2.5,2023-12,1,31,3.2
+Las Ferias,las_ferias,PM2.5,2024-01,9,31,29.0
+Las Ferias,las_ferias,PM2.5,2024-02,15,29,51.7
+Las Ferias,las_ferias,PM2.5,2024-03,31,31,100.0
+Las Ferias,las_ferias,PM2.5,2024-04,28,30,93.3
+Las Ferias,las_ferias,PM2.5,2024-05,5,31,16.1
+Las Ferias,las_ferias,PM2.5,2024-06,27,30,90.0
+Las Ferias,las_ferias,PM2.5,2024-07,18,31,58.1
+Las Ferias,las_ferias,PM2.5,2024-08,17,31,54.8
+Las Ferias,las_ferias,PM2.5,2024-09,24,30,80.0
+Las Ferias,las_ferias,PM2.5,2024-10,4,31,12.9
+Las Ferias,las_ferias,PM2.5,2024-11,2,30,6.7
+Las Ferias,las_ferias,PM2.5,2024-12,12,31,38.7
+Las Ferias,las_ferias,PM2.5,2025-01,25,31,80.6
+Las Ferias,las_ferias,PM2.5,2025-02,22,28,78.6
+Las Ferias,las_ferias,PM2.5,2025-03,29,31,93.5
+Las Ferias,las_ferias,PM2.5,2025-04,30,30,100.0
+Las Ferias,las_ferias,PM2.5,2025-05,28,31,90.3
+Las Ferias,las_ferias,PM2.5,2025-06,29,30,96.7
+Las Ferias,las_ferias,PM2.5,2025-07,27,31,87.1
+Las Ferias,las_ferias,PM2.5,2025-08,1,31,3.2
+Las Ferias,las_ferias,PM2.5,2025-09,0,30,0.0
+Las Ferias,las_ferias,PM2.5,2025-10,10,31,32.3
+Las Ferias,las_ferias,PM2.5,2025-11,29,30,96.7
+Las Ferias,las_ferias,PM2.5,2025-12,30,31,96.8
+Las Ferias,las_ferias,PM2.5,2026-01,25,31,80.6
+Las Ferias,las_ferias,PM2.5,2026-02,28,28,100.0
+Las Ferias,las_ferias,PM2.5,2026-03,28,31,90.3
+Las Ferias,las_ferias,PM2.5,2026-04,29,30,96.7
+Las Ferias,las_ferias,PM2.5,2026-05,26,31,83.9
+Las Ferias,las_ferias,PM2.5,2026-06,22,30,73.3
+Las Ferias,las_ferias,PM2.5,2026-07,30,31,96.8
+Las Ferias,las_ferias,PM2.5,2026-08,27,31,87.1
+Las Ferias,las_ferias,PM2.5,2026-09,30,30,100.0
+Las Ferias,las_ferias,PM2.5,2026-10,22,31,71.0
+MinAmbiente,minambiente,PM10,2023-10,7,31,22.6
+MinAmbiente,minambiente,PM10,2023-11,29,30,96.7
+MinAmbiente,minambiente,PM10,2023-12,29,31,93.5
+MinAmbiente,minambiente,PM10,2024-01,31,31,100.0
+MinAmbiente,minambiente,PM10,2024-02,29,29,100.0
+MinAmbiente,minambiente,PM10,2024-03,31,31,100.0
+MinAmbiente,minambiente,PM10,2024-04,30,30,100.0
+MinAmbiente,minambiente,PM10,2024-05,30,31,96.8
+MinAmbiente,minambiente,PM10,2024-06,29,30,96.7
+MinAmbiente,minambiente,PM10,2024-07,30,31,96.8
+MinAmbiente,minambiente,PM10,2024-08,31,31,100.0
+MinAmbiente,minambiente,PM10,2024-09,30,30,100.0
+MinAmbiente,minambiente,PM10,2024-10,31,31,100.0
+MinAmbiente,minambiente,PM10,2024-11,25,30,83.3
+MinAmbiente,minambiente,PM10,2024-12,31,31,100.0
+MinAmbiente,minambiente,PM10,2025-01,22,31,71.0
+MinAmbiente,minambiente,PM10,2025-02,25,28,89.3
+MinAmbiente,minambiente,PM10,2025-03,31,31,100.0
+MinAmbiente,minambiente,PM10,2025-04,30,30,100.0
+MinAmbiente,minambiente,PM10,2025-05,30,31,96.8
+MinAmbiente,minambiente,PM10,2025-06,30,30,100.0
+MinAmbiente,minambiente,PM10,2025-07,31,31,100.0
+MinAmbiente,minambiente,PM10,2025-08,0,31,0.0
+MinAmbiente,minambiente,PM10,2025-09,0,30,0.0
+MinAmbiente,minambiente,PM10,2025-10,10,31,32.3
+MinAmbiente,minambiente,PM10,2025-11,30,30,100.0
+MinAmbiente,minambiente,PM10,2025-12,31,31,100.0
+MinAmbiente,minambiente,PM10,2026-01,14,31,45.2
+MinAmbiente,minambiente,PM10,2026-02,28,28,100.0
+MinAmbiente,minambiente,PM10,2026-03,31,31,100.0
+MinAmbiente,minambiente,PM10,2026-04,29,30,96.7
+MinAmbiente,minambiente,PM10,2026-05,31,31,100.0
+MinAmbiente,minambiente,PM10,2026-06,30,30,100.0
+MinAmbiente,minambiente,PM10,2026-07,31,31,100.0
+MinAmbiente,minambiente,PM10,2026-08,31,31,100.0
+MinAmbiente,minambiente,PM10,2026-09,30,30,100.0
+MinAmbiente,minambiente,PM10,2026-10,23,31,74.2
+MinAmbiente,minambiente,PM2.5,2023-10,8,31,25.8
+MinAmbiente,minambiente,PM2.5,2023-11,30,30,100.0
+MinAmbiente,minambiente,PM2.5,2023-12,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2024-01,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2024-02,29,29,100.0
+MinAmbiente,minambiente,PM2.5,2024-03,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2024-04,30,30,100.0
+MinAmbiente,minambiente,PM2.5,2024-05,30,31,96.8
+MinAmbiente,minambiente,PM2.5,2024-06,28,30,93.3
+MinAmbiente,minambiente,PM2.5,2024-07,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2024-08,29,31,93.5
+MinAmbiente,minambiente,PM2.5,2024-09,21,30,70.0
+MinAmbiente,minambiente,PM2.5,2024-10,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2024-11,25,30,83.3
+MinAmbiente,minambiente,PM2.5,2024-12,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2025-01,22,31,71.0
+MinAmbiente,minambiente,PM2.5,2025-02,23,28,82.1
+MinAmbiente,minambiente,PM2.5,2025-03,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2025-04,30,30,100.0
+MinAmbiente,minambiente,PM2.5,2025-05,30,31,96.8
+MinAmbiente,minambiente,PM2.5,2025-06,27,30,90.0
+MinAmbiente,minambiente,PM2.5,2025-07,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2025-08,0,31,0.0
+MinAmbiente,minambiente,PM2.5,2025-09,0,30,0.0
+MinAmbiente,minambiente,PM2.5,2025-10,8,31,25.8
+MinAmbiente,minambiente,PM2.5,2025-11,30,30,100.0
+MinAmbiente,minambiente,PM2.5,2025-12,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2026-01,14,31,45.2
+MinAmbiente,minambiente,PM2.5,2026-02,28,28,100.0
+MinAmbiente,minambiente,PM2.5,2026-03,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2026-04,29,30,96.7
+MinAmbiente,minambiente,PM2.5,2026-05,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2026-06,30,30,100.0
+MinAmbiente,minambiente,PM2.5,2026-07,31,31,100.0
+MinAmbiente,minambiente,PM2.5,2026-08,30,31,96.8
+MinAmbiente,minambiente,PM2.5,2026-09,26,30,86.7
+MinAmbiente,minambiente,PM2.5,2026-10,22,31,71.0
+Movil 7ma,movil_7ma,PM10,2023-10,8,31,25.8
+Movil 7ma,movil_7ma,PM10,2023-11,26,30,86.7
+Movil 7ma,movil_7ma,PM10,2023-12,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2024-01,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2024-02,29,29,100.0
+Movil 7ma,movil_7ma,PM10,2024-03,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2024-04,30,30,100.0
+Movil 7ma,movil_7ma,PM10,2024-05,30,31,96.8
+Movil 7ma,movil_7ma,PM10,2024-06,26,30,86.7
+Movil 7ma,movil_7ma,PM10,2024-07,30,31,96.8
+Movil 7ma,movil_7ma,PM10,2024-08,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2024-09,29,30,96.7
+Movil 7ma,movil_7ma,PM10,2024-10,23,31,74.2
+Movil 7ma,movil_7ma,PM10,2024-11,30,30,100.0
+Movil 7ma,movil_7ma,PM10,2024-12,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2025-01,23,31,74.2
+Movil 7ma,movil_7ma,PM10,2025-02,22,28,78.6
+Movil 7ma,movil_7ma,PM10,2025-03,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2025-04,25,30,83.3
+Movil 7ma,movil_7ma,PM10,2025-05,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2025-06,30,30,100.0
+Movil 7ma,movil_7ma,PM10,2025-07,27,31,87.1
+Movil 7ma,movil_7ma,PM10,2025-08,0,31,0.0
+Movil 7ma,movil_7ma,PM10,2025-09,0,30,0.0
+Movil 7ma,movil_7ma,PM10,2025-10,8,31,25.8
+Movil 7ma,movil_7ma,PM10,2025-11,30,30,100.0
+Movil 7ma,movil_7ma,PM10,2025-12,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2026-01,0,31,0.0
+Movil 7ma,movil_7ma,PM10,2026-02,27,28,96.4
+Movil 7ma,movil_7ma,PM10,2026-03,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2026-04,29,30,96.7
+Movil 7ma,movil_7ma,PM10,2026-05,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2026-06,30,30,100.0
+Movil 7ma,movil_7ma,PM10,2026-07,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2026-08,31,31,100.0
+Movil 7ma,movil_7ma,PM10,2026-09,29,30,96.7
+Movil 7ma,movil_7ma,PM10,2026-10,23,31,74.2
+Movil 7ma,movil_7ma,PM2.5,2023-10,8,31,25.8
+Movil 7ma,movil_7ma,PM2.5,2023-11,30,30,100.0
+Movil 7ma,movil_7ma,PM2.5,2023-12,30,31,96.8
+Movil 7ma,movil_7ma,PM2.5,2024-01,26,31,83.9
+Movil 7ma,movil_7ma,PM2.5,2024-02,29,29,100.0
+Movil 7ma,movil_7ma,PM2.5,2024-03,31,31,100.0
+Movil 7ma,movil_7ma,PM2.5,2024-04,29,30,96.7
+Movil 7ma,movil_7ma,PM2.5,2024-05,29,31,93.5
+Movil 7ma,movil_7ma,PM2.5,2024-06,27,30,90.0
+Movil 7ma,movil_7ma,PM2.5,2024-07,28,31,90.3
+Movil 7ma,movil_7ma,PM2.5,2024-08,31,31,100.0
+Movil 7ma,movil_7ma,PM2.5,2024-09,28,30,93.3
+Movil 7ma,movil_7ma,PM2.5,2024-10,23,31,74.2
+Movil 7ma,movil_7ma,PM2.5,2024-11,30,30,100.0
+Movil 7ma,movil_7ma,PM2.5,2024-12,31,31,100.0
+Movil 7ma,movil_7ma,PM2.5,2025-01,23,31,74.2
+Movil 7ma,movil_7ma,PM2.5,2025-02,22,28,78.6
+Movil 7ma,movil_7ma,PM2.5,2025-03,28,31,90.3
+Movil 7ma,movil_7ma,PM2.5,2025-04,27,30,90.0
+Movil 7ma,movil_7ma,PM2.5,2025-05,29,31,93.5
+Movil 7ma,movil_7ma,PM2.5,2025-06,30,30,100.0
+Movil 7ma,movil_7ma,PM2.5,2025-07,27,31,87.1
+Movil 7ma,movil_7ma,PM2.5,2025-08,0,31,0.0
+Movil 7ma,movil_7ma,PM2.5,2025-09,0,30,0.0
+Movil 7ma,movil_7ma,PM2.5,2025-10,8,31,25.8
+Movil 7ma,movil_7ma,PM2.5,2025-11,30,30,100.0
+Movil 7ma,movil_7ma,PM2.5,2025-12,31,31,100.0
+Movil 7ma,movil_7ma,PM2.5,2026-01,0,31,0.0
+Movil 7ma,movil_7ma,PM2.5,2026-02,28,28,100.0
+Movil 7ma,movil_7ma,PM2.5,2026-03,8,31,25.8
+Movil 7ma,movil_7ma,PM2.5,2026-04,7,30,23.3
+Movil 7ma,movil_7ma,PM2.5,2026-05,27,31,87.1
+Movil 7ma,movil_7ma,PM2.5,2026-06,29,30,96.7
+Movil 7ma,movil_7ma,PM2.5,2026-07,31,31,100.0
+Movil 7ma,movil_7ma,PM2.5,2026-08,31,31,100.0
+Movil 7ma,movil_7ma,PM2.5,2026-09,29,30,96.7
+Movil 7ma,movil_7ma,PM2.5,2026-10,23,31,74.2
+Movil Fontibon,movil_fontibon,PM10,2023-10,8,31,25.8
+Movil Fontibon,movil_fontibon,PM10,2023-11,30,30,100.0
+Movil Fontibon,movil_fontibon,PM10,2023-12,25,31,80.6
+Movil Fontibon,movil_fontibon,PM10,2024-01,31,31,100.0
+Movil Fontibon,movil_fontibon,PM10,2024-02,28,29,96.6
+Movil Fontibon,movil_fontibon,PM10,2024-03,31,31,100.0
+Movil Fontibon,movil_fontibon,PM10,2024-04,30,30,100.0
+Movil Fontibon,movil_fontibon,PM10,2024-05,25,31,80.6
+Movil Fontibon,movil_fontibon,PM10,2024-06,26,30,86.7
+Movil Fontibon,movil_fontibon,PM10,2024-07,30,31,96.8
+Movil Fontibon,movil_fontibon,PM10,2024-08,31,31,100.0
+Movil Fontibon,movil_fontibon,PM10,2024-09,30,30,100.0
+Movil Fontibon,movil_fontibon,PM10,2024-10,20,31,64.5
+Movil Fontibon,movil_fontibon,PM10,2024-11,30,30,100.0
+Movil Fontibon,movil_fontibon,PM10,2024-12,31,31,100.0
+Movil Fontibon,movil_fontibon,PM10,2025-01,18,31,58.1
+Movil Fontibon,movil_fontibon,PM10,2025-02,28,28,100.0
+Movil Fontibon,movil_fontibon,PM10,2025-03,31,31,100.0
+Movil Fontibon,movil_fontibon,PM10,2025-04,30,30,100.0
+Movil Fontibon,movil_fontibon,PM10,2025-05,30,31,96.8
+Movil Fontibon,movil_fontibon,PM10,2025-06,29,30,96.7
+Movil Fontibon,movil_fontibon,PM10,2025-07,31,31,100.0
+Movil Fontibon,movil_fontibon,PM10,2025-08,1,31,3.2
+Movil Fontibon,movil_fontibon,PM10,2025-09,0,30,0.0
+Movil Fontibon,movil_fontibon,PM10,2025-10,10,31,32.3
+Movil Fontibon,movil_fontibon,PM10,2025-11,28,30,93.3
+Movil Fontibon,movil_fontibon,PM10,2025-12,31,31,100.0
+Movil Fontibon,movil_fontibon,PM10,2026-01,0,31,0.0
+Movil Fontibon,movil_fontibon,PM10,2026-02,26,28,92.9
+Movil Fontibon,movil_fontibon,PM10,2026-03,31,31,100.0
+Movil Fontibon,movil_fontibon,PM10,2026-04,28,30,93.3
+Movil Fontibon,movil_fontibon,PM10,2026-05,29,31,93.5
+Movil Fontibon,movil_fontibon,PM10,2026-06,30,30,100.0
+Movil Fontibon,movil_fontibon,PM10,2026-07,31,31,100.0
+Movil Fontibon,movil_fontibon,PM10,2026-08,31,31,100.0
+Movil Fontibon,movil_fontibon,PM10,2026-09,21,30,70.0
+Movil Fontibon,movil_fontibon,PM10,2026-10,23,31,74.2
+Movil Fontibon,movil_fontibon,PM2.5,2023-10,7,31,22.6
+Movil Fontibon,movil_fontibon,PM2.5,2023-11,29,30,96.7
+Movil Fontibon,movil_fontibon,PM2.5,2023-12,26,31,83.9
+Movil Fontibon,movil_fontibon,PM2.5,2024-01,28,31,90.3
+Movil Fontibon,movil_fontibon,PM2.5,2024-02,27,29,93.1
+Movil Fontibon,movil_fontibon,PM2.5,2024-03,31,31,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2024-04,30,30,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2024-05,25,31,80.6
+Movil Fontibon,movil_fontibon,PM2.5,2024-06,23,30,76.7
+Movil Fontibon,movil_fontibon,PM2.5,2024-07,30,31,96.8
+Movil Fontibon,movil_fontibon,PM2.5,2024-08,31,31,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2024-09,30,30,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2024-10,22,31,71.0
+Movil Fontibon,movil_fontibon,PM2.5,2024-11,30,30,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2024-12,31,31,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2025-01,18,31,58.1
+Movil Fontibon,movil_fontibon,PM2.5,2025-02,25,28,89.3
+Movil Fontibon,movil_fontibon,PM2.5,2025-03,31,31,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2025-04,30,30,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2025-05,31,31,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2025-06,29,30,96.7
+Movil Fontibon,movil_fontibon,PM2.5,2025-07,31,31,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2025-08,1,31,3.2
+Movil Fontibon,movil_fontibon,PM2.5,2025-09,0,30,0.0
+Movil Fontibon,movil_fontibon,PM2.5,2025-10,10,31,32.3
+Movil Fontibon,movil_fontibon,PM2.5,2025-11,28,30,93.3
+Movil Fontibon,movil_fontibon,PM2.5,2025-12,31,31,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2026-01,0,31,0.0
+Movil Fontibon,movil_fontibon,PM2.5,2026-02,4,28,14.3
+Movil Fontibon,movil_fontibon,PM2.5,2026-03,31,31,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2026-04,28,30,93.3
+Movil Fontibon,movil_fontibon,PM2.5,2026-05,22,31,71.0
+Movil Fontibon,movil_fontibon,PM2.5,2026-06,30,30,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2026-07,31,31,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2026-08,31,31,100.0
+Movil Fontibon,movil_fontibon,PM2.5,2026-09,21,30,70.0
+Movil Fontibon,movil_fontibon,PM2.5,2026-10,23,31,74.2
+Puente Aranda,puente_aranda,PM10,2023-10,8,31,25.8
+Puente Aranda,puente_aranda,PM10,2023-11,30,30,100.0
+Puente Aranda,puente_aranda,PM10,2023-12,31,31,100.0
+Puente Aranda,puente_aranda,PM10,2024-01,29,31,93.5
+Puente Aranda,puente_aranda,PM10,2024-02,29,29,100.0
+Puente Aranda,puente_aranda,PM10,2024-03,30,31,96.8
+Puente Aranda,puente_aranda,PM10,2024-04,30,30,100.0
+Puente Aranda,puente_aranda,PM10,2024-05,26,31,83.9
+Puente Aranda,puente_aranda,PM10,2024-06,26,30,86.7
+Puente Aranda,puente_aranda,PM10,2024-07,22,31,71.0
+Puente Aranda,puente_aranda,PM10,2024-08,29,31,93.5
+Puente Aranda,puente_aranda,PM10,2024-09,24,30,80.0
+Puente Aranda,puente_aranda,PM10,2024-10,28,31,90.3
+Puente Aranda,puente_aranda,PM10,2024-11,30,30,100.0
+Puente Aranda,puente_aranda,PM10,2024-12,28,31,90.3
+Puente Aranda,puente_aranda,PM10,2025-01,10,31,32.3
+Puente Aranda,puente_aranda,PM10,2025-02,22,28,78.6
+Puente Aranda,puente_aranda,PM10,2025-03,31,31,100.0
+Puente Aranda,puente_aranda,PM10,2025-04,30,30,100.0
+Puente Aranda,puente_aranda,PM10,2025-05,13,31,41.9
+Puente Aranda,puente_aranda,PM10,2025-06,9,30,30.0
+Puente Aranda,puente_aranda,PM10,2025-07,26,31,83.9
+Puente Aranda,puente_aranda,PM10,2025-08,1,31,3.2
+Puente Aranda,puente_aranda,PM10,2025-09,0,30,0.0
+Puente Aranda,puente_aranda,PM10,2025-10,10,31,32.3
+Puente Aranda,puente_aranda,PM10,2025-11,30,30,100.0
+Puente Aranda,puente_aranda,PM10,2025-12,30,31,96.8
+Puente Aranda,puente_aranda,PM10,2026-01,3,31,9.7
+Puente Aranda,puente_aranda,PM10,2026-02,13,28,46.4
+Puente Aranda,puente_aranda,PM10,2026-03,31,31,100.0
+Puente Aranda,puente_aranda,PM10,2026-04,3,30,10.0
+Puente Aranda,puente_aranda,PM10,2026-05,8,31,25.8
+Puente Aranda,puente_aranda,PM10,2026-06,29,30,96.7
+Puente Aranda,puente_aranda,PM10,2026-07,31,31,100.0
+Puente Aranda,puente_aranda,PM10,2026-08,27,31,87.1
+Puente Aranda,puente_aranda,PM10,2026-09,30,30,100.0
+Puente Aranda,puente_aranda,PM10,2026-10,23,31,74.2
+Puente Aranda,puente_aranda,PM2.5,2023-10,8,31,25.8
+Puente Aranda,puente_aranda,PM2.5,2023-11,30,30,100.0
+Puente Aranda,puente_aranda,PM2.5,2023-12,31,31,100.0
+Puente Aranda,puente_aranda,PM2.5,2024-01,28,31,90.3
+Puente Aranda,puente_aranda,PM2.5,2024-02,29,29,100.0
+Puente Aranda,puente_aranda,PM2.5,2024-03,31,31,100.0
+Puente Aranda,puente_aranda,PM2.5,2024-04,28,30,93.3
+Puente Aranda,puente_aranda,PM2.5,2024-05,29,31,93.5
+Puente Aranda,puente_aranda,PM2.5,2024-06,28,30,93.3
+Puente Aranda,puente_aranda,PM2.5,2024-07,31,31,100.0
+Puente Aranda,puente_aranda,PM2.5,2024-08,30,31,96.8
+Puente Aranda,puente_aranda,PM2.5,2024-09,24,30,80.0
+Puente Aranda,puente_aranda,PM2.5,2024-10,28,31,90.3
+Puente Aranda,puente_aranda,PM2.5,2024-11,30,30,100.0
+Puente Aranda,puente_aranda,PM2.5,2024-12,31,31,100.0
+Puente Aranda,puente_aranda,PM2.5,2025-01,10,31,32.3
+Puente Aranda,puente_aranda,PM2.5,2025-02,18,28,64.3
+Puente Aranda,puente_aranda,PM2.5,2025-03,31,31,100.0
+Puente Aranda,puente_aranda,PM2.5,2025-04,30,30,100.0
+Puente Aranda,puente_aranda,PM2.5,2025-05,15,31,48.4
+Puente Aranda,puente_aranda,PM2.5,2025-06,14,30,46.7
+Puente Aranda,puente_aranda,PM2.5,2025-07,31,31,100.0
+Puente Aranda,puente_aranda,PM2.5,2025-08,1,31,3.2
+Puente Aranda,puente_aranda,PM2.5,2025-09,0,30,0.0
+Puente Aranda,puente_aranda,PM2.5,2025-10,10,31,32.3
+Puente Aranda,puente_aranda,PM2.5,2025-11,30,30,100.0
+Puente Aranda,puente_aranda,PM2.5,2025-12,30,31,96.8
+Puente Aranda,puente_aranda,PM2.5,2026-01,5,31,16.1
+Puente Aranda,puente_aranda,PM2.5,2026-02,8,28,28.6
+Puente Aranda,puente_aranda,PM2.5,2026-03,22,31,71.0
+Puente Aranda,puente_aranda,PM2.5,2026-04,3,30,10.0
+Puente Aranda,puente_aranda,PM2.5,2026-05,8,31,25.8
+Puente Aranda,puente_aranda,PM2.5,2026-06,23,30,76.7
+Puente Aranda,puente_aranda,PM2.5,2026-07,31,31,100.0
+Puente Aranda,puente_aranda,PM2.5,2026-08,31,31,100.0
+Puente Aranda,puente_aranda,PM2.5,2026-09,30,30,100.0
+Puente Aranda,puente_aranda,PM2.5,2026-10,23,31,74.2
+San Cristobal,san_cristobal,PM10,2023-10,8,31,25.8
+San Cristobal,san_cristobal,PM10,2023-11,30,30,100.0
+San Cristobal,san_cristobal,PM10,2023-12,27,31,87.1
+San Cristobal,san_cristobal,PM10,2024-01,31,31,100.0
+San Cristobal,san_cristobal,PM10,2024-02,29,29,100.0
+San Cristobal,san_cristobal,PM10,2024-03,31,31,100.0
+San Cristobal,san_cristobal,PM10,2024-04,30,30,100.0
+San Cristobal,san_cristobal,PM10,2024-05,20,31,64.5
+San Cristobal,san_cristobal,PM10,2024-06,24,30,80.0
+San Cristobal,san_cristobal,PM10,2024-07,14,31,45.2
+San Cristobal,san_cristobal,PM10,2024-08,12,31,38.7
+San Cristobal,san_cristobal,PM10,2024-09,28,30,93.3
+San Cristobal,san_cristobal,PM10,2024-10,31,31,100.0
+San Cristobal,san_cristobal,PM10,2024-11,22,30,73.3
+San Cristobal,san_cristobal,PM10,2024-12,31,31,100.0
+San Cristobal,san_cristobal,PM10,2025-01,10,31,32.3
+San Cristobal,san_cristobal,PM10,2025-02,25,28,89.3
+San Cristobal,san_cristobal,PM10,2025-03,31,31,100.0
+San Cristobal,san_cristobal,PM10,2025-04,30,30,100.0
+San Cristobal,san_cristobal,PM10,2025-05,27,31,87.1
+San Cristobal,san_cristobal,PM10,2025-06,25,30,83.3
+San Cristobal,san_cristobal,PM10,2025-07,31,31,100.0
+San Cristobal,san_cristobal,PM10,2025-08,0,31,0.0
+San Cristobal,san_cristobal,PM10,2025-09,0,30,0.0
+San Cristobal,san_cristobal,PM10,2025-10,14,31,45.2
+San Cristobal,san_cristobal,PM10,2025-11,28,30,93.3
+San Cristobal,san_cristobal,PM10,2025-12,31,31,100.0
+San Cristobal,san_cristobal,PM10,2026-01,3,31,9.7
+San Cristobal,san_cristobal,PM10,2026-02,28,28,100.0
+San Cristobal,san_cristobal,PM10,2026-03,31,31,100.0
+San Cristobal,san_cristobal,PM10,2026-04,29,30,96.7
+San Cristobal,san_cristobal,PM10,2026-05,27,31,87.1
+San Cristobal,san_cristobal,PM10,2026-06,28,30,93.3
+San Cristobal,san_cristobal,PM10,2026-07,24,31,77.4
+San Cristobal,san_cristobal,PM10,2026-08,31,31,100.0
+San Cristobal,san_cristobal,PM10,2026-09,27,30,90.0
+San Cristobal,san_cristobal,PM10,2026-10,22,31,71.0
+San Cristobal,san_cristobal,PM2.5,2023-10,8,31,25.8
+San Cristobal,san_cristobal,PM2.5,2023-11,30,30,100.0
+San Cristobal,san_cristobal,PM2.5,2023-12,20,31,64.5
+San Cristobal,san_cristobal,PM2.5,2024-01,29,31,93.5
+San Cristobal,san_cristobal,PM2.5,2024-02,29,29,100.0
+San Cristobal,san_cristobal,PM2.5,2024-03,26,31,83.9
+San Cristobal,san_cristobal,PM2.5,2024-04,30,30,100.0
+San Cristobal,san_cristobal,PM2.5,2024-05,28,31,90.3
+San Cristobal,san_cristobal,PM2.5,2024-06,24,30,80.0
+San Cristobal,san_cristobal,PM2.5,2024-07,28,31,90.3
+San Cristobal,san_cristobal,PM2.5,2024-08,17,31,54.8
+San Cristobal,san_cristobal,PM2.5,2024-09,21,30,70.0
+San Cristobal,san_cristobal,PM2.5,2024-10,31,31,100.0
+San Cristobal,san_cristobal,PM2.5,2024-11,5,30,16.7
+San Cristobal,san_cristobal,PM2.5,2024-12,30,31,96.8
+San Cristobal,san_cristobal,PM2.5,2025-01,9,31,29.0
+San Cristobal,san_cristobal,PM2.5,2025-02,26,28,92.9
+San Cristobal,san_cristobal,PM2.5,2025-03,31,31,100.0
+San Cristobal,san_cristobal,PM2.5,2025-04,30,30,100.0
+San Cristobal,san_cristobal,PM2.5,2025-05,30,31,96.8
+San Cristobal,san_cristobal,PM2.5,2025-06,30,30,100.0
+San Cristobal,san_cristobal,PM2.5,2025-07,31,31,100.0
+San Cristobal,san_cristobal,PM2.5,2025-08,0,31,0.0
+San Cristobal,san_cristobal,PM2.5,2025-09,0,30,0.0
+San Cristobal,san_cristobal,PM2.5,2025-10,13,31,41.9
+San Cristobal,san_cristobal,PM2.5,2025-11,30,30,100.0
+San Cristobal,san_cristobal,PM2.5,2025-12,31,31,100.0
+San Cristobal,san_cristobal,PM2.5,2026-01,2,31,6.5
+San Cristobal,san_cristobal,PM2.5,2026-02,28,28,100.0
+San Cristobal,san_cristobal,PM2.5,2026-03,31,31,100.0
+San Cristobal,san_cristobal,PM2.5,2026-04,29,30,96.7
+San Cristobal,san_cristobal,PM2.5,2026-05,24,31,77.4
+San Cristobal,san_cristobal,PM2.5,2026-06,28,30,93.3
+San Cristobal,san_cristobal,PM2.5,2026-07,27,31,87.1
+San Cristobal,san_cristobal,PM2.5,2026-08,31,31,100.0
+San Cristobal,san_cristobal,PM2.5,2026-09,21,30,70.0
+San Cristobal,san_cristobal,PM2.5,2026-10,22,31,71.0
+Suba,suba,PM10,2023-10,8,31,25.8
+Suba,suba,PM10,2023-11,29,30,96.7
+Suba,suba,PM10,2023-12,30,31,96.8
+Suba,suba,PM10,2024-01,31,31,100.0
+Suba,suba,PM10,2024-02,29,29,100.0
+Suba,suba,PM10,2024-03,29,31,93.5
+Suba,suba,PM10,2024-04,30,30,100.0
+Suba,suba,PM10,2024-05,29,31,93.5
+Suba,suba,PM10,2024-06,29,30,96.7
+Suba,suba,PM10,2024-07,31,31,100.0
+Suba,suba,PM10,2024-08,30,31,96.8
+Suba,suba,PM10,2024-09,30,30,100.0
+Suba,suba,PM10,2024-10,30,31,96.8
+Suba,suba,PM10,2024-11,25,30,83.3
+Suba,suba,PM10,2024-12,31,31,100.0
+Suba,suba,PM10,2025-01,12,31,38.7
+Suba,suba,PM10,2025-02,28,28,100.0
+Suba,suba,PM10,2025-03,30,31,96.8
+Suba,suba,PM10,2025-04,29,30,96.7
+Suba,suba,PM10,2025-05,29,31,93.5
+Suba,suba,PM10,2025-06,23,30,76.7
+Suba,suba,PM10,2025-07,30,31,96.8
+Suba,suba,PM10,2025-08,2,31,6.5
+Suba,suba,PM10,2025-09,0,30,0.0
+Suba,suba,PM10,2025-10,9,31,29.0
+Suba,suba,PM10,2025-11,29,30,96.7
+Suba,suba,PM10,2025-12,29,31,93.5
+Suba,suba,PM10,2026-01,2,31,6.5
+Suba,suba,PM10,2026-02,28,28,100.0
+Suba,suba,PM10,2026-03,28,31,90.3
+Suba,suba,PM10,2026-04,27,30,90.0
+Suba,suba,PM10,2026-05,31,31,100.0
+Suba,suba,PM10,2026-06,27,30,90.0
+Suba,suba,PM10,2026-07,31,31,100.0
+Suba,suba,PM10,2026-08,31,31,100.0
+Suba,suba,PM10,2026-09,29,30,96.7
+Suba,suba,PM10,2026-10,22,31,71.0
+Suba,suba,PM2.5,2023-10,6,31,19.4
+Suba,suba,PM2.5,2023-11,30,30,100.0
+Suba,suba,PM2.5,2023-12,31,31,100.0
+Suba,suba,PM2.5,2024-01,31,31,100.0
+Suba,suba,PM2.5,2024-02,29,29,100.0
+Suba,suba,PM2.5,2024-03,31,31,100.0
+Suba,suba,PM2.5,2024-04,30,30,100.0
+Suba,suba,PM2.5,2024-05,30,31,96.8
+Suba,suba,PM2.5,2024-06,28,30,93.3
+Suba,suba,PM2.5,2024-07,31,31,100.0
+Suba,suba,PM2.5,2024-08,31,31,100.0
+Suba,suba,PM2.5,2024-09,26,30,86.7
+Suba,suba,PM2.5,2024-10,31,31,100.0
+Suba,suba,PM2.5,2024-11,13,30,43.3
+Suba,suba,PM2.5,2024-12,31,31,100.0
+Suba,suba,PM2.5,2025-01,11,31,35.5
+Suba,suba,PM2.5,2025-02,28,28,100.0
+Suba,suba,PM2.5,2025-03,31,31,100.0
+Suba,suba,PM2.5,2025-04,23,30,76.7
+Suba,suba,PM2.5,2025-05,30,31,96.8
+Suba,suba,PM2.5,2025-06,30,30,100.0
+Suba,suba,PM2.5,2025-07,27,31,87.1
+Suba,suba,PM2.5,2025-08,2,31,6.5
+Suba,suba,PM2.5,2025-09,0,30,0.0
+Suba,suba,PM2.5,2025-10,9,31,29.0
+Suba,suba,PM2.5,2025-11,30,30,100.0
+Suba,suba,PM2.5,2025-12,22,31,71.0
+Suba,suba,PM2.5,2026-01,2,31,6.5
+Suba,suba,PM2.5,2026-02,22,28,78.6
+Suba,suba,PM2.5,2026-03,31,31,100.0
+Suba,suba,PM2.5,2026-04,29,30,96.7
+Suba,suba,PM2.5,2026-05,28,31,90.3
+Suba,suba,PM2.5,2026-06,28,30,93.3
+Suba,suba,PM2.5,2026-07,31,31,100.0
+Suba,suba,PM2.5,2026-08,30,31,96.8
+Suba,suba,PM2.5,2026-09,29,30,96.7
+Suba,suba,PM2.5,2026-10,22,31,71.0
+Tunal,tunal,PM10,2023-10,8,31,25.8
+Tunal,tunal,PM10,2023-11,29,30,96.7
+Tunal,tunal,PM10,2023-12,30,31,96.8
+Tunal,tunal,PM10,2024-01,30,31,96.8
+Tunal,tunal,PM10,2024-02,29,29,100.0
+Tunal,tunal,PM10,2024-03,31,31,100.0
+Tunal,tunal,PM10,2024-04,28,30,93.3
+Tunal,tunal,PM10,2024-05,30,31,96.8
+Tunal,tunal,PM10,2024-06,19,30,63.3
+Tunal,tunal,PM10,2024-07,27,31,87.1
+Tunal,tunal,PM10,2024-08,31,31,100.0
+Tunal,tunal,PM10,2024-09,26,30,86.7
+Tunal,tunal,PM10,2024-10,31,31,100.0
+Tunal,tunal,PM10,2024-11,25,30,83.3
+Tunal,tunal,PM10,2024-12,25,31,80.6
+Tunal,tunal,PM10,2025-01,26,31,83.9
+Tunal,tunal,PM10,2025-02,28,28,100.0
+Tunal,tunal,PM10,2025-03,31,31,100.0
+Tunal,tunal,PM10,2025-04,28,30,93.3
+Tunal,tunal,PM10,2025-05,21,31,67.7
+Tunal,tunal,PM10,2025-06,19,30,63.3
+Tunal,tunal,PM10,2025-07,7,31,22.6
+Tunal,tunal,PM10,2025-08,0,31,0.0
+Tunal,tunal,PM10,2025-09,0,30,0.0
+Tunal,tunal,PM10,2025-10,14,31,45.2
+Tunal,tunal,PM10,2025-11,30,30,100.0
+Tunal,tunal,PM10,2025-12,31,31,100.0
+Tunal,tunal,PM10,2026-01,15,31,48.4
+Tunal,tunal,PM10,2026-02,28,28,100.0
+Tunal,tunal,PM10,2026-03,27,31,87.1
+Tunal,tunal,PM10,2026-04,29,30,96.7
+Tunal,tunal,PM10,2026-05,27,31,87.1
+Tunal,tunal,PM10,2026-06,26,30,86.7
+Tunal,tunal,PM10,2026-07,31,31,100.0
+Tunal,tunal,PM10,2026-08,27,31,87.1
+Tunal,tunal,PM10,2026-09,30,30,100.0
+Tunal,tunal,PM10,2026-10,23,31,74.2
+Tunal,tunal,PM2.5,2023-10,8,31,25.8
+Tunal,tunal,PM2.5,2023-11,29,30,96.7
+Tunal,tunal,PM2.5,2023-12,31,31,100.0
+Tunal,tunal,PM2.5,2024-01,31,31,100.0
+Tunal,tunal,PM2.5,2024-02,29,29,100.0
+Tunal,tunal,PM2.5,2024-03,31,31,100.0
+Tunal,tunal,PM2.5,2024-04,28,30,93.3
+Tunal,tunal,PM2.5,2024-05,30,31,96.8
+Tunal,tunal,PM2.5,2024-06,22,30,73.3
+Tunal,tunal,PM2.5,2024-07,27,31,87.1
+Tunal,tunal,PM2.5,2024-08,31,31,100.0
+Tunal,tunal,PM2.5,2024-09,22,30,73.3
+Tunal,tunal,PM2.5,2024-10,25,31,80.6
+Tunal,tunal,PM2.5,2024-11,22,30,73.3
+Tunal,tunal,PM2.5,2024-12,24,31,77.4
+Tunal,tunal,PM2.5,2025-01,26,31,83.9
+Tunal,tunal,PM2.5,2025-02,24,28,85.7
+Tunal,tunal,PM2.5,2025-03,31,31,100.0
+Tunal,tunal,PM2.5,2025-04,27,30,90.0
+Tunal,tunal,PM2.5,2025-05,19,31,61.3
+Tunal,tunal,PM2.5,2025-06,18,30,60.0
+Tunal,tunal,PM2.5,2025-07,8,31,25.8
+Tunal,tunal,PM2.5,2025-08,0,31,0.0
+Tunal,tunal,PM2.5,2025-09,0,30,0.0
+Tunal,tunal,PM2.5,2025-10,14,31,45.2
+Tunal,tunal,PM2.5,2025-11,9,30,30.0
+Tunal,tunal,PM2.5,2025-12,12,31,38.7
+Tunal,tunal,PM2.5,2026-01,20,31,64.5
+Tunal,tunal,PM2.5,2026-02,28,28,100.0
+Tunal,tunal,PM2.5,2026-03,31,31,100.0
+Tunal,tunal,PM2.5,2026-04,25,30,83.3
+Tunal,tunal,PM2.5,2026-05,31,31,100.0
+Tunal,tunal,PM2.5,2026-06,28,30,93.3
+Tunal,tunal,PM2.5,2026-07,22,31,71.0
+Tunal,tunal,PM2.5,2026-08,31,31,100.0
+Tunal,tunal,PM2.5,2026-09,30,30,100.0
+Tunal,tunal,PM2.5,2026-10,22,31,71.0
+Usaquen,usaquen,PM10,2023-10,8,31,25.8
+Usaquen,usaquen,PM10,2023-11,30,30,100.0
+Usaquen,usaquen,PM10,2023-12,31,31,100.0
+Usaquen,usaquen,PM10,2024-01,31,31,100.0
+Usaquen,usaquen,PM10,2024-02,27,29,93.1
+Usaquen,usaquen,PM10,2024-03,31,31,100.0
+Usaquen,usaquen,PM10,2024-04,30,30,100.0
+Usaquen,usaquen,PM10,2024-05,31,31,100.0
+Usaquen,usaquen,PM10,2024-06,26,30,86.7
+Usaquen,usaquen,PM10,2024-07,31,31,100.0
+Usaquen,usaquen,PM10,2024-08,29,31,93.5
+Usaquen,usaquen,PM10,2024-09,29,30,96.7
+Usaquen,usaquen,PM10,2024-10,31,31,100.0
+Usaquen,usaquen,PM10,2024-11,29,30,96.7
+Usaquen,usaquen,PM10,2024-12,28,31,90.3
+Usaquen,usaquen,PM10,2025-01,15,31,48.4
+Usaquen,usaquen,PM10,2025-02,25,28,89.3
+Usaquen,usaquen,PM10,2025-03,31,31,100.0
+Usaquen,usaquen,PM10,2025-04,27,30,90.0
+Usaquen,usaquen,PM10,2025-05,16,31,51.6
+Usaquen,usaquen,PM10,2025-06,28,30,93.3
+Usaquen,usaquen,PM10,2025-07,31,31,100.0
+Usaquen,usaquen,PM10,2025-08,2,31,6.5
+Usaquen,usaquen,PM10,2025-09,0,30,0.0
+Usaquen,usaquen,PM10,2025-10,8,31,25.8
+Usaquen,usaquen,PM10,2025-11,30,30,100.0
+Usaquen,usaquen,PM10,2025-12,16,31,51.6
+Usaquen,usaquen,PM10,2026-01,0,31,0.0
+Usaquen,usaquen,PM10,2026-02,26,28,92.9
+Usaquen,usaquen,PM10,2026-03,22,31,71.0
+Usaquen,usaquen,PM10,2026-04,20,30,66.7
+Usaquen,usaquen,PM10,2026-05,30,31,96.8
+Usaquen,usaquen,PM10,2026-06,30,30,100.0
+Usaquen,usaquen,PM10,2026-07,31,31,100.0
+Usaquen,usaquen,PM10,2026-08,28,31,90.3
+Usaquen,usaquen,PM10,2026-09,26,30,86.7
+Usaquen,usaquen,PM10,2026-10,23,31,74.2
+Usaquen,usaquen,PM2.5,2023-10,8,31,25.8
+Usaquen,usaquen,PM2.5,2023-11,30,30,100.0
+Usaquen,usaquen,PM2.5,2023-12,31,31,100.0
+Usaquen,usaquen,PM2.5,2024-01,31,31,100.0
+Usaquen,usaquen,PM2.5,2024-02,29,29,100.0
+Usaquen,usaquen,PM2.5,2024-03,31,31,100.0
+Usaquen,usaquen,PM2.5,2024-04,30,30,100.0
+Usaquen,usaquen,PM2.5,2024-05,30,31,96.8
+Usaquen,usaquen,PM2.5,2024-06,28,30,93.3
+Usaquen,usaquen,PM2.5,2024-07,27,31,87.1
+Usaquen,usaquen,PM2.5,2024-08,31,31,100.0
+Usaquen,usaquen,PM2.5,2024-09,30,30,100.0
+Usaquen,usaquen,PM2.5,2024-10,31,31,100.0
+Usaquen,usaquen,PM2.5,2024-11,29,30,96.7
+Usaquen,usaquen,PM2.5,2024-12,22,31,71.0
+Usaquen,usaquen,PM2.5,2025-01,15,31,48.4
+Usaquen,usaquen,PM2.5,2025-02,24,28,85.7
+Usaquen,usaquen,PM2.5,2025-03,0,31,0.0
+Usaquen,usaquen,PM2.5,2025-04,29,30,96.7
+Usaquen,usaquen,PM2.5,2025-05,1,31,3.2
+Usaquen,usaquen,PM2.5,2025-06,24,30,80.0
+Usaquen,usaquen,PM2.5,2025-07,31,31,100.0
+Usaquen,usaquen,PM2.5,2025-08,1,31,3.2
+Usaquen,usaquen,PM2.5,2025-09,0,30,0.0
+Usaquen,usaquen,PM2.5,2025-10,8,31,25.8
+Usaquen,usaquen,PM2.5,2025-11,30,30,100.0
+Usaquen,usaquen,PM2.5,2025-12,31,31,100.0
+Usaquen,usaquen,PM2.5,2026-01,0,31,0.0
+Usaquen,usaquen,PM2.5,2026-02,24,28,85.7
+Usaquen,usaquen,PM2.5,2026-03,31,31,100.0
+Usaquen,usaquen,PM2.5,2026-04,28,30,93.3
+Usaquen,usaquen,PM2.5,2026-05,11,31,35.5
+Usaquen,usaquen,PM2.5,2026-06,27,30,90.0
+Usaquen,usaquen,PM2.5,2026-07,30,31,96.8
+Usaquen,usaquen,PM2.5,2026-08,31,31,100.0
+Usaquen,usaquen,PM2.5,2026-09,29,30,96.7
+Usaquen,usaquen,PM2.5,2026-10,23,31,74.2
+Usme,usme,PM10,2023-10,8,31,25.8
+Usme,usme,PM10,2023-11,30,30,100.0
+Usme,usme,PM10,2023-12,31,31,100.0
+Usme,usme,PM10,2024-01,31,31,100.0
+Usme,usme,PM10,2024-02,29,29,100.0
+Usme,usme,PM10,2024-03,31,31,100.0
+Usme,usme,PM10,2024-04,28,30,93.3
+Usme,usme,PM10,2024-05,31,31,100.0
+Usme,usme,PM10,2024-06,29,30,96.7
+Usme,usme,PM10,2024-07,31,31,100.0
+Usme,usme,PM10,2024-08,31,31,100.0
+Usme,usme,PM10,2024-09,30,30,100.0
+Usme,usme,PM10,2024-10,27,31,87.1
+Usme,usme,PM10,2024-11,15,30,50.0
+Usme,usme,PM10,2024-12,25,31,80.6
+Usme,usme,PM10,2025-01,9,31,29.0
+Usme,usme,PM10,2025-02,24,28,85.7
+Usme,usme,PM10,2025-03,25,31,80.6
+Usme,usme,PM10,2025-04,11,30,36.7
+Usme,usme,PM10,2025-05,29,31,93.5
+Usme,usme,PM10,2025-06,30,30,100.0
+Usme,usme,PM10,2025-07,31,31,100.0
+Usme,usme,PM10,2025-08,0,31,0.0
+Usme,usme,PM10,2025-09,0,30,0.0
+Usme,usme,PM10,2025-10,8,31,25.8
+Usme,usme,PM10,2025-11,29,30,96.7
+Usme,usme,PM10,2025-12,31,31,100.0
+Usme,usme,PM10,2026-01,3,31,9.7
+Usme,usme,PM10,2026-02,28,28,100.0
+Usme,usme,PM10,2026-03,31,31,100.0
+Usme,usme,PM10,2026-04,29,30,96.7
+Usme,usme,PM10,2026-05,31,31,100.0
+Usme,usme,PM10,2026-06,30,30,100.0
+Usme,usme,PM10,2026-07,31,31,100.0
+Usme,usme,PM10,2026-08,31,31,100.0
+Usme,usme,PM10,2026-09,30,30,100.0
+Usme,usme,PM10,2026-10,23,31,74.2
+Usme,usme,PM2.5,2023-10,8,31,25.8
+Usme,usme,PM2.5,2023-11,30,30,100.0
+Usme,usme,PM2.5,2023-12,31,31,100.0
+Usme,usme,PM2.5,2024-01,28,31,90.3
+Usme,usme,PM2.5,2024-02,29,29,100.0
+Usme,usme,PM2.5,2024-03,31,31,100.0
+Usme,usme,PM2.5,2024-04,28,30,93.3
+Usme,usme,PM2.5,2024-05,31,31,100.0
+Usme,usme,PM2.5,2024-06,28,30,93.3
+Usme,usme,PM2.5,2024-07,28,31,90.3
+Usme,usme,PM2.5,2024-08,31,31,100.0
+Usme,usme,PM2.5,2024-09,30,30,100.0
+Usme,usme,PM2.5,2024-10,27,31,87.1
+Usme,usme,PM2.5,2024-11,0,30,0.0
+Usme,usme,PM2.5,2024-12,23,31,74.2
+Usme,usme,PM2.5,2025-01,10,31,32.3
+Usme,usme,PM2.5,2025-02,23,28,82.1
+Usme,usme,PM2.5,2025-03,22,31,71.0
+Usme,usme,PM2.5,2025-04,5,30,16.7
+Usme,usme,PM2.5,2025-05,27,31,87.1
+Usme,usme,PM2.5,2025-06,30,30,100.0
+Usme,usme,PM2.5,2025-07,31,31,100.0
+Usme,usme,PM2.5,2025-08,0,31,0.0
+Usme,usme,PM2.5,2025-09,0,30,0.0
+Usme,usme,PM2.5,2025-10,8,31,25.8
+Usme,usme,PM2.5,2025-11,30,30,100.0
+Usme,usme,PM2.5,2025-12,31,31,100.0
+Usme,usme,PM2.5,2026-01,3,31,9.7
+Usme,usme,PM2.5,2026-02,28,28,100.0
+Usme,usme,PM2.5,2026-03,30,31,96.8
+Usme,usme,PM2.5,2026-04,21,30,70.0
+Usme,usme,PM2.5,2026-05,31,31,100.0
+Usme,usme,PM2.5,2026-06,30,30,100.0
+Usme,usme,PM2.5,2026-07,28,31,90.3
+Usme,usme,PM2.5,2026-08,31,31,100.0
+Usme,usme,PM2.5,2026-09,30,30,100.0
+Usme,usme,PM2.5,2026-10,22,31,71.0
