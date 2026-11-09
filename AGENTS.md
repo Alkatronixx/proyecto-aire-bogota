@@ -35,6 +35,10 @@ Cada estación de aire se asigna a la estación IDEAM más cercana y se guarda l
 - Generar una tabla de cobertura (estación x año-mes, % de días con dato) y documentar el umbral de descarte.
 - Cada transformación debe ser un script en src/ reproducible, no pasos manuales.
 - Verificar con tests: sin duplicados (fecha, estacion_id), rangos válidos, fechas en el periodo.
+- Valores centinela o físicamente imposibles (-9999 y similares, velocidad de viento < 0, PM < 0, dirección fuera de 0-360): se conservan tal cual en data/interim, se reportan, y pasan a NaN con bandera de calidad al construir la tabla maestra. Nunca se corrigen ni se reemplazan por otro valor.
+- Si la velocidad del viento de una estación y día es inválida (centinela o negativa), la dirección de ese mismo día y estación también pasa a NaN, aunque esté dentro de 0-360.
+- - Direcciones de viento idénticas durante 4 o más días consecutivos en una estación se tratan como falla del sensor: pasan a NaN con bandera. Las rachas de velocidad repetida no se tocan (resolución de 0.1 m/s).
+- Variable de viento del modelo base: vel_ciudad_ms (índice de ciudad). La dirección y la velocidad propia de cada estación no entran al modelo base; solo se prueban como extras opcionales.
 
 # Modelo
 - Validación temporal: entrenar con los primeros años y probar con el último año completo. Nunca partir al azar.

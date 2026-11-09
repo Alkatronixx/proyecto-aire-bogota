@@ -1,0 +1,12 @@
+﻿id,nombre,categoria,lat,lon,elevacion,municipio,variables_disponibles,en_bogota
+21201240,SANTA MARIA DE USME,Pluviométrica,4.481305556,-74.12627778,2800,"Bogotá, D.C",precip_mm,True
+21201300,AUSTRALIA,Pluviométrica,4.39425,-74.132,3050,"Bogotá, D.C",precip_mm,True
+2120500204,IDEAM PUENTE ARANDA,Climatológica Principal,4.621608,-74.103408,2559,"Bogotá, D.C",precip_mm,True
+21205710,JARDIN BOTANICO,Climatológica Principal,4.667867,-74.101034,2552,"Bogotá, D.C","humedad,precip_mm",True
+21205791,EL DORADO CATAM,Climatológica Principal,4.705583,-74.150667,2547,"Bogotá, D.C","humedad,precip_mm",True
+21206260,C.UNIV.AGROP-UDCA,Climatológica Ordinaria,4.798638889,-74.04972222,2570,"Bogotá, D.C","precip_mm,tmax_c,tmin_c",True
+21206560,INEM KENNEDY,Climatológica Principal,4.62547,-74.156066,2557,"Bogotá, D.C","humedad,precip_mm,tmin_c",True
+21206600,NUEVA GENERACION,Climatológica Principal,4.786594,-74.102247,2590,"Bogotá, D.C","humedad,precip_mm,tmax_c,tmin_c",True
+21206650,COLEGIO SAN CAYETANO,Climatológica Ordinaria,4.516752778,-74.088222222,3100,"Bogotá, D.C","precip_mm,tmax_c,tmin_c",True
+35020310,NAZARETH,Pluviográfica,4.17225,-74.146,2800,"Bogotá, D.C",precip_mm,False
+21205012,UNIVERSIDAD NACIONAL,Climatológica Principal,4.63723,-74.08892,2556,"Bogotá, D.C",humedad,True

@@ -36,3 +36,13 @@
 - **Decisión:** se conserva la dirección del viento tal como aparece en la fuente, considerando su posible limitación metodológica.
 - **Motivo:** es posible que la fuente calcule los promedios de dirección mediante una media aritmética convencional, en lugar de utilizar un promedio circular.
 - **Aclaración:** esto puede generar valores representativos incorrectos cuando las direcciones se encuentran próximas a 0° y 360°.
+
+## 2026-11-08: Exclusión de estaciones del índice de viento de ciudad [REEMPLAZADA el 2026-11-08, ver DV-12]
+- **Decisión:** se excluyen Kennedy y San Cristóbal del índice de viento de ciudad.
+- **Motivo:** su correlación reportada con la mediana de las otras estaciones es -0.11 y 0.11, frente a 0.32–0.76 para las demás; el supuesto se deja como constante `EXCLUIDAS_INDICE` y se puede revisar con el reporte del nuevo proceso.
+- **Alternativas descartadas:** incluir las 17 estaciones sin ponderación por estación.
+
+## 2026-11-08: Controles de calidad de viento para el índice
+- **Decisión:** velocidades negativas invalidan la velocidad y su dirección del mismo día; direcciones constantes durante cuatro o más días se invalidan; las rachas de velocidad repetida solo se contabilizan conceptualmente y no se alteran.
+- **Motivo:** aplicar los criterios de control definidos para esta tarea sin imputar mediciones.
+- **Alternativas descartadas:** corregir valores por estimación o invalidar rachas de velocidad con baja varianza.
