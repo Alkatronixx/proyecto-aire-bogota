@@ -1,0 +1,14 @@
+n,MAE,RMSE,R2,modelo,version,alpha,imputacion,rf_n_estimators,rf_min_samples_leaf,rf_max_features,mejora_mae_vs_base_pct
+5410,4.297055972349907,5.522055407373702,0.5358183659577578,línea base,explicativo,,,,,,0.0
+5410,6.212736055399425,7.575593220155122,0.12638571566938173,Ridge,explicativo,0.1,mediana en pipeline ajustada en entrenamiento,,,,-44.581222478279734
+5410,6.195329750456111,7.857178151921142,0.06023420498019294,Ridge log,explicativo,0.1,mediana en pipeline ajustada en entrenamiento,,,,-44.17614735113878
+5410,5.235027845563354,6.914917157055384,0.2721189781932519,Random Forest,explicativo,,mediana en pipeline ajustada en entrenamiento,250.0,5.0,0.8,-21.828244250225673
+5410,5.116325287242266,,,sin_temperatura,ablacion,,,,,,
+5410,5.471688018540162,,,sin_viento,ablacion,,,,,,
+5410,5.336397523445718,,,sin_lluvia,ablacion,,,,,,
+5410,6.0525670777290745,,,sin_calendario,ablacion,,,,,,
+4878,5.245802317559516,,,sin_estaciones_moviles,ablacion,,,,,,
+5170,3.4416054158607348,4.852261631449678,0.6414368311665612,línea base,predictivo,,,,,,0.0
+5170,3.331786510679928,4.387416640861591,0.7068465469708427,Ridge,predictivo,100.0,mediana en pipeline ajustada en entrenamiento,,,,3.1909208613719473
+5170,3.5108311394111955,5.296594968351025,0.5727611031327622,Ridge log,predictivo,100.0,mediana en pipeline ajustada en entrenamiento,,,,-2.0114369657669666
+5170,3.22311699416421,4.328541864055144,0.7146614156675588,Random Forest,predictivo,,mediana en pipeline ajustada en entrenamiento,250.0,5.0,0.8,6.348444847559066

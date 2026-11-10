@@ -1,0 +1,6 @@
+n,MAE,RMSE,R2,modelo,version,alpha,imputacion,rf_n_estimators,rf_min_samples_leaf,rf_max_features,mejora_mae_vs_base_pct
+5410,5.116325287242266,,,sin_temperatura,ablacion,,,,,,
+5410,5.471688018540162,,,sin_viento,ablacion,,,,,,
+5410,5.336397523445718,,,sin_lluvia,ablacion,,,,,,
+5410,6.0525670777290745,,,sin_calendario,ablacion,,,,,,
+4878,5.245802317559516,,,sin_estaciones_moviles,ablacion,,,,,,

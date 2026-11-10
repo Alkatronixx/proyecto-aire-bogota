@@ -61,3 +61,8 @@
 ## 2026-11-05: Datos de viento faltantes en estaciones móviles de Fontibón y Usme
 - *Decisión:* queda pendiente definir el criterio para asignar datos de viento a las estaciones móviles de Fontibón y Usme, que no cuentan con mediciones propias. Se propone utilizar los datos de la estación más cercana que tenga información disponible.
 - *Motivo:* evitar dejar sin información de viento a las estaciones móviles y establecer un criterio espacial consistente. La propuesta requiere validación antes de su implementación.
+
+2026-11-09: Validación de métricas predictivas, comportamiento del PM2.5 y escenarios del simulador
+- Decisión: retirar las métricas del Random Forest guardado (MAE 1,93 y R² 0,88), ya que corresponden a resultados dentro de muestra. Se establecen como métricas válidas del Random Forest MAE 5,24 y R² 0,27. Se confirma que el modelo predictivo guardado es un Ridge, con MAE 3,332 y R² 0,707, frente a un modelo de persistencia con MAE 3,442. También se acuerda describir la caída del nivel de PM2.5 sin atribuirle una causa específica y expresar los escenarios del simulador como cambios frente a una referencia.
+
+- Motivo: garantizar la transparencia y consistencia en la presentación de los resultados, utilizando métricas válidas para evaluar el desempeño predictivo. Evitar atribuir la caída del PM2.5 a una causa no comprobada, dado que podría deberse a un cambio real en las concentraciones, a modificaciones en los equipos o a ajustes de calibración. Expresar los escenarios del simulador respecto a una referencia permite facilitar su interpretación y comparación

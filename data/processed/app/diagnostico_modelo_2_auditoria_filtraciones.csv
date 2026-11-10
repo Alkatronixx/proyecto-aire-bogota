@@ -1,0 +1,23 @@
+archivo,linea,paso,evidencia,usa_test_al_ajustar
+entrenar.py,36,medias tmax/tmin por estación IDEAM,solo train: fechas 2023-10-24..2025-10-23,sí
+entrenar.py,39-40,rezagos PM2.5,shift/rolling por estación ordenada; solo observaciones previas de cada fila,no usa futuro; véase hueco de cobertura
+entrenar.py,"46-49, 91-92, 117-128","medianas, StandardScaler, categorías OneHotEncoder en evaluación CV/test","fit ocurre en cada train fold o train final, no en test",sí durante evaluación
+entrenar.py,"65-67, 70-94","cortes CV, alpha Ridge y parámetros RF",bloques cronológicos expansivos dentro de filas train,sí
+entrenar.py,105-107,máscara complete-case y cortes train/test,"filtra por disponibilidad, luego corta fechas",sí
+entrenar.py,110-112,climatología groupby estación-mes,z contiene train y test antes del groupby,NO: fuga test
+entrenar.py,117-128,Ridge y RF de evaluación temporal,fit xtr/ytr solamente,sí
+entrenar.py,138-145,RF de ablación,fit sel_train (solo entrenamiento); evalúa sel_test,sí
+entrenar.py,165-176,importancia por permutación,usa test para interpretar; no reajusta modelo,no es ajuste predictivo
+entrenar.py,181-187,bootstrap de coeficientes,máscara explícita train; bloques semanales de train,sí
+entrenar.py,190-194,dependencia parcial,predictores de test y modelo fit train,no reajusta
+entrenar.py,196-200,RF/Ridge de app; preprocesador y one-hot final,all_exp/all_pred incluyen fechas train y test; metadatos categories usa d completa,"NO, final app usa todos los datos por diseño"
+entrenar.py,198,cuantiles residuales del modelo explicativo,residuo sobre test para intervalo en metadata,"usa test para calibrar intervalo, no estimador"
+entrenar_v2.py,37-39,medias temperatura para anomalías,d.fecha <= 2025-10-23,sí
+entrenar_v2.py,47-55,climatología estación-mes/estación/global y anomalías,train explícito; respaldo n<10 por estación y global si no existe estación,sí
+entrenar_v2.py,64-87,"imputación, escalado, Ridge/HGB CV, elección entre modelos",fit por pliegues temporales train; selección por CV train,sí
+entrenar_v2.py,86-88,modelos candidatos finalistas,"fit xtr/ytr, fechas solo hasta 2025-10-23",sí
+entrenar_v2.py,99-105,cuantiles q10/q90 de observado/predicción,calculados en prueba para calibrar intervalo,"usa test para intervalo, no entrenamiento del estimador"
+entrenar_v2.py,111-118,ablación Ridge,se ajusta con todo xtr/ytr de entrenamiento,sí
+entrenar_v2.py,120-129,permutación agrupada,usa test para medir importancia; no hace fit,no es ajuste
+entrenar_v2.py,131-136,dependencia parcial,usa xte y modelo ya fit en train,no reajusta
+entrenar_v2.py,138-145,serialización modelo anomalia,guarda bestmodel ajustado train; climatología y cuantiles asociados,estimador sí; cuantiles usan test

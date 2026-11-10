@@ -8,4 +8,5 @@ __pycache__/
 .venv/
 .env
 .ipynb_checkpoints/
+models/modelo_explicativo.joblib
 .DS_Store

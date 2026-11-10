@@ -182,3 +182,34 @@
 
 - Decisión: se genera un resumen de humedad relativa con 932 días de información, correspondientes a 2024 y 2026, para cinco estaciones. No se cuenta con información para 2025. Estos datos se utilizarán únicamente con fines exploratorios y no como insumo definitivo del análisis.
 - Motivo: la cobertura temporal y espacial de los registros es insuficiente para garantizar un análisis representativo y comparable entre estaciones y años.
+## 2026-11-09: Conservación de las 19 estaciones para el modelado
+
+- Decisión: se conservan las 19 estaciones en el conjunto de datos, considerando que la cobertura de PM2.5 no presenta valores inferiores al 73,2 %.
+- Motivo: mantener la mayor cobertura espacial posible para el modelado, sin excluir estaciones que cuentan con información suficiente para el análisis.
+
+## 2026-11-09: Exclusión de la altitud como variable del modelo
+
+- Decisión: se excluye altitud_m como variable predictora del modelo, dado que siete estaciones no cuentan con este dato. No se imputan ni inventan valores de altitud.
+- Motivo: evitar introducir información artificial o sesgos derivados de completar datos que no están disponibles.
+
+## 2026-11-09: Tratamiento de las diferencias de temperatura entre estaciones
+
+- Decisión: se mantienen las mediciones de temperatura de San Cayetano y Nueva Generación, considerando que San Cayetano registra temperaturas promedio 6,4 °C menores en temperatura máxima y 3,7 °C menores en temperatura mínima respecto a Nueva Generación. Para el modelado, se utilizan anomalías calculadas respecto a la media de entrenamiento de cada estación.
+- Motivo: controlar las diferencias sistemáticas de temperatura entre estaciones y permitir que el modelo trabaje con desviaciones respecto a las condiciones habituales de cada una.
+
+## 2026-11-09: Definición de los periodos de entrenamiento y prueba
+
+- Decisión: se establece la siguiente partición temporal de los datos:
+  - Entrenamiento: del 2023-10-24 al 2025-10-23.
+  - Prueba: del 2025-10-24 al 2026-10-23. Para la implementación en la aplicación, el modelo se reentrena utilizando la totalidad de los datos disponibles.
+- Motivo: evaluar el desempeño del modelo con un periodo posterior al utilizado para el entrenamiento, respetando el orden temporal. El reentrenamiento final permite aprovechar toda la información disponible para su uso en la aplicación.
+
+## 2026-11-09: Inclusión de estaciones móviles en el modelado
+
+- Decisión: se conservan las estaciones móviles en el conjunto de datos, identificándolas mediante una bandera o variable indicadora. Además, se mide la sensibilidad de los resultados a su inclusión.
+- Motivo: evitar perder información potencialmente útil y evaluar explícitamente si las características de las estaciones móviles afectan el desempeño del modelo. Esta decisión reemplaza la regla anterior documentada en AGENTS.md de «confirmar o excluir».
+
+## 2026-11-09: Verificación de registros anómalos pendientes
+
+- Decisión: queda pendiente verificar los registros correspondientes a Bolivia durante febrero y marzo de 2024, así como seis casos identificados en enero de 2026.
+- Motivo: confirmar la consistencia y validez de estos registros antes de considerarlos definitivamente en el análisis y el modelado.

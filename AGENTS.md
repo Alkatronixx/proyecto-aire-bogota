@@ -9,7 +9,7 @@ Análisis de calidad del aire en Bogotá (PM2.5 y PM10) y sus factores (viento, 
 - Grano: una fila por estación y día. Llave única: (fecha, estacion_id).
 - La humedad relativa NO entra al modelo (no hay datos de 2025); solo exploración.
 - Tráfico (aforos): extra opcional. Los Excel traen latitud y longitud de cada nodo. Se usan solo aforos dentro del periodo 2023-10-23 a 2026-10-23. Se asigna cada nodo a la estación de aire más cercana dentro de un radio de 1.5 km y se calcula el flujo medio por tipo de vehículo como variable fija por estación (no es una serie diaria). Los tipos de vehículo (columnas L, B, M, BI, C, etc.) cambian entre archivos: pasarlos a formato largo (tipo_vehiculo, conteo) y mapearlos a categorías comunes usando la leyenda de cada archivo. No inventar el mapeo: si una categoría es ambigua, dejar un TODO.
-- Estaciones móviles: confirmar ubicación antes de usarlas; si no, excluir.
+- Estaciones móviles: se conservan con la bandera es_movil (no se pudo confirmar si cambiaron de sitio); se reporta la sensibilidad sin ellas.
 
 # Estructura de carpetas
 data/raw (no se toca, no se sube a git), data/interim (una tabla limpia por fuente, formato largo), data/processed (tabla maestra y catálogos, sí se sube), data/docs (fuentes.md, diccionario_datos.md), docs (decisiones.md), notebooks, src/datos, src/modelo, src/utils, models, app (app.py, pages, components, assets), tests.
@@ -23,7 +23,7 @@ data/raw (no se toca, no se sube a git), data/interim (una tabla limpia por fuen
 - Fechas en formato día/mes/año: leer con dayfirst=True.
 
 # Tabla maestra (columnas)
-fecha, estacion_id, pm25, pm10, vel_viento, dir_sin, dir_cos, precip_mm, precip_1d_antes, precip_3d_acum, tmax_c, tmin_c, tmedia_c, amplitud_c, dist_precip_km, dist_temp_km, dia_semana, mes, es_fin_semana, es_festivo, temporada, localidad, altitud_m, lat, lon, pm25_faltante, pm10_faltante.
+fecha, estacion_id, estacion, es_movil, pm25, pm10, pm25_faltante, pm10_faltante, pm_invalido, hueco_pm_2025, vel_ciudad_ms, n_est_viento, vel_viento_propia, dir_sin, dir_cos, precip_mm, precip_1d_antes, precip_3d_acum, llueve, lluvia_ciudad_n, dist_precip_km, precip_estacion_id, tmax_c, tmin_c, tmedia_c, amplitud_c, dist_temp_km, temp_estacion_id, dia_semana, mes, es_fin_semana, es_festivo, temporada, localidad, altitud_m, lat, lon.
 Cada estación de aire se asigna a la estación IDEAM más cercana y se guarda la distancia.
 
 # Reglas de datos (críticas)

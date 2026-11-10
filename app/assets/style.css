@@ -1,0 +1,65 @@
+:root {
+  --aire-bg: #0E1117;
+  --aire-card: #1A1F2B;
+  --aire-line: #303847;
+  --aire-accent: #00C2A8;
+  --aire-text: #F2F4F8;
+  --aire-muted: #AAB3C2;
+}
+
+html, body, [class*="css"] {
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+}
+
+.block-container {
+  max-width: 1440px;
+  padding-top: 2.25rem;
+  padding-bottom: 3rem;
+}
+
+#MainMenu, footer { visibility: hidden; }
+
+.page-kicker {
+  color: var(--aire-accent);
+  font-size: .76rem;
+  font-weight: 750;
+  letter-spacing: .16em;
+  margin: .25rem 0 .5rem;
+}
+.page-title {
+  color: var(--aire-text);
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  letter-spacing: -.035em;
+  line-height: 1.1;
+  margin: 0;
+}
+.page-description {
+  color: var(--aire-muted);
+  font-size: 1.08rem;
+  line-height: 1.65;
+  margin: .8rem 0 1.8rem;
+  max-width: 850px;
+}
+
+.kpi-card, .finding-card, .pending-card, .method-note {
+  background: var(--aire-card);
+  border: 1px solid var(--aire-line);
+  border-radius: 12px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.12);
+  margin: .25rem 0 .8rem;
+}
+.kpi-card { min-height: 142px; padding: 1.25rem 1.35rem; }
+.kpi-label { color: var(--aire-muted); font-size: .86rem; font-weight: 650; }
+.kpi-value { color: var(--aire-text); font-size: 2rem; font-weight: 750; margin: .45rem 0 .3rem; }
+.kpi-detail { color: var(--aire-muted); font-size: .78rem; line-height: 1.45; }
+.finding-card { align-items: flex-start; color: var(--aire-text); display: flex; gap: .8rem; line-height: 1.55; min-height: 118px; padding: 1.15rem 1.2rem; }
+.finding-mark { color: var(--aire-accent); font-size: .72rem; padding-top: .28rem; }
+.pending-card { background: #252B36; border-color: #454E5E; color: #D5DAE2; line-height: 1.55; padding: 1rem 1.1rem; }
+.pending-card strong { color: #F1C40F; }
+.method-note { border-left: 3px solid var(--aire-accent); color: var(--aire-muted); line-height: 1.55; padding: .85rem 1rem; }
+
+div[data-testid="stPlotlyChart"], div[data-testid="stDeckGlJsonChart"] {
+  border: 1px solid var(--aire-line);
+  border-radius: 12px;
+  overflow: hidden;
+}
