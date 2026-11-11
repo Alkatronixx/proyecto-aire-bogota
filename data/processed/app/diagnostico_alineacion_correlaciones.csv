@@ -1,0 +1,161 @@
+k,grupo,variable,spearman,n_dias
+-2,global,precip_mm,-0.01729141224067251,15573
+-2,global,llueve,-0.030520663403153153,15573
+-2,global,tmax_anom,0.07421474253777116,16277
+-2,global,tmin_anom,0.041884229914140376,16329
+-2,global,amplitud_c,0.011648207155107582,16156
+-2,global,anomalia_media_con_lluvia,-1.496567723549686,7385
+-2,global,anomalia_media_sin_lluvia,-0.9080946919465793,8188
+-2,global,diferencia_con_menos_sin_lluvia,-0.5884730316031066,15573
+-2,Nueva Generación,precip_mm,-0.057019754604016135,3377
+-2,Nueva Generación,llueve,-0.02182640354032125,3377
+-2,Nueva Generación,tmax_anom,0.09547453046558917,7563
+-2,Nueva Generación,tmin_anom,0.04895917969067203,7615
+-2,Nueva Generación,amplitud_c,0.018382512410120323,7461
+-2,Nueva Generación,anomalia_media_con_lluvia,-1.458548495770396,1129
+-2,Nueva Generación,anomalia_media_sin_lluvia,-0.9446453916314507,2248
+-2,Nueva Generación,diferencia_con_menos_sin_lluvia,-0.5139031041389454,3377
+-2,Jardín Botánico,precip_mm,0.01174802811205749,8771
+-2,Jardín Botánico,llueve,-0.01653288885898545,8771
+-2,Jardín Botánico,tmax_anom,,0
+-2,Jardín Botánico,tmin_anom,,0
+-2,Jardín Botánico,amplitud_c,,0
+-2,Jardín Botánico,anomalia_media_con_lluvia,-1.4924810100518533,4464
+-2,Jardín Botánico,anomalia_media_sin_lluvia,-1.0790247026672382,4307
+-2,Jardín Botánico,diferencia_con_menos_sin_lluvia,-0.41345630738461514,8771
+-2,San Cayetano,precip_mm,-0.051397779418506234,3425
+-2,San Cayetano,llueve,-0.06635875942722888,3425
+-2,San Cayetano,tmax_anom,0.061295305696969685,8714
+-2,San Cayetano,tmin_anom,0.038969081712531634,8714
+-2,San Cayetano,amplitud_c,0.022120546939181366,8695
+-2,San Cayetano,anomalia_media_con_lluvia,-1.530700980925324,1792
+-2,San Cayetano,anomalia_media_sin_lluvia,-0.40695474763214684,1633
+-2,San Cayetano,diferencia_con_menos_sin_lluvia,-1.1237462332931771,3425
+-1,global,precip_mm,-0.0237709981607776,15577
+-1,global,llueve,-0.03113856126283018,15577
+-1,global,tmax_anom,0.101910967012757,16297
+-1,global,tmin_anom,0.04213879766275178,16347
+-1,global,amplitud_c,0.015232041785169282,16176
+-1,global,anomalia_media_con_lluvia,-1.4764666388810408,7372
+-1,global,anomalia_media_sin_lluvia,-0.8557297774544891,8205
+-1,global,diferencia_con_menos_sin_lluvia,-0.6207368614265517,15577
+-1,Nueva Generación,precip_mm,-0.10712987901783955,3379
+-1,Nueva Generación,llueve,-0.05201113398506811,3379
+-1,Nueva Generación,tmax_anom,0.12570792007138956,7573
+-1,Nueva Generación,tmin_anom,0.030195980444585137,7623
+-1,Nueva Generación,amplitud_c,0.04553973374178768,7471
+-1,Nueva Generación,anomalia_media_con_lluvia,-1.7467309285099075,1126
+-1,Nueva Generación,anomalia_media_sin_lluvia,-0.7974027603734879,2253
+-1,Nueva Generación,diferencia_con_menos_sin_lluvia,-0.9493281681364196,3379
+-1,Jardín Botánico,precip_mm,0.032943484636659116,8769
+-1,Jardín Botánico,llueve,0.008000919063185253,8769
+-1,Jardín Botánico,tmax_anom,,0
+-1,Jardín Botánico,tmin_anom,,0
+-1,Jardín Botánico,amplitud_c,,0
+-1,Jardín Botánico,anomalia_media_con_lluvia,-1.326050479426725,4448
+-1,Jardín Botánico,anomalia_media_sin_lluvia,-1.12633004565446,4321
+-1,Jardín Botánico,diferencia_con_menos_sin_lluvia,-0.1997204337722649,8769
+-1,San Cayetano,precip_mm,-0.09471896109520432,3429
+-1,San Cayetano,llueve,-0.11196835402081735,3429
+-1,San Cayetano,tmax_anom,0.08247102707922581,8724
+-1,San Cayetano,tmin_anom,0.06528764605474122,8724
+-1,San Cayetano,amplitud_c,0.018279300323137366,8705
+-1,San Cayetano,anomalia_media_con_lluvia,-1.6793217485199137,1798
+-1,San Cayetano,anomalia_media_sin_lluvia,-0.2194005380868746,1631
+-1,San Cayetano,diferencia_con_menos_sin_lluvia,-1.459921210433039,3429
+0,global,precip_mm,0.06195418533431251,15578
+0,global,llueve,0.03628457762842929,15578
+0,global,tmax_anom,0.08774733578113258,16317
+0,global,tmin_anom,0.03933521580137701,16363
+0,global,amplitud_c,-0.009442607983855425,16196
+0,global,anomalia_media_con_lluvia,-1.048608448540168,7340
+0,global,anomalia_media_sin_lluvia,-1.29833994779516,8238
+0,global,diferencia_con_menos_sin_lluvia,0.24973149925499194,15578
+0,Nueva Generación,precip_mm,0.004360306400613482,3380
+0,Nueva Generación,llueve,0.031356426677321414,3380
+0,Nueva Generación,tmax_anom,0.14319215864268234,7583
+0,Nueva Generación,tmin_anom,-0.006129681681950229,7629
+0,Nueva Generación,amplitud_c,0.08218718648514477,7481
+0,Nueva Generación,anomalia_media_con_lluvia,-0.993615514392358,1108
+0,Nueva Generación,anomalia_media_sin_lluvia,-1.1523870435382468,2272
+0,Nueva Generación,diferencia_con_menos_sin_lluvia,0.15877152914588888,3380
+0,Jardín Botánico,precip_mm,0.08773409612310495,8765
+0,Jardín Botánico,llueve,0.051434960740437546,8765
+0,Jardín Botánico,tmax_anom,,0
+0,Jardín Botánico,tmin_anom,,0
+0,Jardín Botánico,amplitud_c,,0
+0,Jardín Botánico,anomalia_media_con_lluvia,-1.0849564037014243,4438
+0,Jardín Botánico,anomalia_media_sin_lluvia,-1.5035526525336937,4327
+0,Jardín Botánico,diferencia_con_menos_sin_lluvia,0.4185962488322694,8765
+0,San Cayetano,precip_mm,0.04992210158790241,3433
+0,San Cayetano,llueve,0.011451705682454535,3433
+0,San Cayetano,tmax_anom,0.03162616148784893,8734
+0,San Cayetano,tmin_anom,0.10931029533502601,8734
+0,San Cayetano,amplitud_c,-0.1026179966100293,8715
+0,San Cayetano,anomalia_media_con_lluvia,-0.9926552411990966,1794
+0,San Cayetano,anomalia_media_sin_lluvia,-0.9588949356341299,1639
+0,San Cayetano,diferencia_con_menos_sin_lluvia,-0.033760305564966786,3433
+1,global,precip_mm,0.060171134422742224,15555
+1,global,llueve,0.040895353440367405,15555
+1,global,tmax_anom,0.0418118745787174,16300
+1,global,tmin_anom,0.08849377096776904,16342
+1,global,amplitud_c,-0.06445457190784111,16176
+1,global,anomalia_media_con_lluvia,-1.0934026835672357,7328
+1,global,anomalia_media_sin_lluvia,-1.3637963025483084,8227
+1,global,diferencia_con_menos_sin_lluvia,0.2703936189810727,15555
+1,Nueva Generación,precip_mm,0.02138836031500286,3378
+1,Nueva Generación,llueve,0.037645996679067865,3378
+1,Nueva Generación,tmax_anom,0.09586485152311933,7574
+1,Nueva Generación,tmin_anom,0.11325158093292965,7617
+1,Nueva Generación,amplitud_c,-0.03361095905459427,7469
+1,Nueva Generación,anomalia_media_con_lluvia,-0.917990323599652,1114
+1,Nueva Generación,anomalia_media_sin_lluvia,-1.2033287472947805,2264
+1,Nueva Generación,diferencia_con_menos_sin_lluvia,0.2853384236951284,3378
+1,Jardín Botánico,precip_mm,0.06310295910287714,8748
+1,Jardín Botánico,llueve,0.03885414308686574,8748
+1,Jardín Botánico,tmax_anom,,0
+1,Jardín Botánico,tmin_anom,,0
+1,Jardín Botánico,amplitud_c,,0
+1,Jardín Botánico,anomalia_media_con_lluvia,-1.302718557315883,4422
+1,Jardín Botánico,anomalia_media_sin_lluvia,-1.4838292417870804,4326
+1,Jardín Botánico,diferencia_con_menos_sin_lluvia,0.18111068447119738,8748
+1,San Cayetano,precip_mm,0.09382221378521192,3429
+1,San Cayetano,llueve,0.06018873298454393,3429
+1,San Cayetano,tmax_anom,-0.019608282223882292,8726
+1,San Cayetano,tmin_anom,0.07856930452812322,8725
+1,San Cayetano,amplitud_c,-0.12606720218496265,8707
+1,San Cayetano,anomalia_media_con_lluvia,-0.6859331385267059,1792
+1,San Cayetano,anomalia_media_sin_lluvia,-1.2685220508360664,1637
+1,San Cayetano,diferencia_con_menos_sin_lluvia,0.5825889123093605,3429
+2,global,precip_mm,0.04126283942645965,15531
+2,global,llueve,0.030346806892494825,15531
+2,global,tmax_anom,0.00795834563911225,16293
+2,global,tmin_anom,0.09275276944573319,16322
+2,global,amplitud_c,-0.0624385777945928,16166
+2,global,anomalia_media_con_lluvia,-1.160985543457143,7301
+2,global,anomalia_media_sin_lluvia,-1.3192076833533573,8230
+2,global,diferencia_con_menos_sin_lluvia,0.15822213989621425,15531
+2,Nueva Generación,precip_mm,0.021922624489248525,3372
+2,Nueva Generación,llueve,0.04506698295955857,3372
+2,Nueva Generación,tmax_anom,0.04974383678179296,7577
+2,Nueva Generación,tmin_anom,0.16187444405741253,7606
+2,Nueva Generación,amplitud_c,-0.09684179076930355,7468
+2,Nueva Generación,anomalia_media_con_lluvia,-0.7929532430090959,1106
+2,Nueva Generación,anomalia_media_sin_lluvia,-1.2404965314432337,2266
+2,Nueva Generación,diferencia_con_menos_sin_lluvia,0.4475432884341378,3372
+2,Jardín Botánico,precip_mm,0.04574886156863603,8734
+2,Jardín Botánico,llueve,0.022585576813604964,8734
+2,Jardín Botánico,tmax_anom,,0
+2,Jardín Botánico,tmin_anom,,0
+2,Jardín Botánico,amplitud_c,,0
+2,Jardín Botánico,anomalia_media_con_lluvia,-1.4169613103966983,4394
+2,Jardín Botánico,anomalia_media_sin_lluvia,-1.4055672813768978,4340
+2,Jardín Botánico,diferencia_con_menos_sin_lluvia,-0.011394029019800467,8734
+2,San Cayetano,precip_mm,0.05622559263918023,3425
+2,San Cayetano,llueve,0.04796271628090177,3425
+2,San Cayetano,tmax_anom,-0.03623284228957134,8716
+2,San Cayetano,tmin_anom,0.02177616013219667,8716
+2,San Cayetano,amplitud_c,-0.08056616003245762,8698
+2,San Cayetano,anomalia_media_con_lluvia,-0.762477050599361,1801
+2,San Cayetano,anomalia_media_sin_lluvia,-1.1982463624211992,1624
+2,San Cayetano,diferencia_con_menos_sin_lluvia,0.4357693118218382,3425

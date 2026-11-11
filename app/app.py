@@ -1,10 +1,11 @@
-"""Configura el tema y la navegación multipágina de la aplicación.
-Registra siete páginas de la app y deja Portada como página inicial.
-Cada página completa sus propias lecturas mediante los cargadores con caché.
-Los cinco módulos todavía no construidos muestran un aviso explícito.
+"""Configura la navegación multipágina de la aplicación.
+Registra siete páginas y prepara el Ridge v2 una sola vez al arrancar.
+Cada página lee los datos publicados mediante cargadores con caché.
+Las páginas aún no desarrolladas muestran un aviso explícito.
 """
 from pathlib import Path
 import streamlit as st
+from utils.datos import cargar_modelo_anomalia
 
 APP_DIR = Path(__file__).resolve().parent
 PAGES_DIR = APP_DIR / "pages"
@@ -15,6 +16,10 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# La primera importación de scikit-learn añade varios segundos; se hace al inicio
+# para que abrir el simulador o la evaluación después de la portada no espere esa carga.
+cargar_modelo_anomalia()
 
 paginas = [
     st.Page(PAGES_DIR / "portada.py", title="Portada", icon="🌿", default=True),

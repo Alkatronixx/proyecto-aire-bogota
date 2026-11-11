@@ -1,0 +1,20 @@
+estacion_id,altitud_m,localidad_sda,tipo_estacion,fuente_url,fecha_consulta,verificar
+guaymaral,2580,Suba,de fondo,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+usaquen,2570,Usaquén,de fondo,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+suba,2571,Suba,de fondo,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+bolivia,2574,Engativá,de fondo,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+las_ferias,2552,Engativá,de tráfico,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,True
+centro_de_alto_rendimiento,2552,Engativá,de tráfico,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+movil_7ma,2583,Chapinero,de tráfico,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+minambiente,2621,Santa Fe,de tráfico,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+fontibon,2551,Fontibón,de tráfico,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+puente_aranda,2590,Puente Aranda,industrial,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+kennedy,2580,Kennedy,de fondo,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+carvajal_sevillana,2563,Kennedy,tráfico/industrial,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+tunal,2589,Tunjuelito,de fondo,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+san_cristobal,2688,San Cristóbal,de fondo,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+jazmin,2559,Puente Aranda,residencial,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+usme,2593,Usme,residencial,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+ciudad_bolivar,2661,Ciudad Bolívar,residencial,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+colina,2555,Suba,de fondo,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False
+movil_fontibon,2547,Fontibón,tráfico/industrial,https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab,2026-11-10,False

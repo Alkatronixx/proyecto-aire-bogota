@@ -47,8 +47,16 @@ def color_rgb_cuantil(valor: float, referencia) -> list[int]:
     cortes = _cuantiles(referencia)
     rgb = np.array([[int(color[i:i+2], 16) for i in (1, 3, 5)] for color in COLORES_PM], dtype=float)
     if cortes[-1] == cortes[0]:
-        pos = .5
-    else:
-        pos = float(np.clip((float(valor) - cortes[0]) / (cortes[-1] - cortes[0]), 0., 1.))
-    pos_cortes = np.linspace(0., 1., len(COLORES_PM))
-    return [int(round(np.interp(pos, pos_cortes, rgb[:, i]))) for i in range(3)]
+        return [int(round(v)) for v in rgb[len(COLORES_PM) // 2]]
+    posiciones = (cortes - cortes[0]) / (cortes[-1] - cortes[0])
+    # Si varios cuartiles coinciden, conserva el color del último corte en esa posición.
+    puntos = []
+    for posicion, color in zip(posiciones, rgb):
+        if puntos and posicion <= puntos[-1][0]:
+            puntos[-1] = (float(posicion), color)
+        else:
+            puntos.append((float(posicion), color))
+    posicion_valor = float(np.clip((float(valor) - cortes[0]) / (cortes[-1] - cortes[0]), 0., 1.))
+    x = np.array([p[0] for p in puntos])
+    colores = np.array([p[1] for p in puntos])
+    return [int(round(np.interp(posicion_valor, x, colores[:, i]))) for i in range(3)]

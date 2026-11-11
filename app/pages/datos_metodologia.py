@@ -62,6 +62,17 @@ st.dataframe(decisiones, hide_index=True, use_container_width=True)
 
 st.subheader("Incidentes y controles de calidad documentados")
 incidentes = decisiones.loc[decisiones.ID.isin(["DV-04", "DV-05", "DV-07", "DV-10"]), ["ID", "Tema", "Decisión vigente"]]
+incidentes = pd.concat(
+    [
+        incidentes,
+        pd.DataFrame([{
+            "ID": "AL-01",
+            "Tema": "Día meteorológico del IDEAM",
+            "Decisión vigente": "Posible desfase de un día, comprobado con desplazamientos de -2 a +2; se mantiene la alineación original.",
+        }]),
+    ],
+    ignore_index=True,
+)
 st.dataframe(incidentes, hide_index=True, use_container_width=True)
 
 st.subheader("Limitaciones")
@@ -71,6 +82,7 @@ limitaciones = [
     "La dirección del viento se excluye del modelo base: su promedio diario y su coherencia entre estaciones tienen limitaciones documentadas.",
     "Aproximadamente el 97% de los datos IDEAM tiene nivel preliminar.",
     "2023 y 2026 son años parciales dentro del periodo analizado.",
+    "La página de la SDA lista 20 estaciones, incluida Bosa, que no está en nuestros archivos.",
 ]
 for texto in limitaciones:
     st.markdown(f"- {texto}")
