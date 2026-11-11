@@ -54,6 +54,15 @@ def cargar_aire() -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
+def cargar_fechas_aire() -> pd.DataFrame:
+    """Lee solo la fecha para páginas que necesitan periodo y conteo de filas."""
+    # La página metodológica no analiza contaminantes; la proyección evita materializar 36 columnas innecesarias.
+    frame = pd.read_parquet(PROCESSED / "aire_bogota_diario.parquet", columns=["fecha"])
+    frame["fecha"] = pd.to_datetime(frame["fecha"])
+    return frame
+
+
+@st.cache_data(show_spinner=False)
 def cargar_geojson_app(nombre: str) -> dict:
     """Lee geometrías generalizadas publicadas en processed/geo, nunca data/raw."""
     permitidos = {"estaciones.geojson", "localidades.geojson"}
@@ -84,6 +93,20 @@ def cargar_csv_app(nombre: str) -> pd.DataFrame:
     if nombre not in permitidos:
         raise ValueError(f"CSV de app no permitido: {nombre}")
     return pd.read_csv(APP_DATA / nombre)
+
+
+@st.cache_data(show_spinner=False)
+def preparar_cobertura_estacion_mes(fecha_inicio: str, fecha_fin: str) -> tuple[pd.DataFrame, list[str], list[str], pd.DataFrame]:
+    """Prepara una matriz estación-mes para la figura de cobertura metodológica."""
+    cobertura = cargar_csv_app("cobertura_estacion_mes.csv")
+    cobertura["año_mes"] = cobertura["año_mes"].astype(str)
+    meses = pd.period_range(pd.Timestamp(fecha_inicio).to_period("M"),
+                            pd.Timestamp(fecha_fin).to_period("M"), freq="M").astype(str).tolist()
+    estaciones = sorted(cobertura.estacion_id.astype(str).unique())
+    matriz = cobertura.pivot_table(
+        index="estacion_id", columns="año_mes", values="pct_dias_pm25", aggfunc="mean"
+    ).reindex(index=estaciones, columns=meses)
+    return cobertura, meses, estaciones, matriz
 
 
 @st.cache_data(show_spinner=False)
@@ -129,6 +152,7 @@ def cargar_modelo_anomalia() -> dict:
     return joblib.load(ROOT / "models" / "modelo_anomalia_v2.joblib")
 
 
+@st.cache_data(show_spinner=False)
 def tabla_decisiones_vigentes(texto: str) -> pd.DataFrame:
     """Extrae la tabla consolidada DV-01... del comienzo de decisiones.md."""
     filas = []
@@ -150,6 +174,7 @@ def tabla_decisiones_vigentes(texto: str) -> pd.DataFrame:
     return pd.DataFrame(filas, columns=columnas) if filas else pd.DataFrame(columns=columnas)
 
 
+@st.cache_data(show_spinner=False)
 def tabla_fuentes(texto: str) -> pd.DataFrame:
     """Convierte los campos etiquetados de fuentes.md en una tabla de lectura."""
     filas = []

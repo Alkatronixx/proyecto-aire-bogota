@@ -1,12 +1,18 @@
 """Bloques de interfaz reutilizables con estilos definidos en assets/style.css."""
+from pathlib import Path
 import streamlit as st
+
+
+@st.cache_data(show_spinner=False)
+def _leer_estilos() -> str:
+    """Lee una vez el CSS compartido para evitar accesos al disco en cada rerun."""
+    css = Path(__file__).resolve().parents[1] / "assets" / "style.css"
+    return css.read_text(encoding="utf-8")
 
 
 def cargar_estilos() -> None:
     """Inyecta el CSS local permitido para conservar un diseño compartido."""
-    from pathlib import Path
-    css = Path(__file__).resolve().parents[1] / "assets" / "style.css"
-    st.markdown(f"<style>{css.read_text(encoding='utf-8')}</style>", unsafe_allow_html=True)
+    st.markdown(f"<style>{_leer_estilos()}</style>", unsafe_allow_html=True)
 
 
 def encabezado_pagina(titulo: str, descripcion: str = "") -> None:

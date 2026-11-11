@@ -316,3 +316,35 @@ Antes de editar guardé la captura AppTest en `D:\ciencia de datos\baseline_app_
 ### Verificación
 
 En el venv nuevo se instaló `requirements-dev.txt`; `pytest -q` terminó con **60 passed in 33,04 s** en la última corrida. AppTest recorrió las siete páginas dentro de la suite y la navegación limpia; no hubo excepciones. El arranque headless respondió correctamente. No ejecuté commit ni push.
+
+## Corrección de datos_metodologia (2026-11-11)
+
+### Diagnóstico y causa reproducida
+
+La página leía la tabla maestra completa (`20.824 × 37`) aunque solo usaba la fecha para periodo y conteo; además, calculaba el pivote y serializaba la figura de cobertura en cada render, aun cuando esa sección no estuviera abierta. En el perfil previo, `cargar_aire()` tardó **2,377 s** y materializó **5,590 MB** en memoria; el pivote tardó **0,269 s** y la creación de la figura **0,715 s**. La página acumuló **7,580 s** en el perfil anterior. La tabla maestra en disco ocupa **0,217 MB**; el coste era leer y convertir columnas que la página no necesitaba, junto con trabajo de gráficos incondicional.
+
+No pude consultar el URL público ni sus logs desde esta sesión. Por tanto, esto identifica la causa de coste local reproducida, pero no prueba que sea la causa única del bloqueo específico de Community Cloud. En la app no encontré ninguna ruta de `data/raw`, `data/interim` o `modelo_explicativo.joblib`.
+
+### Lecturas, tablas, gráficos y cálculos
+
+| Archivo o bloque | Tamaño/forma | Uso en la página |
+|---|---:|---|
+| `app/assets/style.css` | 2.022 bytes (**0,00202 MB**) | CSS compartido, leído por ruta derivada de `__file__`; lectura cacheada. |
+| `data/processed/aire_bogota_diario.parquet` | En disco **0,2172 MB**; completo `20.824 × 37`, memoria pandas **5,5901 MB**; proyección actual `20.824 × 1`, **0,1667 MB** | Solo se necesita `fecha`; min, max y conteo de filas producen periodo `2023-10-24 — 2026-10-23` y **20.824** filas. |
+| `data/docs/fuentes.md` | 750 bytes (**0,00075 MB**) | Se convierte en una tabla de fuentes de `1 × 5`, memoria **0,000757 MB**, mostrada con `st.dataframe` y descarga CSV. |
+| `data/processed/app/cobertura_estacion_mes.csv` | `703 × 3`, disco **0,0223 MB**, memoria **0,02899 MB** | Lectura, pivote estación-mes `19 × 37` (**0,005967 MB**) y figura Plotly. Todo el bloque queda diferido hasta abrir el expander y ofrece descarga CSV. |
+| `docs/decisiones.md` | 23.658 bytes (**0,02366 MB**) | Se convierte en tabla de decisiones `18 × 5` (**0,005991 MB**); incidentes: filtro de cuatro registros y adición del registro IDEAM, tabla final `5 × 3`. Ambas tablas están en un expander y tienen descarga CSV. |
+| Figura de cobertura | matriz `19 × 37`; JSON Plotly de **12,39 kB** | `px.imshow`, título, escala, eje mensual y marca del hueco de PM; solo se construye al abrir el expander. |
+
+Todos los archivos de la tabla anterior aparecen en `git ls-files`. `git check-ignore -v` no devolvió reglas para esas rutas; no hay archivos no versionados requeridos por esta página. La página no lee `data/raw`, `data/interim`, ni archivos de `models/`. Las tablas son pequeñas (máximo 18 decisiones); se mantienen completas, con visualización diferida y botón de descarga CSV, sin truncar filas.
+
+### Corrección y rendimiento
+
+- Añadí `cargar_fechas_aire()` con `read_parquet(columns=["fecha"])`, caché de datos, y cacheé la lectura del CSS, las fuentes, decisiones, CSV de cobertura y el pivote mensual.
+- El mapa de calor y las tablas de decisiones/incidentes se calculan dentro de expanders con `on_change="rerun"`; los bloques muestran un spinner durante su carga. La matriz tiene solo 703 observaciones de origen y se construye en **0,016 s**; el gráfico diferido se crea en **0,336 s**. No se justifica un archivo precalculado ni un script nuevo para un cálculo de ese tamaño.
+- No hay un modelo ni otro objeto persistente en esta página que requiera `st.cache_resource`; sus lecturas y agregaciones corresponden a `st.cache_data`.
+- En proceso nuevo, AppTest aislado demoró **10,783 s** de pared incluyendo arranque e importaciones de Python/Streamlit (RSS **156,86 MB**); con esas dependencias ya importadas, el render frío y con cachés vacías demoró **1,481 s**, pico RSS **157,40 MB**, sin excepciones. En el recorrido secuencial de las siete páginas, Datos y metodología demoró **0,338 s** y el pico RSS del proceso fue **281,49 MB**, bajo el objetivo de 600 MB. En la misma secuencia: Portada 2,602 s; Contexto 0,747 s; Mapa 0,348 s; Factores 1,002 s; Simulador 11,921 s; Modelo 1,481 s; Datos y metodología 0,338 s. El tiempo alto de Simulador incluye su primera carga del artefacto y no pertenece a esta corrección.
+- Comparación con el estado previo: Datos y metodología pasó de **7,580 s** en el perfil local previo a **1,481 s** de render frío medido tras importar el runtime (y **0,338 s** en el recorrido); el perfil previo no obtuvo un pico RSS válido para las siete páginas. El pico RSS de la medición secuencial actual es **281,49 MB**.
+- Las tres métricas visibles siguen exactamente en **2023-10-24 — 2026-10-23**, “Una fila por estación y día” y **20.824** filas. El JSON del gráfico regenerado coincide con la captura anterior en datos y layout (`old_data_equal=True`, `old_layout_equal=True`). Las tablas usan las mismas fuentes y funciones de transformación; el cambio es de carga diferida, proyección y caché.
+
+AppTest sin importar la página directamente terminó sin excepciones en cada una de las siete páginas. El render aislado de Datos y metodología quedó por debajo de 5 s una vez inicializado el runtime. No se hizo commit ni push.
