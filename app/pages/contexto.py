@@ -20,6 +20,7 @@ from app.utils.datos import cargar_aire, cargar_ficha_estaciones
 from app.utils.contexto import agregar_mensual, calcular_superaciones, normalizar_texto
 from app.utils.fuentes_contexto import (
     POBLACION_BOGOTA_2025, ESTACIONES_SDA, MICROSENSORES_SDA,
+    DIAMETRO_PM25_MICROMETROS, DIAMETRO_PM10_MICROMETROS,
     OMS_DIAS_EXCEDENCIA_24H, OMS_PM25_ANUAL, OMS_PM25_24H,
     OMS_PM10_ANUAL, OMS_PM10_24H, OMS_ANIO_GUIA,
     COLOMBIA_ANIO_RESOLUCION,
@@ -69,7 +70,7 @@ def _mapa_estaciones(ficha: pd.DataFrame, datos: pd.DataFrame) -> None:
             map_style="https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
             tooltip={"text": "{estacion}\n{localidad_sda} · {tipo_estacion}\n{altitud_m} m"},
         ),
-        use_container_width=True,
+        width="stretch",
     )
     leyenda = " · ".join(
         f'<span style="color:rgb({r},{g},{b})">●</span> {tipo}'
@@ -102,14 +103,14 @@ def _grafico_excedencias(tabla: pd.DataFrame, columna_15: str, columna_37: str, 
     for dias in OMS_DIAS_EXCEDENCIA_24H:
         fig.add_vline(
         x=dias / DIAS_ANO_REFERENCIA * 100, line_dash="dot", line_color="#DDE2EA",
-            annotation_text=f"{dias}/365 días", annotation_position="top",
+            annotation_text=f"{dias}/{DIAS_ANO_REFERENCIA} días", annotation_position="top",
         )
     fig.update_layout(
         title=titulo, barmode="group", height=690,
         xaxis_title="% de días con dato sobre el umbral", yaxis_title="",
         legend_title="Referencia de 24 h",
     )
-    st.plotly_chart(aplicar_tema(fig), use_container_width=True, config={"displayModeBar": False})
+    st.plotly_chart(aplicar_tema(fig), width="stretch", config={"displayModeBar": False})
 
 
 cargar_estilos()
@@ -126,7 +127,8 @@ sobran_ficha = sorted(ficha_ids - maestro_ids)
 
 st.subheader("El problema")
 st.markdown(
-    "PM2.5 y PM10 describen material particulado con diámetro igual o menor a 2,5 y 10 micrómetros. "
+    f"PM2.5 y PM10 describen material particulado con diámetro igual o menor a "
+    f"{str(DIAMETRO_PM25_MICROMETROS).replace('.', ',')} y {DIAMETRO_PM10_MICROMETROS:g} micrómetros. "
     "La vigilancia registra su concentración en el aire y permite compararla con valores guía y normas."
 )
 st.info(f"{TEXTO_SALUD_OMS} [OMS: guías de calidad del aire]({URL_GUIAS_OMS})")
@@ -169,12 +171,12 @@ st.markdown("**Localidad SDA frente al cruce espacial del proyecto**")
 if diferencias.empty:
     st.caption("Las localidades coinciden para todas las estaciones.")
 else:
-    st.dataframe(diferencias, hide_index=True, use_container_width=True)
+    st.dataframe(diferencias, hide_index=True, width="stretch")
     st.caption("Se muestran ambas asignaciones tal como están registradas; no se corrigieron.")
 
 st.subheader("Qué miden los datos")
 st.markdown(
-    f"PM2.5 y PM10 son promedios de 24 horas por estación. La tabla maestra cubre "
+    "PM2.5 y PM10 son promedios de 24 horas por estación. La tabla maestra cubre "
     f"{datos.fecha.min():%Y-%m-%d} a {datos.fecha.max():%Y-%m-%d}, con una fila por estación y día."
 )
 _enlace_pagina("pages/datos_metodologia.py", "Ver Datos y metodología", "📚", "datos_metodologia")
@@ -206,14 +208,14 @@ normas = pd.DataFrame([
         "Aplicación": f"Resolución 2254 de {COLOMBIA_ANIO_RESOLUCION}",
     },
 ])
-st.dataframe(normas, hide_index=True, use_container_width=True)
+st.dataframe(normas, hide_index=True, width="stretch")
 niveles = pd.DataFrame([{
     "Contaminante / periodo": "PM2.5 · 24 h",
     "Prevención (µg/m³)": COLOMBIA_PM25_PREVENCION,
     "Alerta (µg/m³)": COLOMBIA_PM25_ALERTA,
     "Emergencia (µg/m³)": COLOMBIA_PM25_EMERGENCIA,
 }])
-st.dataframe(niveles, hide_index=True, use_container_width=True)
+st.dataframe(niveles, hide_index=True, width="stretch")
 st.warning(
     "La norma exige evaluar el cumplimiento por cada estación; el promedio de la ciudad no sirve para esa evaluación. "
     f"[OMS]({URL_GUIAS_OMS}) · [Resolución 2254 de {COLOMBIA_ANIO_RESOLUCION}]({URL_RESOLUCION_2254}); "
@@ -256,7 +258,7 @@ fig_anual.update_layout(
     title="PM2.5 medio en últimos 12 meses por estación",
     xaxis_title="PM2.5 medio (µg/m³)", yaxis_title="", height=690,
 )
-st.plotly_chart(aplicar_tema(fig_anual), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(fig_anual), width="stretch", config={"displayModeBar": False})
 tabla_superaciones = superaciones.copy()
 for columna in (
     "pct_pm25_mayor_15_periodo", "pct_pm25_mayor_37_periodo",
@@ -267,7 +269,7 @@ tabla_superaciones["pm25_medio_12m"] = tabla_superaciones.apply(
     lambda fila: f"{fila.pm25_medio_12m:.2f} µg/m³" if fila.estado_media_12m == "con datos suficientes" else "sin datos suficientes",
     axis=1,
 )
-st.dataframe(tabla_superaciones, hide_index=True, use_container_width=True)
+st.dataframe(tabla_superaciones, hide_index=True, width="stretch")
 st.caption(
     f"La media anual descriptiva se presenta solo con al menos {DIAS_MINIMOS_PROMEDIO_ANUAL} días con dato, "
     f"según la ficha de indicador SDA. [Ficha del indicador]({FUENTES[6]['url']})."
@@ -308,7 +310,7 @@ fig_mensual.update_layout(title="Medias mensuales de PM2.5 y precipitación", ho
 fig_mensual.update_xaxes(title_text="Mes")
 fig_mensual.update_yaxes(title_text="PM2.5 (µg/m³)", secondary_y=False)
 fig_mensual.update_yaxes(title_text="Precipitación (mm)", secondary_y=True)
-st.plotly_chart(aplicar_tema(fig_mensual), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(fig_mensual), width="stretch", config={"displayModeBar": False})
 
 st.subheader("Factores evaluados y pregunta del proyecto")
 st.markdown(

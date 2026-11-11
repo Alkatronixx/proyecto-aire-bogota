@@ -107,7 +107,7 @@ linea.add_vrect(x0=INICIO_HUECO, x1=FIN_HUECO, y0=.68, y1=1.32,
                 annotation_text="sin mediciones PM", annotation_position="top left")
 linea.update_yaxes(tickvals=[0, 1], ticktext=["Prueba", "Entrenamiento"], range=[-.5, 1.5])
 linea.update_layout(title="Separación temporal", xaxis_title="Fecha", yaxis_title="")
-st.plotly_chart(aplicar_tema(linea), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(linea), width="stretch", config={"displayModeBar": False})
 st.caption("Entrenamiento: 24-oct-2023 a 23-oct-2025. Prueba: 24-oct-2025 a 23-oct-2026. El hueco 04-ago a 16-oct-2025 cae dentro del entrenamiento; nunca se mezclan fechas al azar.")
 
 st.subheader("Control de alineación temporal")
@@ -128,7 +128,7 @@ st.info(
 st.subheader("Resultados de prueba")
 metricas = tabla_metricas(metricas_exp, metricas_pred, predicciones)
 st.dataframe(metricas.style.format({"MAE": "{:.3f}", "RMSE": "{:.3f}", "R2": "{:.3f}"}),
-             hide_index=True, use_container_width=True)
+             hide_index=True, width="stretch")
 st.caption("Las cifras explicativas se leen de diagnostico_modelo_metricas_v2.csv y las predictivas de metricas_modelos.csv; coinciden con la tabla indicada a tres decimales.")
 st.info("HGB obtuvo el menor MAE explicativo en prueba. El Ridge publicado se eligió por validación cruzada temporal dentro del entrenamiento, no por el resultado de prueba.")
 
@@ -159,7 +159,7 @@ with scatter_col:
     disperso.add_trace(go.Scatter(x=[0, limite], y=[0, limite], mode="lines",
                                   line={"color": "#E67E22", "dash": "dash"}, name="45°"))
     disperso.update_layout(title="Predicho frente a observado · prueba", xaxis_title="PM2.5 observado (µg/m³)", yaxis_title="PM2.5 predicho (µg/m³)")
-    st.plotly_chart(aplicar_tema(disperso), use_container_width=True, config={"displayModeBar": False})
+    st.plotly_chart(aplicar_tema(disperso), width="stretch", config={"displayModeBar": False})
 with weekly_col:
     _, semanal = agregar_series_prueba(predicciones)
     serie = go.Figure()
@@ -168,7 +168,7 @@ with weekly_col:
     serie.add_trace(go.Scatter(x=semanal.semana, y=semanal.predicho, mode="lines+markers",
                                name="Predicho", line={"color": "#E67E22"}))
     serie.update_layout(title="Media semanal de ciudad · prueba", xaxis_title="Semana", yaxis_title="PM2.5 (µg/m³)", hovermode="x unified")
-    st.plotly_chart(aplicar_tema(serie), use_container_width=True, config={"displayModeBar": False})
+    st.plotly_chart(aplicar_tema(serie), width="stretch", config={"displayModeBar": False})
 
 sesgo_filas = predicciones.assign(sesgo=predicciones.pm25_predicho-predicciones.pm25_real)
 sesgo_global = float(sesgo_filas.sesgo.mean())
@@ -178,7 +178,7 @@ sesgo_por_estacion = (sesgo_filas.groupby("estacion_id", as_index=False)
 st.subheader("Sesgo medio del Ridge v2 en prueba")
 st.markdown(f"Sesgo = predicción − observado. Global: **{sesgo_global:+.3f} µg/m³** en {len(predicciones):,} filas.")
 st.dataframe(sesgo_por_estacion.style.format({"sesgo_medio": "{:+.3f}", "n": "{:,.0f}"}),
-             hide_index=True, use_container_width=True)
+             hide_index=True, width="stretch")
 
 st.subheader("MAE por estación frente a climatología")
 mae_estacion = cargar_csv_app("diagnostico_modelo_mae_estacion_v2.csv").sort_values("MAE_clim")
@@ -188,7 +188,7 @@ fig_mae.add_trace(go.Bar(x=mae_estacion.MAE_clim, y=mae_estacion.estacion_id,
 fig_mae.add_trace(go.Bar(x=mae_estacion.MAE_mejor_v2, y=mae_estacion.estacion_id,
                          name="Ridge v2", orientation="h", marker_color=ACENTO))
 fig_mae.update_layout(title="MAE de PM2.5 por estación", barmode="group", xaxis_title="MAE (µg/m³)", yaxis_title="")
-st.plotly_chart(aplicar_tema(fig_mae), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(fig_mae), width="stretch", config={"displayModeBar": False})
 nota_metodologica("Qué se ve: el MAE del Ridge v2 y de la climatología cambia entre estaciones. Qué no se puede concluir: la diferencia no identifica por sí sola qué característica de una estación está asociada con el error.")
 
 st.subheader("Ablación por grupos")
@@ -199,7 +199,7 @@ fig_abl.add_trace(go.Bar(x=ablacion.grupo_excluido, y=ablacion.MAE_modelo_comple
 fig_abl.add_trace(go.Bar(x=ablacion.grupo_excluido, y=ablacion.MAE_sin_grupo,
                          name="Sin el grupo", marker_color="#E67E22"))
 fig_abl.update_layout(title="Error al quitar un bloque de variables", barmode="group", xaxis_title="Grupo excluido", yaxis_title="MAE (µg/m³)")
-st.plotly_chart(aplicar_tema(fig_abl), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(fig_abl), width="stretch", config={"displayModeBar": False})
 nota_metodologica("Qué se ve: el MAE varía al excluir cada grupo del Ridge de ablación. Qué no se puede concluir: la diferencia no es una contribución causal aislada ni una selección universal de variables.")
 completo = float(ablacion.MAE_modelo_completo.iloc[0])
 sin_lluvia = float(ablacion.loc[ablacion.grupo_excluido.eq("lluvia"), "MAE_sin_grupo"].iloc[0])
@@ -224,7 +224,7 @@ permutacion = cargar_csv_app("diagnostico_modelo_permutacion_grupos_v2.csv").sor
 fig_perm = go.Figure(go.Bar(x=permutacion.aumento_MAE, y=permutacion.grupo,
                             orientation="h", marker_color=ACENTO))
 fig_perm.update_layout(title="Cambio de MAE al permutar conjuntamente cada grupo", xaxis_title="Aumento del MAE (µg/m³)", yaxis_title="")
-st.plotly_chart(aplicar_tema(fig_perm), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(fig_perm), width="stretch", config={"displayModeBar": False})
 nota_metodologica("Qué se ve: la pérdida predictiva cambia al permutar grupos de columnas en conjunto. Qué no se puede concluir: columnas relacionadas pueden compartir información y el orden no demuestra causalidad.")
 
 st.subheader("Dependencia parcial")
@@ -238,7 +238,7 @@ for indice, variable in enumerate(variables_pdp):
                                showlegend=False), row=indice//2+1, col=indice%2+1)
 panel.update_yaxes(title_text="PM2.5 medio predicho (µg/m³)")
 panel.update_layout(title="Promedio de predicciones al variar una entrada", height=650)
-st.plotly_chart(aplicar_tema(panel), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(panel), width="stretch", config={"displayModeBar": False})
 nota_metodologica("Qué se ve: cambia la predicción media cuando se fija una variable y se promedian las demás entradas observadas. Qué no se puede concluir: estas curvas no describen escenarios conjuntos ni una respuesta causal.")
 
 st.subheader("Cobertura del intervalo por estación")
@@ -247,7 +247,7 @@ fig_cob = go.Figure(go.Bar(x=cobertura.cobertura*100, y=cobertura.estacion_id,
                            orientation="h", marker_color=ACENTO))
 fig_cob.update_layout(title="Porcentaje de observaciones contenidas en el intervalo 10–90 %",
                       xaxis_title="Cobertura empírica (%)", yaxis_title="")
-st.plotly_chart(aplicar_tema(fig_cob), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(fig_cob), width="stretch", config={"displayModeBar": False})
 nota_metodologica(f"El intervalo se calibró con el año de prueba; cobertura global {sesgo_filas.pm25_real.between(predicciones.limite_inferior, predicciones.limite_superior).mean():.1%}, rango por estación {cobertura.cobertura.min():.1%}–{cobertura.cobertura.max():.1%}. Esta cobertura observada no garantiza cobertura futura.")
 
 st.subheader("Lo que detectamos y corregimos")

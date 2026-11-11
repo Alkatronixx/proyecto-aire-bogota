@@ -1,13 +1,22 @@
-"""Configura la navegación multipágina de la aplicación.
-Registra siete páginas y prepara el Ridge v2 una sola vez al arrancar.
-Cada página lee los datos publicados mediante cargadores con caché.
-Las páginas aún no desarrolladas muestran un aviso explícito.
+"""Configura la navegación y carga inicial de las siete páginas de la app.
+El Ridge v2 se carga de forma diferida al abrir Simulador o Modelo, con caché.
+Las páginas activas leen datos publicados mediante cargadores con caché.
+Los componentes compartidos mantienen consistentes el tema y la presentación.
 """
 from pathlib import Path
-import streamlit as st
-from utils.datos import cargar_modelo_anomalia
+import sys
 
 APP_DIR = Path(__file__).resolve().parent
+ROOT_DIR = APP_DIR.parent
+# Streamlit antepone el directorio app/ al importar páginas; la raíz primero evita
+# que app/app.py tape al paquete app usado por los imports compartidos.
+for ruta in (str(ROOT_DIR), str(APP_DIR)):
+    if ruta in sys.path:
+        sys.path.remove(ruta)
+sys.path[:0] = [str(ROOT_DIR), str(APP_DIR)]
+
+import streamlit as st
+
 PAGES_DIR = APP_DIR / "pages"
 
 st.set_page_config(
@@ -16,10 +25,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-
-# La primera importación de scikit-learn añade varios segundos; se hace al inicio
-# para que abrir el simulador o la evaluación después de la portada no espere esa carga.
-cargar_modelo_anomalia()
 
 paginas = [
     st.Page(PAGES_DIR / "portada.py", title="Portada", icon="🌿", default=True),

@@ -283,3 +283,36 @@ Tamaños de archivos en bytes según el checkout y `git ls-files`; excluye archi
 Después de esta auditoría se añadió `pytest==9.2.0` a `requirements.txt` para que el procedimiento indicado pueda instalar el runner junto con las dependencias. Recreé `.venv-prueba` desde cero con ese archivo y la instalación terminó correctamente en Python 3.15.2. La suite con `python -m pytest -q` se mantuvo en cinco casos completados y sin progreso durante más de tres minutos; la interrumpí. El caso aislado de Portada también no terminó en más de 90 s en AppTest. El smoke test real `streamlit run app/app.py` desde ese venv sí devolvió `ok` en `/_stcore/health`.
 
 La instalación de Python 3.11 solicitada para ajustarse a `AGENTS.md` fue rechazada por el control de aprobación; el entorno local continúa en Python 3.15.2. La ejecución en Cloud con Python 3.11 todavía no está validada localmente.
+
+
+## Correcciones del 2026-11-10
+
+### Antes y después
+
+| Tema | Antes | Después |
+|---|---|---|
+| Git | La auditoría indicaba que cuatro utilidades y `data/processed/geo/` no estaban versionados. En el estado revisado para esta corrección ya estaban rastreados; `git ls-files --others --exclude-standard` solo mostró `app/utils/portada.py` y `requirements-dev.txt`. | Ejecuté `git add app/utils/contexto.py app/utils/fuentes_contexto.py app/utils/simulador.py app/utils/cifras_modelo.py data/processed/geo/`. Ninguna regla de `.gitignore` coincide con esas rutas. `models/modelo_explicativo.joblib` no está en el índice y no añadí `data/raw`. No hice commit ni push. |
+| Dependencias | `pytest`, `shapely` y `pyproj` estaban en `requirements.txt`. | `pytest==9.2.0` y `psutil==7.1.3` quedaron en `requirements-dev.txt`, que incluye `-r requirements.txt`. No encontré importaciones de ejecución de Shapely ni PyProj en `app/`; se quitaron de `requirements.txt`. Todas las dependencias de ejecución siguen fijadas con `==`. El venv limpio usó Python 3.15.2, Streamlit 1.67.0 y scikit-learn 1.9.1. Añadí en `AGENTS.md` que el despliegue use la versión más reciente que ofrezca Streamlit Community Cloud. |
+| Carga y agregaciones | Portada y Simulador habían tardado 40,64 s y 53,57 s en la auditoría original. | Añadí `@st.cache_data` al resumen de Portada; datos y agregaciones del Simulador ya usan caché, y el modelo mantiene `@st.cache_resource`. Las expresiones del resumen de Portada se trasladaron sin cambiar sus fórmulas. |
+| Carga diferida | `app.py` deserializaba el Ridge aunque Portada no lo usa. | El modelo se carga al abrir Simulador o Modelo y se reutiliza con caché. En AppTest de navegación, la primera Portada bajó de 18,48 s a 10,57 s en una medición; en la medición final fue 11,41 s. La primera apertura de Simulador fue 11,23 s en una medición y 10,18 s en la final; las aperturas calientes quedaron entre 0,06 y 0,25 s. El objetivo AppTest de frío (<10 s) aún se excede levemente en Portada y Simulador; el perfil atribuye la mayor parte a importaciones/carga de `scikit-learn` y esperas internas del runner. |
+| Importación en navegación | En un proceso AppTest limpio, `app.py` podía ocultar el paquete `app` y producir `ModuleNotFoundError: 'app' is not a package`; la suite habitual lo ocultaba porque importaba antes `app.utils`. | `app.py` pone la raíz del repositorio antes de `app/` en `sys.path`. La navegación limpia por las siete rutas terminó sin excepciones. |
+| Avisos y presentación | Había `use_container_width`, un slider con valor duplicado en Session State, la altitud fija errónea de 550 m y el gráfico de caída no nombraba ambos contaminantes. | Reemplacé el parámetro por `width="stretch"`; los sliders no reciben simultáneamente `value` y estado; la diferencia IDEAM se calcula desde `asignacion_estaciones.csv` y da 510 m; el gráfico ahora tiene título y ejes PM2.5/PM10. Actualicé la docstring de `app.py`. |
+| Cifras de contexto | Los diámetros 2,5 y 10, el divisor 365 y el conteo 20/Bosa estaban escritos directamente en páginas. | Están centralizados en `app/utils/fuentes_contexto.py` con referencias y se usan desde Contexto y Datos y metodología. Los textos conservan los valores que ya mostraba la app. |
+
+### Rendimiento medido
+
+El cProfile de Portada se ejecutó en un proceso aparte del de Simulador, ambos con el venv limpio. Portada: 13,26 s en el runner; la importación de pandas ocupó 5,99 s y `time.sleep` del AppTest acumuló 9,35 s. Simulador: 13,59 s en el runner; cargar el `.joblib` y sus importaciones ocupó 7,84 s, incluida la inicialización de scikit-learn (6,62 s). El tiempo de espera del AppTest no equivale a tiempo de cómputo de la página.
+
+Medición independiente por bloques: lectura de `aire_bogota_diario.parquet` 1,539 s; carga del artefacto y scikit-learn 7,406 s; agregaciones cache miss de Portada 0,489 s; estadísticas de entrenamiento del Simulador 0,096 s; predicción 0,140 s; tornado de 12 variables 0,041 s; asignación 0,041 s. La lectura de geometrías tomó 0,013 s (estaciones) y 0,016 s (localidades); Portada y Simulador no consumen geometrías. El bootstrap semanal de 200 réplicas solo se usa en Factores; con caché fría, la página Factores completa tardó 0,855–1,169 s junto con sus gráficos.
+
+En la navegación final AppTest, Portada tardó 11,407 s; Contexto 0,465 s; Mapa 0,185 s; Factores 0,855 s; Simulador 10,184 s; Modelo 0,379 s; Datos y metodología 0,492 s. En caliente: 0,068; 0,210; 0,112; 0,175; 0,250; 0,167; y 0,063 s, respectivamente. Las siete páginas cargaron sin excepciones. El pico RSS muestreado cada 20 ms en ese mismo proceso fue 302,1 MiB (RSS final 299,0 MiB), por debajo de 800 MiB.
+
+Streamlit headless en el venv limpio respondió `ok` en 7,296 s; el proceso se detuvo al terminar. Esto mide arranque hasta el endpoint de salud, no el tiempo de descarga/render del navegador.
+
+### Comparación de cifras visibles
+
+Antes de editar guardé la captura AppTest en `D:\ciencia de datos\baseline_app_numbers_20261111.json`. La comparación posterior está en `D:\ciencia de datos\app_visible_after_20261111.json`; ambas quedaron fuera del repositorio. Los KPI de Portada permanecen en 11,7 µg/m³; 19 estaciones; 1.096 días; 79,3% de cobertura. En Contexto siguen 7.937.898 habitantes, 19 estaciones, 70 microsensores y el rango de 2.547–2.688 m; los diámetros conservan 2,5 y 10. En Simulador permanecen el escenario A de 8,5 µg/m³, intervalo [3,2; 10,8], nivel típico 6,6; escenario B de 3,3 e intervalo [1,3; 4,2]. Modelo conserva sus métricas y tablas; Datos y metodología mantiene 20.824 filas. La única cifra corregida intencionalmente es la diferencia de altitud de 550 a 510 m. Los cálculos y series de los gráficos no se cambiaron; en “La caída de nivel” solo añadí título y nombres de ejes.
+
+### Verificación
+
+En el venv nuevo se instaló `requirements-dev.txt`; `pytest -q` terminó con **60 passed in 33,04 s** en la última corrida. AppTest recorrió las siete páginas dentro de la suite y la navegación limpia; no hubo excepciones. El arranque headless respondió correctamente. No ejecuté commit ni push.

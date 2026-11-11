@@ -161,7 +161,7 @@ else:
                                      contaminante+" medio: {valor_medio} µg/m³<br/>"+
                                      "Días con dato: {dias_con_dato}<br/>Cobertura: {cobertura}%<br/>{nota}"},
                     map_style=None)
-    st.pydeck_chart(deck, use_container_width=True)
+    st.pydeck_chart(deck, width="stretch")
     paradas_escala = escala_plotly(valores)
     gradiente = ", ".join(f"{color} {posicion*100:.2f}%" for posicion, color in paradas_escala)
     st.markdown(
@@ -179,7 +179,7 @@ else:
                               marker_color=[f"rgb{tuple(color_rgb_cuantil(v, valores))}" for v in ranking.valor_medio],
                               hovertemplate="%{y}<br>Media: %{x:.2f} µg/m³<extra></extra>"))
     barras.update_layout(title=f"{contaminante} medio por estación", xaxis_title="µg/m³", yaxis_title="")
-    st.plotly_chart(aplicar_tema(barras), use_container_width=True, config={"displayModeBar": False})
+    st.plotly_chart(aplicar_tema(barras), width="stretch", config={"displayModeBar": False})
 
     st.subheader(f"Serie semanal · {nombre_estacion}")
     estacion_id = df.loc[df.estacion.eq(nombre_estacion), "estacion_id"].iloc[0]
@@ -196,4 +196,4 @@ else:
         linea.add_vrect(x0=INICIO_HUECO, x1=FIN_HUECO, fillcolor="#778395", opacity=.22,
                         line_width=0, layer="below")
         linea.update_layout(title=f"{contaminante} semanal observado", xaxis_title="Semana", yaxis_title="µg/m³", hovermode="x unified")
-        st.plotly_chart(aplicar_tema(linea), use_container_width=True, config={"displayModeBar": False})
+        st.plotly_chart(aplicar_tema(linea), width="stretch", config={"displayModeBar": False})

@@ -50,13 +50,18 @@ def controles_escenario(prefijo: str, titulo: str, inicial: dict, estaciones: li
         lluvia_ayer = _slider_rango(prefijo, "precip_1d_antes", "Lluvia ayer (mm)", estadisticas)
     tmin = _slider_rango(prefijo, "tmin_c", "Temperatura mínima (°C)", estadisticas)
     tmax_min = max(estadisticas["cotas_entrada"]["tmax_c"][0], float(tmin))
-    tmax = st.slider(
-        "Temperatura máxima (°C)", min_value=float(tmax_min),
-        max_value=float(estadisticas["cotas_entrada"]["tmax_c"][1]),
-        value=float(np.clip(st.session_state.get(f"{prefijo}_tmax_c", inicial["tmax_c"]),
-                            tmax_min, estadisticas["cotas_entrada"]["tmax_c"][1])),
-        step=0.1, format="%.1f", key=f"{prefijo}_tmax_c",
-    )
+    maximo_tmax = float(estadisticas["cotas_entrada"]["tmax_c"][1])
+    clave_tmax = f"{prefijo}_tmax_c"
+    valor_tmax = float(np.clip(st.session_state.get(clave_tmax, inicial["tmax_c"]),
+                               tmax_min, maximo_tmax))
+    if clave_tmax in st.session_state:
+        # La sesión ya contiene el valor inicial, por eso no se pasa además value= al widget.
+        st.session_state[clave_tmax] = valor_tmax
+    argumentos_tmax = {"min_value": float(tmax_min), "max_value": maximo_tmax,
+                       "step": 0.1, "format": "%.1f", "key": clave_tmax}
+    if clave_tmax not in st.session_state:
+        argumentos_tmax["value"] = valor_tmax
+    tmax = st.slider("Temperatura máxima (°C)", **argumentos_tmax)
     st.caption(f"Rango p1–p99 de entrenamiento: {tmax_min:.1f}–{estadisticas['cotas_entrada']['tmax_c'][1]:.1f} °C; tmax ≥ tmin.")
     return {
         "estacion_id": estacion, "mes": int(mes), "dia_semana": int(dia),
@@ -71,9 +76,16 @@ def _slider_rango(prefijo: str, variable: str, titulo: str, estadisticas: dict) 
     minimo, maximo = estadisticas["cotas_entrada"][variable]
     inicial = float(estadisticas["medianas_entrada"][variable])
     step = 0.1 if variable.startswith("precip") else 0.05
-    valor = st.slider(titulo, min_value=float(minimo), max_value=float(maximo),
-                      value=float(np.clip(st.session_state.get(f"{prefijo}_{variable}", inicial), minimo, maximo)),
-                      step=step, format="%.2f", key=f"{prefijo}_{variable}")
+    clave = f"{prefijo}_{variable}"
+    valor_inicial = float(np.clip(st.session_state.get(clave, inicial), minimo, maximo))
+    if clave in st.session_state:
+        # Se evita duplicar el valor en Session State y el argumento value del slider.
+        st.session_state[clave] = valor_inicial
+    argumentos = {"min_value": float(minimo), "max_value": float(maximo),
+                  "step": step, "format": "%.2f", "key": clave}
+    if clave not in st.session_state:
+        argumentos["value"] = valor_inicial
+    valor = st.slider(titulo, **argumentos)
     st.caption(f"Entrenamiento p1–p99: {minimo:.2f}–{maximo:.2f}")
     return float(valor)
 
@@ -122,7 +134,7 @@ with col_controles:
                                       estaciones, nombres, estadisticas)
     st.caption("El preset de bajo viento usa el percentil 10 observado; no representa calma ni un valor cero inventado.")
     st.session_state["_ultimo_escenario_a"] = escenario_a.copy()
-    if st.button("Copiar A en B", use_container_width=True):
+    if st.button("Copiar A en B", width="stretch"):
         for clave in CLAVES_ESCENARIO:
             st.session_state[f"b_{clave}"] = escenario_a[clave]
     escenario_b_inicial = crear_preset("Fin de semana seco y ventoso", referencia_inicial, estadisticas)
@@ -160,7 +172,7 @@ with col_resultados:
     figura.add_vline(x=0, line_color="#D5DAE2", line_width=1)
     figura.update_layout(title="Cambio al comparar p10 con p90; resto fijo en la referencia",
                          xaxis_title="Cambio en PM2.5 predicho (µg/m³)", yaxis_title="")
-    st.plotly_chart(aplicar_tema(figura), use_container_width=True, config={"displayModeBar": False})
+    st.plotly_chart(aplicar_tema(figura), width="stretch", config={"displayModeBar": False})
     mayor = tornado.iloc[tornado.cambio.abs().argmax()]
     mae_ridge = float(cargar_csv_app("diagnostico_modelo_metricas_v2.csv").set_index("modelo").loc["+Ridge", "MAE"])
     if abs(float(mayor.cambio)) < mae_ridge:

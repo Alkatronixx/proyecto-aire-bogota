@@ -67,7 +67,7 @@ Cada estación de aire se asigna a la estación IDEAM más cercana y se guarda l
 - Los comentarios deben permitir que alguien que no escribió el código pueda explicarlo en una exposición oral.
 
 # Convenciones
-- Python 3.11, pandas, scikit-learn, plotly, pydeck, streamlit, geopandas, openpyxl, pyarrow.
+- Python 3.15.2 (versión probada localmente); para desplegar, elegir la versión más reciente que ofrezca Streamlit Community Cloud. Dependencias de ejecución: pandas, scikit-learn, plotly, pydeck, streamlit, geopandas, openpyxl, pyarrow.
 - Nombres de columnas en snake_case sin tildes; código y comentarios claros; funciones pequeñas con docstring corta.
 - Una tarea por vez: no refactorizar ni tocar archivos fuera de lo pedido.
 - Antes de terminar: ejecutar el código, mostrar errores si los hay, y no declarar éxito sin haberlo corrido.

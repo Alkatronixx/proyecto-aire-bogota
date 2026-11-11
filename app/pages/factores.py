@@ -11,7 +11,7 @@ import streamlit as st
 from app.components.paleta import ACENTO, color_rgb_cuantil
 from app.components.tema_graficos import aplicar_tema
 from app.components.ui import cargar_estilos, encabezado_pagina, nota_metodologica
-from app.utils.datos import cargar_aire
+from app.utils.datos import cargar_aire, cargar_tabla_maestra
 
 FECHA_FIN_ENTRENAMIENTO = pd.Timestamp("2025-10-23")
 ANTES_HUECO = pd.Timestamp("2025-08-03")
@@ -149,6 +149,16 @@ def figura_barras_error(tabla: pd.DataFrame, eje: str, titulo: str) -> go.Figure
 cargar_estilos()
 encabezado_pagina("Factores asociados", "Comparaciones descriptivas del PM2.5, el tiempo meteorológico y el calendario.")
 res = resumir_factores(cargar_aire())
+asignaciones = cargar_tabla_maestra("asignacion_estaciones.csv")
+# Las elevaciones corresponden a las estaciones IDEAM asignadas, no a las de aire.
+altitudes_asignadas = asignaciones[["temp_estacion", "elev_ideam_temp_m"]].drop_duplicates()
+altitud_nueva_generacion = float(altitudes_asignadas.loc[
+    altitudes_asignadas.temp_estacion.str.contains("NUEVA GENERACION", case=False), "elev_ideam_temp_m"
+].iloc[0])
+altitud_san_cayetano = float(altitudes_asignadas.loc[
+    altitudes_asignadas.temp_estacion.str.contains("SAN CAYETANO", case=False), "elev_ideam_temp_m"
+].iloc[0])
+diferencia_altitud_ideam = abs(altitud_san_cayetano - altitud_nueva_generacion)
 
 st.subheader("a) Viento")
 fig = go.Figure()
@@ -158,7 +168,7 @@ for grupo in res["viento"].cuartil.cat.categories:
                          marker_color=ACENTO, line_color=ACENTO))
 fig.update_layout(title="PM2.5 observado por cuartil de velocidad del viento de ciudad",
                   xaxis_title="Cuartil de vel_ciudad_ms", yaxis_title="PM2.5 (µg/m³)")
-st.plotly_chart(aplicar_tema(fig), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(fig), width="stretch", config={"displayModeBar": False})
 nota_metodologica(f"<strong>Qué se ve:</strong> Spearman global = {res['spearman_viento']:.2f} en {len(res['viento']):,} observaciones.<br><strong>Qué no se puede concluir:</strong> es una asociación descriptiva; no identifica un efecto del viento por sí solo.")
 
 st.subheader("b) Calendario")
@@ -170,7 +180,7 @@ for i, tabla in enumerate([res["ci_dia"], res["ci_tipo"]], start=1):
                          marker_color=ACENTO, showlegend=False), row=1, col=i)
 cal.update_yaxes(title_text="PM2.5 (µg/m³)", row=1, col=1)
 cal.update_yaxes(title_text="PM2.5 (µg/m³)", row=1, col=2)
-st.plotly_chart(aplicar_tema(cal), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(cal), width="stretch", config={"displayModeBar": False})
 dif_cal = float(res["ci_tipo"].set_index("categoria").media.get("Laborable", np.nan) - res["ci_tipo"].set_index("categoria").media.get("Fin de semana", np.nan))
 nota_metodologica(f"<strong>Qué se ve:</strong> las barras muestran promedios por día y tipo, con intervalos bootstrap por semana ({REPLICAS_BOOTSTRAP} réplicas; laborable menos fin de semana: {dif_cal:+.2f} µg/m³).<br><strong>Qué no se puede concluir:</strong> las diferencias no aíslan el calendario de las demás condiciones concurrentes.")
 
@@ -182,7 +192,7 @@ for periodo, tabla in lluvia.groupby("periodo"):
                         text=tabla["count"].map(lambda n: f"n={n:,}"), marker_color=ACENTO))
 ll.update_layout(title="PM2.5 observado según lluvia del mismo día y del día anterior",
                  barmode="group", xaxis_title="Condición observada", yaxis_title="PM2.5 (µg/m³)")
-st.plotly_chart(aplicar_tema(ll), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(ll), width="stretch", config={"displayModeBar": False})
 d_hoy = res["lluvia_dif"].get("Mismo día", float("nan")); d_ayer = res["lluvia_dif"].get("Día anterior", float("nan"))
 nota_metodologica(f"<strong>Qué se ve:</strong> diferencia con/sin lluvia de {d_hoy:+.2f} µg/m³ el mismo día y {d_ayer:+.2f} µg/m³ al comparar el día anterior.<br><strong>Qué no se puede concluir:</strong> estos contrastes no estiman un efecto aislado de la lluvia.")
 
@@ -192,8 +202,8 @@ tf = go.Figure(go.Scatter(x=temp.ventana, y=temp.media, mode="lines+markers",
                           marker={"size": 10, "color": ACENTO}, line={"color": ACENTO},
                           text=temp.n.map(lambda n: f"n={n:,}"), hovertemplate="%{x}<br>%{y:.2f} µg/m³<br>%{text}<extra></extra>"))
 tf.update_layout(title="PM2.5 medio por ventanas de cuantiles de tmax_anom", xaxis_title="Cuantil de anomalía de temperatura máxima", yaxis_title="PM2.5 (µg/m³)")
-st.plotly_chart(aplicar_tema(tf), use_container_width=True, config={"displayModeBar": False})
-nota_metodologica("<strong>Qué se ve:</strong> las ventanas comparan anomalías respecto a la media de entrenamiento de cada estación IDEAM.<br><strong>Qué no se puede concluir:</strong> San Cayetano y Nueva Generación difieren en 550 m de altitud, por lo que niveles absolutos no son directamente comparables.")
+st.plotly_chart(aplicar_tema(tf), width="stretch", config={"displayModeBar": False})
+nota_metodologica(f"<strong>Qué se ve:</strong> las ventanas comparan anomalías respecto a la media de entrenamiento de cada estación IDEAM.<br><strong>Qué no se puede concluir:</strong> San Cayetano y Nueva Generación difieren en {diferencia_altitud_ideam:.0f} m de altitud, calculados desde el catálogo IDEAM asignado; los niveles absolutos no son directamente comparables.")
 
 st.subheader("e) Estacionalidad")
 mensual = res["mensual"]
@@ -208,7 +218,7 @@ est.add_trace(go.Bar(x=lluvia_mes.mes, y=lluvia_mes.precip_media,
 est.update_layout(title="PM2.5 mensual por año y lluvia media mensual", xaxis_title="Mes calendario", hovermode="x unified")
 est.update_yaxes(title_text="PM2.5 (µg/m³)", secondary_y=False)
 est.update_yaxes(title_text="Precipitación media (mm/día)", secondary_y=True)
-st.plotly_chart(aplicar_tema(est), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(est), width="stretch", config={"displayModeBar": False})
 nota_metodologica(f"<strong>Qué se ve:</strong> 2023 se rotula parcial y la lluvia media por mes calendario aparece en eje secundario.<br><strong>Qué no se puede concluir:</strong> 2023 ({res['dias_2023']} días) y 2026 ({res['dias_2026']} días) son parciales y no se comparan como tendencia.")
 
 st.subheader("f) Estaciones y localidades")
@@ -218,13 +228,13 @@ with col1:
     esf = go.Figure(go.Bar(x=estaciones.pm25, y=estaciones.estacion, orientation="h",
                            marker_color=[f"rgb{tuple(color_rgb_cuantil(v, estaciones.pm25))}" for v in estaciones.pm25]))
     esf.update_layout(title="PM2.5 medio por estación", xaxis_title="µg/m³", yaxis_title="")
-    st.plotly_chart(aplicar_tema(esf), use_container_width=True, config={"displayModeBar": False})
+    st.plotly_chart(aplicar_tema(esf), width="stretch", config={"displayModeBar": False})
 with col2:
     localidades = res["localidades"]
     lof = go.Figure(go.Bar(x=localidades.pm25, y=localidades.localidad, orientation="h",
                            marker_color=[f"rgb{tuple(color_rgb_cuantil(v, localidades.pm25))}" for v in localidades.pm25]))
     lof.update_layout(title="PM2.5 medio por localidad", xaxis_title="µg/m³", yaxis_title="")
-    st.plotly_chart(aplicar_tema(lof), use_container_width=True, config={"displayModeBar": False})
+    st.plotly_chart(aplicar_tema(lof), width="stretch", config={"displayModeBar": False})
 nota_metodologica(f"<strong>Qué se ve:</strong> las medias resumen {len(estaciones)} estaciones y {len(localidades)} localidades con registros.<br><strong>Qué no se puede concluir:</strong> las diferencias espaciales no separan ubicación, cobertura y características de cada estación.")
 
 st.subheader("La caída de nivel")
@@ -238,9 +248,9 @@ for nombre, sufijo, color in [("Antes del hueco", "_antes", "#00C2A8"), ("Despu�
 ca.add_trace(go.Bar(x=res["razon"].periodo, y=res["razon"].mediana,
                     marker_color=["#00C2A8", "#E67E22"], showlegend=False), row=1, col=3)
 ca.update_xaxes(tickangle=-65, row=1, col=1); ca.update_xaxes(tickangle=-65, row=1, col=2)
-ca.update_yaxes(title_text="µg/m³", row=1, col=1); ca.update_yaxes(title_text="µg/m³", row=1, col=2)
-ca.update_layout(barmode="group", height=580)
-st.plotly_chart(aplicar_tema(ca), use_container_width=True, config={"displayModeBar": False})
+ca.update_yaxes(title_text="PM2.5 (µg/m³)", row=1, col=1); ca.update_yaxes(title_text="PM10 (µg/m³)", row=1, col=2)
+ca.update_layout(title="La caída de nivel · PM2.5, PM10 y razón", barmode="group", height=580)
+st.plotly_chart(aplicar_tema(ca), width="stretch", config={"displayModeBar": False})
 razon_a = float(res["razon"].iloc[0].mediana); razon_d = float(res["razon"].iloc[1].mediana)
 nota_metodologica(f"<strong>Qué se ve:</strong> el PM2.5 medio fue menor después del hueco en {res['caida_estaciones']} de {res['n_estaciones']} estaciones; la razón mediana PM2.5/PM10 pasó de {razon_a:.3f} a {razon_d:.3f}. Las medias de viento, lluvia y tmax_anom cambiaron {cambio.vel_ciudad_ms_diferencia.mean():+.3f} m/s, {cambio.precip_mm_diferencia.mean():+.3f} mm y {cambio.tmax_anom_diferencia.mean():+.3f} °C.<br><strong>Qué no se puede concluir:</strong> este resumen no determina el origen; podría tratarse de una variación real o de una diferencia de equipo o calibración.")
 
@@ -252,5 +262,5 @@ heat = go.Figure(go.Heatmap(z=corr.to_numpy(), x=corr.columns, y=corr.index,
                             colorbar={"title":"ρ"}, hovertemplate="%{y} · %{x}<br>Spearman: %{z:.2f}<extra></extra>"))
 heat.update_layout(title="Variables numéricas y PM2.5 (sin dirección del viento)", height=680,
                    xaxis={"tickangle":-45})
-st.plotly_chart(aplicar_tema(heat), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(heat), width="stretch", config={"displayModeBar": False})
 nota_metodologica("Correlación no es causalidad. Se excluyen dir_sin y dir_cos porque la dirección del viento está fuera de este análisis según las decisiones vigentes.")

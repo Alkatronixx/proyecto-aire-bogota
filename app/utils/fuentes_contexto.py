@@ -11,6 +11,11 @@ ESTACIONES_SDA = 19
 MICROSENSORES_SDA = 70
 # fuente verificada el 2026-11-10: https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab
 URL_ESTACIONES_SDA = "https://ambientebogota.gov.co/es/web/sda/estaciones-rmcab"
+# fuente verificada el 2026-11-10: ficha de estaciones RMCAB de la SDA.
+ESTACIONES_LISTADAS_SDA = 20
+# fuente verificada el 2026-11-10: página de contaminantes de la OMS.
+DIAMETRO_PM25_MICROMETROS = 2.5
+DIAMETRO_PM10_MICROMETROS = 10
 # fuente verificada el 2026-11-10: https://www.who.int/teams/environment-climate-change-and-health/air-quality-and-health/health-impacts/types-of-pollutants
 URL_GUIAS_OMS = "https://www.who.int/teams/environment-climate-change-and-health/air-quality-and-health/health-impacts/types-of-pollutants"
 # fuente verificada el 2026-11-10: https://www.who.int/news-room/questions-and-answers/item/who-global-air-quality-guidelines

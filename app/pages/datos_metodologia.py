@@ -11,6 +11,7 @@ from app.components.paleta import escala_plotly
 from app.components.tema_graficos import aplicar_tema
 from app.components.ui import cargar_estilos, caja_pendiente, encabezado_pagina
 from app.utils.datos import cargar_aire, cargar_csv_app, cargar_markdown, tabla_decisiones_vigentes, tabla_fuentes
+from app.utils.fuentes_contexto import ESTACIONES_LISTADAS_SDA
 
 cargar_estilos()
 encabezado_pagina("Datos y metodología", "Fuentes, cobertura temporal, decisiones vigentes y límites de interpretación.")
@@ -18,7 +19,7 @@ df = cargar_aire()
 
 fuentes = tabla_fuentes(cargar_markdown("fuentes"))
 st.subheader("Fuentes documentadas")
-st.dataframe(fuentes, hide_index=True, use_container_width=True)
+st.dataframe(fuentes, hide_index=True, width="stretch")
 
 st.subheader("Cobertura y estructura")
 c1, c2, c3 = st.columns(3)
@@ -52,13 +53,13 @@ if "2025-08" in meses and "2025-10" in meses:
                   fillcolor="#7B8492", opacity=.18, line_width=0, layer="below")
     fig.add_annotation(x=meses.index("2025-09"), y=-.7, xref="x", yref="y", text="hueco de PM",
                        showarrow=False, font={"color": "#DDE2EA", "size": 10})
-st.plotly_chart(aplicar_tema(fig), use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(aplicar_tema(fig), width="stretch", config={"displayModeBar": False})
 st.caption("El hueco oficial de PM2.5 va del 2025-08-04 al 2025-10-16. Los faltantes permanecen como faltantes.")
 
 texto_decisiones = cargar_markdown("decisiones")
 decisiones = tabla_decisiones_vigentes(texto_decisiones)
 st.subheader("Decisiones vigentes")
-st.dataframe(decisiones, hide_index=True, use_container_width=True)
+st.dataframe(decisiones, hide_index=True, width="stretch")
 
 st.subheader("Incidentes y controles de calidad documentados")
 incidentes = decisiones.loc[decisiones.ID.isin(["DV-04", "DV-05", "DV-07", "DV-10"]), ["ID", "Tema", "Decisión vigente"]]
@@ -73,7 +74,7 @@ incidentes = pd.concat(
     ],
     ignore_index=True,
 )
-st.dataframe(incidentes, hide_index=True, use_container_width=True)
+st.dataframe(incidentes, hide_index=True, width="stretch")
 
 st.subheader("Limitaciones")
 limitaciones = [
@@ -82,7 +83,7 @@ limitaciones = [
     "La dirección del viento se excluye del modelo base: su promedio diario y su coherencia entre estaciones tienen limitaciones documentadas.",
     "Aproximadamente el 97% de los datos IDEAM tiene nivel preliminar.",
     "2023 y 2026 son años parciales dentro del periodo analizado.",
-    "La página de la SDA lista 20 estaciones, incluida Bosa, que no está en nuestros archivos.",
+    f"La página de la SDA lista {ESTACIONES_LISTADAS_SDA} estaciones, incluida Bosa, que no está en nuestros archivos.",
 ]
 for texto in limitaciones:
     st.markdown(f"- {texto}")
