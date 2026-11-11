@@ -5,6 +5,7 @@ No lee fuentes sin procesar ni crea o modifica archivos de datos.
 """
 from pathlib import Path
 import json
+import re
 import joblib
 import pandas as pd
 import streamlit as st
@@ -96,17 +97,13 @@ def cargar_csv_app(nombre: str) -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
-def preparar_cobertura_estacion_mes(fecha_inicio: str, fecha_fin: str) -> tuple[pd.DataFrame, list[str], list[str], pd.DataFrame]:
-    """Prepara una matriz estación-mes para la figura de cobertura metodológica."""
-    cobertura = cargar_csv_app("cobertura_estacion_mes.csv")
-    cobertura["año_mes"] = cobertura["año_mes"].astype(str)
-    meses = pd.period_range(pd.Timestamp(fecha_inicio).to_period("M"),
-                            pd.Timestamp(fecha_fin).to_period("M"), freq="M").astype(str).tolist()
-    estaciones = sorted(cobertura.estacion_id.astype(str).unique())
-    matriz = cobertura.pivot_table(
-        index="estacion_id", columns="año_mes", values="pct_dias_pm25", aggfunc="mean"
-    ).reindex(index=estaciones, columns=meses)
-    return cobertura, meses, estaciones, matriz
+def preparar_cobertura_estacion_mes() -> tuple[pd.DataFrame, list[str], list[str], pd.DataFrame]:
+    """Lee la matriz compacta estación-mes precalculada para la figura."""
+    matriz = cargar_csv_app("cobertura_estacion_mes.csv").set_index("estacion_id")
+    matriz.index = matriz.index.astype(str)
+    meses = matriz.columns.astype(str).tolist()
+    estaciones = matriz.index.tolist()
+    return matriz, meses, estaciones, matriz
 
 
 @st.cache_data(show_spinner=False)
@@ -133,16 +130,31 @@ def cargar_ficha_estaciones() -> pd.DataFrame:
     return pd.read_csv(GEO_DATA / "estaciones_rmcab_ficha.csv", dtype={"estacion_id": str})
 
 
-@st.cache_data(show_spinner=False)
-def cargar_markdown(tipo: str) -> str:
-    """Lee solo los dos documentos aprobados para la metodología de la app."""
+def rutas_markdown(tipo: str) -> tuple[Path, ...]:
+    """Devuelve las rutas de documentación que alimentan la página metodológica."""
     rutas = {
-        "fuentes": ROOT / "data" / "docs" / "fuentes.md",
-        "decisiones": ROOT / "docs" / "decisiones.md",
+        "fuentes": (ROOT / "data" / "docs" / "fuentes.md",),
+        # El registro detallado contiene decisiones recientes; el documento raíz conserva el consolidado.
+        "decisiones": (ROOT / "docs" / "decisiones.md", ROOT / "data" / "docs" / "decisiones.md"),
     }
     if tipo not in rutas:
         raise ValueError(f"Documento no permitido: {tipo}")
-    return rutas[tipo].read_text(encoding="utf-8")
+    return rutas[tipo]
+
+
+def firma_markdown(tipo: str) -> tuple[int, ...]:
+    """Forma una clave de caché que cambia cuando se modifica un documento fuente."""
+    firma: list[int] = []
+    for ruta in rutas_markdown(tipo):
+        estado = ruta.stat()
+        firma.extend((estado.st_mtime_ns, estado.st_size))
+    return tuple(firma)
+
+
+@st.cache_data(show_spinner=False)
+def cargar_markdown(tipo: str, firma: tuple[int, ...] = ()) -> str:
+    """Lee documentación aprobada; la firma invalida caché sin reiniciar la app."""
+    return "\n\n".join(ruta.read_text(encoding="utf-8") for ruta in rutas_markdown(tipo))
 
 
 @st.cache_resource(show_spinner=False)
@@ -172,6 +184,62 @@ def tabla_decisiones_vigentes(texto: str) -> pd.DataFrame:
             filas.append(celdas)
     columnas = ["ID", "Tema", "Decisión vigente", "Motivo", "Fecha original"]
     return pd.DataFrame(filas, columns=columnas) if filas else pd.DataFrame(columns=columnas)
+
+
+@st.cache_data(show_spinner=False)
+def entradas_decisiones(texto: str) -> tuple[pd.DataFrame, list[str]]:
+    """Extrae decisiones fechadas con distintos estilos Markdown y señala secciones incompletas."""
+    patron = re.compile(r"^##\s+(\d{4}-\d{2}-\d{2}):\s*(.+?)\s*$")
+    secciones: list[tuple[str, str, list[str]]] = []
+    avisos: list[str] = []
+    fecha_actual: str | None = None
+    titulo_actual: str | None = None
+    cuerpo: list[str] = []
+
+    def guardar() -> None:
+        if fecha_actual is not None and titulo_actual is not None:
+            secciones.append((fecha_actual, titulo_actual, cuerpo.copy()))
+
+    for linea in texto.splitlines():
+        if linea.startswith("## "):
+            guardar()
+            match = patron.match(linea.strip())
+            if match:
+                fecha_actual, titulo_actual = match.group(1), match.group(2).strip()
+                cuerpo = []
+            else:
+                fecha_actual = titulo_actual = None
+                cuerpo = []
+                if re.match(r"^##\s+\d{4}-\d{2}-\d{2}", linea):
+                    avisos.append(linea.strip())
+            continue
+        if fecha_actual is not None:
+            cuerpo.append(linea)
+    guardar()
+
+    filas: list[dict[str, str]] = []
+    vistos: set[tuple[str, str]] = set()
+    for fecha, titulo, contenido in secciones:
+        clave = (fecha, titulo.casefold())
+        if clave in vistos:
+            continue
+        vistos.add(clave)
+        decision = ""
+        for linea in contenido:
+            normalizada = re.sub(r"[*_`]+", "", linea).strip()
+            match = re.match(r"^-\s*Decisión\s*:\s*(.+)$", normalizada, flags=re.IGNORECASE)
+            if match:
+                decision = match.group(1).strip()
+                break
+        if decision:
+            filas.append({"Fecha": fecha, "Título": titulo, "Decisión": decision})
+        else:
+            avisos.append(f"{fecha}: {titulo}")
+
+    tabla = pd.DataFrame(filas, columns=["Fecha", "Título", "Decisión"])
+    if not tabla.empty:
+        tabla = tabla.sort_values(["Fecha", "Título"], kind="stable").reset_index(drop=True)
+    return tabla, avisos
 
 
 @st.cache_data(show_spinner=False)

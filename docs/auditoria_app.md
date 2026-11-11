@@ -400,3 +400,31 @@ Comprobé existencia, sintaxis y función `main` de los ocho scripts mencionados
 | Modelo y gráficos de ablación | Métricas de los CSV v2 | Mismos valores; títulos y explicación corregidos | Iguales |
 
 Mapa y Factores no tuvieron cambios de cálculo. No se modificaron `data/raw/`, `data/interim/`, `data/processed/` existentes, `models/` ni `docs/decisiones.md`; tampoco hice commit ni push.
+
+## Corrección de cobertura y lectura de decisiones (2026-11-11)
+
+### Cobertura de PM2.5
+
+Antes del cambio, `app/pages/datos_metodologia.py` leía el CSV largo de **703 filas × 3 columnas**, lo pivotaba a **19 estaciones × 37 meses** y construía una figura `px.imshow`. El JSON de la figura medía **15,42 KB**, contenía **1 traza**, **703 celdas** y **1 anotación general** para el hueco (ninguna anotación por celda). El hover era `Año-mes: %{x}<br>Estación: %{y}<br>% días con PM2.5: %{z}<extra></extra>`.
+
+La figura ahora usa `go.Heatmap` con la matriz compacta y una altura fija de **620 px**; su JSON mide **9,32 KB**, con **1 traza, 703 celdas y 0 anotaciones**. El hover breve es `%{y}<br>%{x}: %{z:.1f}%<extra></extra>`. El hueco conserva el sombreado y se explica en el texto bajo el gráfico. No se encontró Playwright instalado (`importlib.util.find_spec("playwright")` devolvió `None`), así que no se midió interacción del hilo principal ni se pudo observar el aviso del navegador; la prueba local valida render y tamaño del payload.
+
+Agregué `src/datos/preparar_cobertura_app.py`, que lee solo `fecha`, `estacion_id` y `pm25` de la tabla maestra, calcula la cobertura con la regla anterior, la redondea a la precisión publicada y escribe `data/processed/app/cobertura_estacion_mes.csv` como **19 × 38** (ID más las 37 columnas mensuales). La ejecución verificó **703/703 celdas iguales** al producto largo previo y generó un archivo de **7.795 bytes**. `src/modelo/explorar.py` ahora reserva el CSV largo para `cobertura_estacion_mes_detalle.csv`, para que una exploración posterior no reemplace por accidente la matriz que consume la app. El uso se documenta en el docstring del script y aquí.
+
+### Lectura de decisiones
+
+La página solo mostraba la tabla consolidada de `docs/decisiones.md`; las entradas recientes con encabezado `## AAAA-MM-DD: título` estaban en `data/docs/decisiones.md` y no se leían. El cargador ahora combina ambos documentos. Su clave `st.cache_data` incluye fecha de modificación en nanosegundos y tamaño de ambos archivos, por lo que una edición cambia la clave y se refleja sin reiniciar el proceso.
+
+El parser acepta `- Decisión:`, `- **Decisión:**` y `- *Decisión:*`; las **56 entradas** se interpretaron sin avisos. Si una entrada fechada no tiene una decisión reconocible o su encabezado no coincide con el formato, la página muestra un aviso. El recuento y los títulos recientes quedan visibles, y el detalle completo se puede abrir en el expander. Últimas cinco, de más reciente a anterior:
+
+1. 2026-11-11 — Simulador y despliegue
+2. 2026-11-10 — Índice de viento de ciudad en lugar de viento por estación
+3. 2026-11-10 — Valores centinela y rachas inválidas
+4. 2026-11-10 — Tabla ICA y cifras de salud
+5. 2026-11-10 — Selección del modelo por validación cruzada temporal, no por la prueba
+
+### Verificación y comparación de cifras
+
+El script de cobertura, las pruebas de parser/clave de caché y el render en AppTest comprobaron la matriz, la interpretación de énfasis distintos y el aviso para una entrada incompleta. En un clon local del último commit con el árbol de trabajo aplicado, `python -B -m pytest -q` terminó con **47 passed, 19 skipped**; `python -B -m pytest -q tests/test_app.py` dio **15 passed** (incluye AppTest de las siete páginas y navegación). El primer intento completo encontró un test heredado que cargaba `modelo_explicativo.joblib`, no versionado intencionalmente; actualicé el test para validar el Ridge predictivo versionado y el modelo v2 del Simulador. No copié ni cambié artefactos de `models/`. Streamlit headless inició desde el clon y `/_stcore/health` respondió `ok`.
+
+Comparé con la captura AppTest previa `D:\ciencia de datos\app_visible_after_contenido_20261111.json`: las métricas coinciden en las siete páginas; los KPI anteriores de Portada están presentes **4/4** y el KPI de Simulador **1/1**. En Datos y metodología siguen exactamente **2023-10-24 — 2026-10-23**, “Una fila por estación y día” y **20.824** filas. La nueva cifra de control es **56 decisiones interpretadas**; la matriz de cobertura coincide en todas sus celdas. No edité `docs/decisiones.md`, ningún modelo ni dato fuente; no hice commit ni push.

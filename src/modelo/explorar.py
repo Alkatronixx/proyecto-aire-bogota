@@ -57,7 +57,8 @@ def main() -> None:
     pares = d[["pm25", "pm10"]].dropna()
     print(f"correlación={pares.pm25.corr(pares.pm10):.4f}; mediana razón pm25/pm10={ (pares.pm25 / pares.pm10.replace(0, np.nan)).median():.4f}; n={len(pares)}")
     cobertura = d.assign(año_mes=d.fecha.dt.to_period("M").astype(str)).groupby(["estacion_id", "año_mes"]).pm25.apply(lambda x: 100*x.notna().mean()).rename("pct_dias_pm25").reset_index()
-    cobertura.to_csv(APP / "cobertura_estacion_mes.csv", index=False)
+    # La exploración conserva el detalle largo separado; la app usa la matriz compacta que genera preparar_cobertura_app.py.
+    cobertura.to_csv(APP / "cobertura_estacion_mes_detalle.csv", index=False)
 
     # El umbral queda omitido hasta disponer de una cifra oficial citada.
     categorias = ["estacion", "localidad", "dia_semana", "mes", "temporada", "es_festivo", "llueve", "precip_1d_antes_ge_1", "cuartil_vel_ciudad", "año"]

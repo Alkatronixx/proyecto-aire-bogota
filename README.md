@@ -103,8 +103,8 @@ Los limpiadores leen los archivos originales y escriben productos en `data/inter
 
 ## Equipo y curso
 
-- Equipo: **[Nombres del equipo]**
-- Curso / Universidad: **[Curso / Universidad]**
+- Equipo: Sergio Fuentes, Samuel Alcala, Camilo Lamprea, Daniel Fonseca, Cristian Ortiz
+- Curso / Universidad: Ciencia de Datos - Universidad UADE
 
 ## Licencia y uso de datos
 

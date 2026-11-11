@@ -27,13 +27,22 @@ def test_rezago_ayer_coincide_con_fecha_anterior_original():
 
 
 def test_modelos_app_cargan_y_simulador_es_finito():
-    """Los artefactos existen y un escenario devuelve predicción e intervalo válido."""
+    """Los artefactos versionados cargan y el simulador devuelve un intervalo válido."""
     import joblib
-    from src.modelo.simular import predecir_escenario
-    for nombre in ("modelo_explicativo.joblib","modelo_predictivo.joblib"):
-        joblib.load(ROOT/"models"/nombre)
-    est=pd.read_csv(ROOT/"data"/"processed"/"asignacion_estaciones.csv",dtype={"estacion_id":str}).estacion_id.iloc[0]
-    salida=predecir_escenario(est,7,5,False,0,0,1.5,22,8)
-    pred=salida["prediccion"]; bajo,alto=salida["intervalo_10_90"]
+    from app.utils.datos import cargar_aire, cargar_tabla_maestra
+    from app.utils.simulador import (
+        estadisticas_entrenamiento, escenario_referencia, predecir_escenario,
+    )
+    # El explicativo de 51 MB se excluye intencionalmente; no debe ser requisito del clon desplegable.
+    joblib.load(ROOT/"models"/"modelo_predictivo.joblib")
+    artefacto = joblib.load(ROOT/"models"/"modelo_anomalia_v2.joblib")
+    datos = cargar_aire()
+    asignacion = cargar_tabla_maestra("asignacion_estaciones.csv")
+    asignacion["estacion_id"] = asignacion.estacion_id.astype(str)
+    estadisticas = estadisticas_entrenamiento(datos)
+    estacion = asignacion.estacion_id.iloc[0]
+    escenario = escenario_referencia(estadisticas, estacion, 7, asignacion)
+    salida = predecir_escenario(escenario, artefacto, estadisticas, asignacion)
+    pred=salida["prediccion"]; bajo=salida["limite_inferior"]; alto=salida["limite_superior"]
     assert np.isfinite(pred) and np.isfinite(bajo) and np.isfinite(alto)
     assert bajo <= pred <= alto

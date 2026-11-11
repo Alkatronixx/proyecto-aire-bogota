@@ -6,10 +6,11 @@ Expone limitaciones y el hueco de PM sin rellenar sus valores.
 import streamlit as st
 from app.components.ui import cargar_estilos, encabezado_pagina
 from app.utils.datos import (
-    cargar_fechas_aire, cargar_markdown,
+    cargar_fechas_aire, cargar_markdown, entradas_decisiones, firma_markdown,
     preparar_cobertura_estacion_mes, tabla_decisiones_vigentes, tabla_fuentes,
 )
 from app.utils.fuentes_contexto import ESTACIONES_LISTADAS_SDA, TEXTO_DATOS_ICA
+from app.utils.graficos import figura_cobertura_estacion_mes
 
 cargar_estilos()
 encabezado_pagina("Datos y metodología", "Fuentes, cobertura temporal, decisiones vigentes y límites de interpretación.")
@@ -32,33 +33,9 @@ c3.metric("Filas", f"{len(df):,}".replace(",", "."))
 with st.expander("Cobertura de PM2.5 · estación × mes", on_change="rerun", key="expander_cobertura_metodologia") as bloque_cobertura:
     if bloque_cobertura.open:
         with st.spinner("Cargando cobertura mensual de las estaciones…"):
-            cobertura, meses, estaciones, matriz = preparar_cobertura_estacion_mes(
-                df.fecha.min().strftime("%Y-%m-%d"), df.fecha.max().strftime("%Y-%m-%d")
-            )
-            import plotly.express as px
-            from app.components.paleta import escala_plotly
-            from app.components.tema_graficos import aplicar_tema
-
-            fig = px.imshow(
-                matriz,
-                x=meses,
-                y=estaciones,
-                aspect="auto",
-                zmin=0,
-                zmax=100,
-                color_continuous_scale=escala_plotly(cobertura.pct_dias_pm25),
-                labels={"x": "Año-mes", "y": "Estación", "color": "% días con PM2.5"},
-                origin="upper",
-            )
-            fig.update_layout(title="Porcentaje de días del mes con PM2.5 observado", coloraxis_colorbar={"ticksuffix": "%"})
-            fig.update_xaxes(tickangle=-60, dtick=2)
-            # El área se marca sobre las columnas del periodo de ausencia documentado, sin cambiar sus valores.
-            if "2025-08" in meses and "2025-10" in meses:
-                fig.add_vrect(x0=meses.index("2025-08")-.5, x1=meses.index("2025-10")+.5,
-                              fillcolor="#7B8492", opacity=.18, line_width=0, layer="below")
-                fig.add_annotation(x=meses.index("2025-09"), y=-.7, xref="x", yref="y", text="hueco de PM",
-                                   showarrow=False, font={"color": "#DDE2EA", "size": 10})
-            st.plotly_chart(aplicar_tema(fig), width="stretch", config={"displayModeBar": False})
+            cobertura, meses, estaciones, matriz = preparar_cobertura_estacion_mes()
+            fig = figura_cobertura_estacion_mes(matriz, meses, estaciones)
+            st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
             st.caption("El hueco oficial de PM2.5 va del 2025-08-04 al 2025-10-16. Los faltantes permanecen como faltantes.")
             st.download_button(
                 "Descargar cobertura mensual completa",
@@ -66,12 +43,25 @@ with st.expander("Cobertura de PM2.5 · estación × mes", on_change="rerun", ke
                 file_name="cobertura_estacion_mes.csv", mime="text/csv",
             )
 
+decisiones_texto = cargar_markdown("decisiones", firma_markdown("decisiones"))
+entradas, avisos_decisiones = entradas_decisiones(decisiones_texto)
+st.subheader("Registro de decisiones fechadas")
+st.caption(f"Entradas interpretadas: {len(entradas)}")
+if not entradas.empty:
+    ultimas = entradas.tail(5).iloc[::-1]
+    st.markdown("**Últimas 5 entradas:** " + " · ".join(
+        f"{fila.Fecha}: {fila.Título}" for fila in ultimas.itertuples(index=False)
+    ))
+if avisos_decisiones:
+    st.warning("No se pudo interpretar la decisión o el encabezado de estas entradas: "
+               + "; ".join(avisos_decisiones))
+
 with st.expander("Decisiones vigentes e incidentes de calidad", on_change="rerun", key="expander_decisiones_metodologia") as bloque_decisiones:
     if bloque_decisiones.open:
         with st.spinner("Leyendo la tabla de decisiones y los incidentes…"):
             import pandas as pd
 
-            decisiones = tabla_decisiones_vigentes(cargar_markdown("decisiones"))
+            decisiones = tabla_decisiones_vigentes(decisiones_texto)
             st.subheader("Decisiones vigentes")
             st.dataframe(decisiones, hide_index=True, width="stretch", lazy=True)
             st.download_button(
@@ -79,7 +69,8 @@ with st.expander("Decisiones vigentes e incidentes de calidad", on_change="rerun
                 decisiones.to_csv(index=False).encode("utf-8-sig"),
                 file_name="decisiones_vigentes.csv", mime="text/csv",
             )
-
+            st.subheader("Detalle de decisiones fechadas")
+            st.dataframe(entradas, hide_index=True, width="stretch", lazy=True)
             st.subheader("Incidentes y controles de calidad documentados")
             incidentes = decisiones.loc[
                 decisiones.ID.isin(["DV-04", "DV-05", "DV-07", "DV-10"]),
