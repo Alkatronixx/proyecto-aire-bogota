@@ -41,7 +41,7 @@ html, body, [class*="css"] {
   max-width: 850px;
 }
 
-.kpi-card, .finding-card, .pending-card, .method-note {
+.kpi-card, .finding-card, .method-note {
   background: var(--aire-card);
   border: 1px solid var(--aire-line);
   border-radius: 12px;
@@ -54,8 +54,6 @@ html, body, [class*="css"] {
 .kpi-detail { color: var(--aire-muted); font-size: .78rem; line-height: 1.45; }
 .finding-card { align-items: flex-start; color: var(--aire-text); display: flex; gap: .8rem; line-height: 1.55; min-height: 118px; padding: 1.15rem 1.2rem; }
 .finding-mark { color: var(--aire-accent); font-size: .72rem; padding-top: .28rem; }
-.pending-card { background: #252B36; border-color: #454E5E; color: #D5DAE2; line-height: 1.55; padding: 1rem 1.1rem; }
-.pending-card strong { color: #F1C40F; }
 .method-note { border-left: 3px solid var(--aire-accent); color: var(--aire-muted); line-height: 1.55; padding: .85rem 1rem; }
 
 div[data-testid="stPlotlyChart"], div[data-testid="stDeckGlJsonChart"] {

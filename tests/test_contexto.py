@@ -75,6 +75,23 @@ def test_constantes_oficiales_coinciden_con_las_cifras_verificadas() -> None:
     assert fuentes.OMS_DIAS_EXCEDENCIA_24H == (3, 4)
     assert fuentes.DIAS_MINIMOS_PROMEDIO_ANUAL == 274
     assert fuentes.FUENTES and all(fuente["url"].startswith("https://") for fuente in fuentes.FUENTES)
+    assert [fila["Categoría"] for fila in fuentes.ICA_24H_PM] == [
+        "Buena", "Aceptable", "Dañina a grupos sensibles", "Dañina a la salud",
+        "Muy dañina", "Peligrosa",
+    ]
+    assert [fila["PM2.5 24 h (µg/m³)"] for fila in fuentes.ICA_24H_PM] == [
+        "0–12", "13–37", "38–55", "56–150", "151–250", "251–500",
+    ]
+    assert [fila["PM10 24 h (µg/m³)"] for fila in fuentes.ICA_24H_PM] == [
+        "0–54", "55–154", "155–254", "255–354", "355–424", "425–604",
+    ]
+    assert fuentes.URL_IDEAM_ICA_24H in [f["url"] for f in fuentes.FUENTES]
+    assert fuentes.URL_SALUD_PM25_AIRQ in [f["url"] for f in fuentes.FUENTES]
+    assert all(f["fecha_consulta"] == "2026-11-11" for f in fuentes.FUENTES[-3:])
+    assert [fila["Riesgo relativo (IC 95 %)"] for fila in fuentes.RIESGOS_RELATIVOS_PM25] == [
+        "1,08 (1,06–1,09)", "1,11 (1,09–1,14)", "1,10 (1,03–1,18)",
+    ]
+    assert "no implican que la concentración de un día concreto cause" in fuentes.NOTA_INTERPRETACION_SALUD_PM25
 
 
 def test_contexto_carga_sin_excepciones() -> None:
@@ -82,3 +99,10 @@ def test_contexto_carga_sin_excepciones() -> None:
     ruta = ROOT / "app" / "pages" / "contexto.py"
     resultado = AppTest.from_file(str(ruta), default_timeout=30).run()
     assert not resultado.exception, str(resultado.exception)
+    textos = "\n".join(elemento.value for elemento in resultado.markdown)
+    assert "Se muestran ambas asignaciones" not in textos
+    assert "coinciden con la tabla maestra" not in textos
+    assert "Fila marcada para verificación" not in textos
+    assert "Cifra pendiente de fuente oficial" not in textos
+    assert any("errata (16-150)" in elemento.value for elemento in resultado.info)
+    assert any(fuentes.NOTA_INTERPRETACION_SALUD_PM25 == elemento.value for elemento in resultado.caption)

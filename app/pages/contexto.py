@@ -15,7 +15,7 @@ from streamlit.errors import StreamlitPageNotFoundError
 
 from app.components.paleta import ACENTO
 from app.components.tema_graficos import aplicar_tema
-from app.components.ui import cargar_estilos, caja_pendiente, encabezado_pagina
+from app.components.ui import cargar_estilos, encabezado_pagina
 from app.utils.datos import cargar_aire, cargar_ficha_estaciones
 from app.utils.contexto import agregar_mensual, calcular_superaciones, normalizar_texto
 from app.utils.fuentes_contexto import (
@@ -34,6 +34,10 @@ from app.utils.fuentes_contexto import (
     URL_ESTACIONES_SDA, URL_GUIAS_OMS, URL_RESOLUCION_2254,
     URL_INVERSION_TERMICA_SDA, URL_FACTORES_INTERNOS_EXTERNOS_SDA,
     URL_REGIMEN_LLUVIA_BOGOTA, DIAS_ANO_REFERENCIA,
+    ICA_24H_PM, COLORES_ICA, NOTA_ERRATA_IDEAM_ICA,
+    URL_IDEAM_ICA_24H, URL_SALUD_PM25_AIRQ, TEXTO_METODOLOGIA_SALUD_PM25,
+    RIESGOS_RELATIVOS_PM25, NOTA_INTERPRETACION_SALUD_PM25,
+    TEXTO_PRESENTACION_ICA_24H,
 )
 
 COLORES_TIPO = {
@@ -120,10 +124,6 @@ encabezado_pagina(
 )
 datos = cargar_aire()
 ficha = cargar_ficha_estaciones()
-maestro_ids = set(datos.estacion_id.astype(str).unique())
-ficha_ids = set(ficha.estacion_id.astype(str))
-faltan_ficha = sorted(maestro_ids - ficha_ids)
-sobran_ficha = sorted(ficha_ids - maestro_ids)
 
 st.subheader("El problema")
 st.markdown(
@@ -149,14 +149,6 @@ st.caption(
     f"[Ficha de estaciones]({URL_ESTACIONES_SDA})."
 )
 _mapa_estaciones(ficha, datos)
-if faltan_ficha or sobran_ficha:
-    st.error(f"IDs que requieren revisión: sin ficha {faltan_ficha}; fuera de la tabla maestra {sobran_ficha}.")
-else:
-    st.success(f"Los {len(ficha_ids)} estacion_id de la ficha coinciden con la tabla maestra.")
-if ficha.verificar.fillna(False).any():
-    filas_verificar = ficha.loc[ficha.verificar.fillna(False), "estacion_id"].tolist()
-    st.warning(f"Fila marcada para verificación en la fuente: {', '.join(filas_verificar)}.")
-
 maestro_localidad = (
     datos.groupby("estacion_id", as_index=False)
     .agg(localidad_maestra=("localidad", "first"))
@@ -172,7 +164,6 @@ if diferencias.empty:
     st.caption("Las localidades coinciden para todas las estaciones.")
 else:
     st.dataframe(diferencias, hide_index=True, width="stretch")
-    st.caption("Se muestran ambas asignaciones tal como están registradas; no se corrigieron.")
 
 st.subheader("Qué miden los datos")
 st.markdown(
@@ -221,6 +212,29 @@ st.warning(
     f"[OMS]({URL_GUIAS_OMS}) · [Resolución 2254 de {COLOMBIA_ANIO_RESOLUCION}]({URL_RESOLUCION_2254}); "
     f"los valores diarios colombianos rigen desde {COLOMBIA_FECHA_INICIO_24H}."
 )
+
+st.subheader("Índice de Calidad del Aire (ICA) · 24 horas")
+st.markdown(
+    f"{TEXTO_PRESENTACION_ICA_24H} [IDEAM]({URL_IDEAM_ICA_24H}) y "
+    f"[MADS]({URL_RESOLUCION_2254})."
+)
+tabla_ica = pd.DataFrame(ICA_24H_PM)
+tabla_ica_estilada = tabla_ica.style.map(
+    lambda color: (
+        f"background-color: {COLORES_ICA[color]}; "
+        f"color: {'#111111' if color in {'Amarillo', 'Naranja'} else '#FFFFFF'}"
+    ),
+    subset=["Color"],
+)
+st.dataframe(tabla_ica_estilada, hide_index=True, width="stretch")
+st.info(NOTA_ERRATA_IDEAM_ICA)
+
+st.subheader("Salud: estimaciones poblacionales")
+st.markdown(
+    f"{TEXTO_METODOLOGIA_SALUD_PM25} [Ficha técnica de la Secretaría Distrital de Salud]({URL_SALUD_PM25_AIRQ})."
+)
+st.dataframe(pd.DataFrame(RIESGOS_RELATIVOS_PM25), hide_index=True, width="stretch")
+st.caption(NOTA_INTERPRETACION_SALUD_PM25)
 
 st.subheader("Qué tan seguido se superan los valores de 24 horas")
 superaciones = calcular_superaciones(datos, DIAS_MINIMOS_PROMEDIO_ANUAL)
@@ -324,8 +338,5 @@ _enlace_pagina("pages/simulador.py", "Probar escenarios en Simulador", "🎛️"
 
 st.subheader("Fuentes oficiales")
 for fuente in FUENTES:
-    st.markdown(f"- [{fuente['nombre']}]({fuente['url']})")
-
-st.subheader("Pendientes")
-caja_pendiente("Puntos de corte del ICA para PM2.5 y PM10: no se muestran categorías hasta contar con una fuente oficial aplicable.")
-caja_pendiente("Cifras de efectos en salud específicas de Bogotá: requieren una fuente oficial específica.")
+    consulta = f" · consulta {fuente['fecha_consulta']}" if "fecha_consulta" in fuente else ""
+    st.markdown(f"- [{fuente['nombre']}]({fuente['url']}){consulta}")

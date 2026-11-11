@@ -198,9 +198,18 @@ fig_abl.add_trace(go.Bar(x=ablacion.grupo_excluido, y=ablacion.MAE_modelo_comple
                          name="Modelo completo", marker_color=ACENTO))
 fig_abl.add_trace(go.Bar(x=ablacion.grupo_excluido, y=ablacion.MAE_sin_grupo,
                          name="Sin el grupo", marker_color="#E67E22"))
-fig_abl.update_layout(title="Error al quitar un bloque de variables", barmode="group", xaxis_title="Grupo excluido", yaxis_title="MAE (µg/m³)")
+fig_abl.update_layout(
+    title="MAE de prueba: modelo completo y Ridge reentrenado sin cada grupo",
+    barmode="group", xaxis_title="Grupo excluido", yaxis_title="MAE en prueba (µg/m³)",
+)
 st.plotly_chart(aplicar_tema(fig_abl), width="stretch", config={"displayModeBar": False})
-nota_metodologica("Qué se ve: el MAE varía al excluir cada grupo del Ridge de ablación. Qué no se puede concluir: la diferencia no es una contribución causal aislada ni una selección universal de variables.")
+nota_metodologica(
+    "Cómo leerlo: el CSV muestra MAE (no RMSE) en el conjunto de prueba. Para cada grupo, se reentrenó "
+    "un Ridge sin ese grupo y se evaluó en las mismas filas de prueba que el modelo completo; no se permutaron "
+    "variables y no son resultados de validación cruzada. La referencia es el Ridge completo (MAE repetido "
+    "por grupo en la tabla fuente). Una barra 'Sin el grupo' más alta indica mayor MAE y peor desempeño; "
+    "una barra más baja indica menor MAE. La diferencia no identifica una contribución causal."
+)
 completo = float(ablacion.MAE_modelo_completo.iloc[0])
 sin_lluvia = float(ablacion.loc[ablacion.grupo_excluido.eq("lluvia"), "MAE_sin_grupo"].iloc[0])
 if sin_lluvia <= completo:

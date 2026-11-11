@@ -36,12 +36,6 @@ def caja_hallazgo(texto: str) -> None:
     st.markdown(f'<div class="finding-card"><span class="finding-mark">●</span><span>{texto}</span></div>', unsafe_allow_html=True)
 
 
-def caja_pendiente(texto: str = "") -> None:
-    """Muestra un pendiente con estilo neutral cuando falta una fuente oficial."""
-    detalle = f"<br>{texto}" if texto else ""
-    st.markdown(f'<div class="pending-card"><strong>Cifra pendiente de fuente oficial</strong>{detalle}</div>', unsafe_allow_html=True)
-
-
 def nota_metodologica(texto: str) -> None:
     """Presenta una precisión metodológica secundaria sin ocultarla."""
     st.markdown(f'<div class="method-note">{texto}</div>', unsafe_allow_html=True)

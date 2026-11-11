@@ -1,7 +1,7 @@
-"""Centraliza cifras de contexto y sus fuentes oficiales verificadas.
-La página Contexto importa estas constantes para evitar números sueltos en la UI.
-Incluye el contenido de las normas y las URLs de las entidades citadas.
-Fuentes consultadas el 2026-11-10; los estadísticos de la red del proyecto se calculan aparte.
+"""Centraliza cifras, textos de contexto y sus fuentes oficiales.
+Las páginas Contexto, Mapa y Datos y metodología importan estos datos para evitar cifras dispersas.
+Incluye tablas normativas, notas de interpretación y enlaces con fechas de consulta.
+Las fuentes anteriores se consultaron el 2026-11-10; ICA y salud se consultaron el 2026-11-11.
 """
 
 # fuente verificada el 2026-11-10: https://www.saludcapital.gov.co/Documents/Brief_Determinantes_Sociales_Bogota.pdf
@@ -64,6 +64,52 @@ TEXTO_SALUD_OMS = "Superar los valores guía de la OMS se asocia con riesgos gra
 # fuente verificada el 2026-11-10: página institucional del Distrito, comunicado del 5 de febrero de 2026.
 URL_COMUNICADO_RED_2026 = "https://bogota.gov.co/mi-ciudad/ambiente/en-bogota-se-monitorea-calidad-del-aire-en-dia-sin-carro-y-sin-moto"
 
+# fuente consultada el 2026-11-11: IDEAM, hoja metodológica ICA; reproduce los rangos del art. 20, Tabla 6 de la Resolución 2254 de 2017.
+URL_IDEAM_ICA_24H = "https://bart.ideam.gov.co/indiecosistemas/ind/aire/hm/1.%20HM%20Indice%20calidad%20aire.pdf"
+ICA_24H_PM = [
+    {"ICA": "0–50", "Categoría": "Buena", "Color": "Verde", "PM2.5 24 h (µg/m³)": "0–12", "PM10 24 h (µg/m³)": "0–54"},
+    {"ICA": "51–100", "Categoría": "Aceptable", "Color": "Amarillo", "PM2.5 24 h (µg/m³)": "13–37", "PM10 24 h (µg/m³)": "55–154"},
+    {"ICA": "101–150", "Categoría": "Dañina a grupos sensibles", "Color": "Naranja", "PM2.5 24 h (µg/m³)": "38–55", "PM10 24 h (µg/m³)": "155–254"},
+    {"ICA": "151–200", "Categoría": "Dañina a la salud", "Color": "Rojo", "PM2.5 24 h (µg/m³)": "56–150", "PM10 24 h (µg/m³)": "255–354"},
+    {"ICA": "201–300", "Categoría": "Muy dañina", "Color": "Púrpura", "PM2.5 24 h (µg/m³)": "151–250", "PM10 24 h (µg/m³)": "355–424"},
+    {"ICA": "301–500", "Categoría": "Peligrosa", "Color": "Marrón", "PM2.5 24 h (µg/m³)": "251–500", "PM10 24 h (µg/m³)": "425–604"},
+]
+# Colores por categoría que aparecen en la tabla de referencia ICA de IDEAM.
+COLORES_ICA = {
+    "Verde": "#00E400", "Amarillo": "#FFFF00", "Naranja": "#FF7E00",
+    "Rojo": "#FF0000", "Púrpura": "#8F3F97", "Marrón": "#7E0023",
+}
+NOTA_ERRATA_IDEAM_ICA = (
+    "El límite inferior de 56 µg/m³ para PM2.5 en 'Dañina a la salud' coincide con el nivel de alerta "
+    "de la Tabla 4 de la misma resolución; el PDF del IDEAM trae una errata (16-150)."
+)
+TEXTO_PRESENTACION_ICA_24H = (
+    "Puntos de corte de 24 h para PM2.5 y PM10 por rango del ICA, según artículo 20, Tabla 6 "
+    "de la Resolución 2254 de 2017."
+)
+TEXTO_MAPA_ICA_CONTINUA = (
+    "La escala del mapa muestra concentraciones de forma continua y no asigna categorías ICA. "
+    "La tabla oficial de puntos de corte está en Contexto."
+)
+TEXTO_DATOS_ICA = "Los puntos de corte oficiales del ICA de 24 horas se presentan en la página Contexto."
+
+# fuente indicada y consultada el 2026-11-11: ficha de la SDS; la versión /2026/03 y su página oficial están accesibles.
+URL_SALUD_PM25_AIRQ = "https://saludata.saludcapital.gov.co/osb/wp-content/uploads/2026/04/OSB_MortalidadAtribuible_PM2.5.pdf"
+URL_SALUD_PM25_FICHA_ACCESIBLE = "https://saludata.saludcapital.gov.co/osb/wp-content/uploads/2026/03/OSB_MortalidadAtribuible_PM2.5.pdf"
+TEXTO_METODOLOGIA_SALUD_PM25 = (
+    "Metodología de la Secretaría Distrital de Salud: AirQ+ de la OMS; compara el promedio anual de PM2.5 "
+    "con el nivel guía de 5 µg/m³; serie 2018–2024; ficha del 25/07/2025."
+)
+RIESGOS_RELATIVOS_PM25 = [
+    {"Evento": "Causas naturales", "Riesgo relativo (IC 95 %)": "1,08 (1,06–1,09)"},
+    {"Evento": "Cardiovasculares", "Riesgo relativo (IC 95 %)": "1,11 (1,09–1,14)"},
+    {"Evento": "Respiratorias", "Riesgo relativo (IC 95 %)": "1,10 (1,03–1,18)"},
+]
+NOTA_INTERPRETACION_SALUD_PM25 = (
+    "Estos riesgos son estimaciones poblacionales de un modelo de la OMS, no resultados de este proyecto, "
+    "y no implican que la concentración de un día concreto cause un efecto individual."
+)
+
 FUENTES = [
     {"nombre": "Estaciones y ficha oficial RMCAB · SDA", "url": URL_ESTACIONES_SDA},
     {"nombre": "Población Bogotá 2025 · Secretaría Distrital de Salud / DANE", "url": "https://www.saludcapital.gov.co/Documents/Brief_Determinantes_Sociales_Bogota.pdf"},
@@ -76,4 +122,7 @@ FUENTES = [
     {"nombre": "Factores internos y externos de la calidad del aire · SDA", "url": URL_FACTORES_INTERNOS_EXTERNOS_SDA},
     {"nombre": "Régimen bimodal de lluvias de Bogotá · IDIGER / referencia IDEAM", "url": URL_REGIMEN_LLUVIA_BOGOTA},
     {"nombre": "Características climatológicas de ciudades · IDEAM", "url": URL_CLIMA_IDEAM},
+    {"nombre": "Puntos de corte ICA de 24 h · IDEAM / Resolución 2254 de 2017, art. 20, Tabla 6", "url": URL_IDEAM_ICA_24H, "fecha_consulta": "2026-11-11"},
+    {"nombre": "Mortalidad atribuida a exposición de largo plazo a PM2.5 · SDS, ficha técnica AirQ+", "url": URL_SALUD_PM25_AIRQ, "fecha_consulta": "2026-11-11"},
+    {"nombre": "Ficha técnica oficial accesible · SaluData / SDS", "url": URL_SALUD_PM25_FICHA_ACCESIBLE, "fecha_consulta": "2026-11-11"},
 ]

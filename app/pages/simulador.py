@@ -138,7 +138,7 @@ with col_controles:
         for clave in CLAVES_ESCENARIO:
             st.session_state[f"b_{clave}"] = escenario_a[clave]
     escenario_b_inicial = crear_preset("Fin de semana seco y ventoso", referencia_inicial, estadisticas)
-    with st.expander("Configurar escenario B", expanded=False):
+    with st.expander("Configurar escenario B", expanded=True):
         escenario_b = controles_escenario("b", "Entradas del escenario B", escenario_b_inicial,
                                           estaciones, nombres, estadisticas)
 
@@ -148,16 +148,7 @@ with col_resultados:
     referencia_a = escenario_referencia(estadisticas, escenario_a["estacion_id"], escenario_a["mes"], asignacion)
     prediccion_referencia_a = predecir_escenario(referencia_a, artefacto, estadisticas, asignacion)
     mostrar_resultado("A", resultado_a, prediccion_referencia_a, artefacto, estadisticas)
-    st.markdown("**Comparación lado a lado**")
-    cmp_a, cmp_b = st.columns(2)
-    with cmp_a:
-        st.metric("Escenario A", f"{resultado_a['prediccion']:.1f} µg/m³",
-                  f"[{resultado_a['limite_inferior']:.1f}; {resultado_a['limite_superior']:.1f}]")
-    with cmp_b:
-        resultado_b = predecir_escenario(escenario_b, artefacto, estadisticas, asignacion)
-        st.metric("Escenario B", f"{resultado_b['prediccion']:.1f} µg/m³",
-                  f"[{resultado_b['limite_inferior']:.1f}; {resultado_b['limite_superior']:.1f}]")
-    st.caption(f"B − A: {resultado_b['prediccion']-resultado_a['prediccion']:+.1f} µg/m³. El intervalo se obtiene multiplicando la predicción por los cuantiles de razón del artefacto.")
+    resultado_b = predecir_escenario(escenario_b, artefacto, estadisticas, asignacion)
 
     st.subheader("Cambio al mover una variable")
     tornado = calcular_tornado(referencia_a, artefacto, estadisticas, asignacion)
@@ -179,6 +170,23 @@ with col_resultados:
         st.info(f"En el rango p10–p90, el mayor cambio individual es {abs(float(mayor.cambio)):.2f} µg/m³ ({mayor.variable}), menor que el MAE de prueba del Ridge ({mae_ridge:.2f}). El modelo calcula efectos individuales pequeños frente a su error típico.")
     else:
         st.info(f"En el rango p10–p90, el mayor cambio individual es {abs(float(mayor.cambio)):.2f} µg/m³ ({mayor.variable}); se muestra el valor calculado por el modelo.")
+
+st.subheader("Comparación lado a lado")
+cmp_a, cmp_b = st.columns(2, gap="large")
+with cmp_a:
+    st.metric(
+        "Escenario A", f"{resultado_a['prediccion']:.1f} µg/m³",
+        f"[{resultado_a['limite_inferior']:.1f}; {resultado_a['limite_superior']:.1f}]",
+    )
+with cmp_b:
+    st.metric(
+        "Escenario B", f"{resultado_b['prediccion']:.1f} µg/m³",
+        f"[{resultado_b['limite_inferior']:.1f}; {resultado_b['limite_superior']:.1f}]",
+    )
+st.caption(
+    f"B − A: {resultado_b['prediccion']-resultado_a['prediccion']:+.1f} µg/m³. "
+    "El intervalo se obtiene multiplicando la predicción por los cuantiles de razón del artefacto."
+)
 
 st.subheader("Supuestos del escenario")
 with st.expander("Variables completadas automáticamente", expanded=False):

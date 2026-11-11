@@ -348,3 +348,55 @@ Todos los archivos de la tabla anterior aparecen en `git ls-files`. `git check-i
 - Las tres métricas visibles siguen exactamente en **2023-10-24 — 2026-10-23**, “Una fila por estación y día” y **20.824** filas. El JSON del gráfico regenerado coincide con la captura anterior en datos y layout (`old_data_equal=True`, `old_layout_equal=True`). Las tablas usan las mismas fuentes y funciones de transformación; el cambio es de carga diferida, proyección y caché.
 
 AppTest sin importar la página directamente terminó sin excepciones en cada una de las siete páginas. El render aislado de Datos y metodología quedó por debajo de 5 s una vez inicializado el runtime. No se hizo commit ni push.
+
+## Correcciones de contenido, fuentes y README (2026-11-11)
+
+### A. Contexto, estaciones, ICA y salud
+
+- Guardé antes de editar la captura AppTest en `D:\ciencia de datos\baseline_contenido_20261111.json`; la captura posterior es `D:\ciencia de datos\app_visible_after_contenido_20261111.json`. La comparación de los componentes métricos confirma igualdad de los números existentes.
+- La verificación con los archivos procesados da **19 IDs en la ficha y 19 en la tabla maestra; conjuntos idénticos**. La fila `verificar=True` es `las_ferias`; esa marca es una nota interna de legibilidad de la fuente y se quitó de la interfaz. También se retiró el mensaje de éxito interno “coinciden con la tabla maestra”.
+- Comparé la localidad con la normalización de `app/utils/contexto.py`. La única diferencia real es `centro_de_alto_rendimiento`: ficha SDA **Engativá**, cruce espacial de la tabla maestra **Barrios Unidos**. La tabla de comparación sigue visible sin el texto “Se muestran ambas asignaciones…” y no se modificaron los datos.
+- La página Contexto ahora presenta los seis rangos del ICA para PM2.5 y PM10, con nombre de categoría y color, datos centralizados en `app/utils/fuentes_contexto.py`. El texto advierte de la errata 16–150 del PDF IDEAM y usa 56 como límite inferior de “Dañina a la salud”, conforme a la Tabla 4 indicada. No encontré otra página que convierta días del proyecto en categorías ICA: Mapa usa escala continua, así que no se cambió ninguna clasificación diaria.
+- El bloque de salud presenta la metodología AirQ+ y los riesgos relativos **1,08 (1,06–1,09)**, **1,11 (1,09–1,14)** y **1,10 (1,03–1,18)** con la advertencia poblacional solicitada. No se muestra el dato de 13.345 muertes. Se añadieron las fuentes oficiales con fecha de consulta **2026-11-11**; la ficha PDF `/2026/04/` dada en la solicitud no fue accesible en el navegador de esta sesión, por lo que se conserva ese enlace y también se lista la versión oficial `/2026/03/` y la página del indicador, donde se verifican metodología, serie, fecha de ficha y riesgos.
+- Quité los mensajes de “Cifra pendiente de fuente oficial” de Contexto, Mapa y Datos y metodología, y retiré el componente genérico que ya no tenía usos. No quedan coincidencias de esos mensajes en `app/`.
+
+### B. Simulador, escenario B
+
+Antes del arreglo, la prueba nueva `tests/test_simulador_escenarios.py` terminó con **1 failed en 9,59 s**: el escenario A aparecía como **8,5 µg/m³**, B como **3,3 µg/m³**, sus entradas diferían y AppTest no reportaba excepciones; falló porque el expander `Configurar escenario B` tenía `expanded=False`. El resultado B se calculaba, pero los controles estaban ocultos por defecto y la comparación vivía dentro de columnas anidadas en la columna estrecha de resultados.
+
+Dejé abiertos por defecto los controles B y moví la comparación A/B a columnas de ancho completo, fuera de la columna anidada. Los prefijos de widget `a_` y `b_` son distintos; no encontré condición que omitiera el cálculo ni excepción silenciada. La prueba verifica expander abierto, días de entrada distintos y métricas distintas para A y B. Después, la suite completa terminó con **61 passed**.
+
+### C. Ablación por grupos
+
+`src/modelo/entrenar_v2.py` reentrena un Ridge sin cada grupo y evalúa MAE en las mismas **5.410 filas de prueba** que el Ridge completo; no permuta columnas y no usa la CV para estas barras. La referencia es el MAE del modelo completo, repetido en el CSV. Verifiqué directamente las cuatro filas del archivo fuente:
+
+| Grupo excluido | Ridge reentrenado sin grupo: MAE prueba | Modelo completo: MAE prueba | Diferencia |
+|---|---:|---:|---:|
+| Lluvia | 5,406238 | 5,391404 | +0,014835 |
+| Temperatura | 5,290404 | 5,391404 | −0,101000 |
+| Viento | 5,565153 | 5,391404 | +0,173749 |
+| Calendario | 5,459607 | 5,391404 | +0,068203 |
+
+La gráfica leía valores MAE de prueba correctos y coincidentes con la tabla. La etiqueta anterior “Error al quitar…” y la nota no explicaban conjunto, métrica ni reentrenamiento. El título y la leyenda ahora aclaran que una barra “Sin el grupo” más alta es mayor MAE y peor desempeño; los valores y las barras no se alteraron.
+
+### D. README y regeneración
+
+El README estaba vacío. Ahora incluye la descripción del proyecto, enlace desplegado, datos y dimensiones, métricas del modelo, hueco de PM, siete páginas, árbol de carpetas, ejecución local y pruebas, comandos reales de regeneración, limitaciones, fuentes oficiales, placeholders del equipo/curso y nota de licencia/atribución. Validé **8 enlaces relativos**: ninguno apunta a un archivo ausente.
+
+No existía `docs/documentacion_datos_y_modelo.md` en el repo. Creé ese documento con métricas leídas de `data/processed/app/diagnostico_modelo_metricas_v2.csv`, `data/processed/app/metricas_modelos.csv`, `app/utils/cifras_modelo.py` y la documentación de datos, y lo enlacé desde el README.
+
+Comprobé existencia, sintaxis y función `main` de los ocho scripts mencionados en README. No tienen `--dry-run`; no los ejecuté porque sus funciones escriben en `data/interim/`, `data/processed/` y `models/`, directorios/artefactos protegidos en esta tarea. Por tanto, esta tarea valida rutas y sintaxis en seco, no una regeneración funcional de los productos.
+
+### E. Verificación final y cifras
+
+`pytest -q` con el ejecutable de consola falló inicialmente durante colección porque no encontraba el paquete `app`. Añadí `tests/conftest.py` para insertar la raíz del repo antes de importar módulos; la colección literal de `pytest -q` pasó y la corrida final terminó con **61 passed in 28,13 s**. El conjunto incluye AppTest para las siete páginas; una captura final individual registró **cero excepciones** en Portada, Contexto, Mapa, Factores, Simulador, Modelo y Datos y metodología. El arranque headless de `streamlit run app/app.py` respondió `ok` en `/_stcore/health`.
+
+| Cifras visibles comparadas | Antes | Después | Resultado |
+|---|---|---|---|
+| Portada: PM2.5 medio, estaciones, días, cobertura | 11,7; 19; 1.096; 79,3 % | 11,7; 19; 1.096; 79,3 % | Iguales |
+| Contexto: población, estaciones, microsensores, altitudes | 7.937.898; 19; 70; 2.547–2.688 m | 7.937.898; 19; 70; 2.547–2.688 m | Iguales; se retiraron avisos internos |
+| Simulador: cambio referencia, A, B | +0,0; 8,5; 3,3 µg/m³ | +0,0; 8,5; 3,3 µg/m³ | Iguales; B ahora visible |
+| Datos y metodología: periodo, grano, filas | 2023-10-24—2026-10-23; estación-día; 20.824 | Los mismos valores | Iguales |
+| Modelo y gráficos de ablación | Métricas de los CSV v2 | Mismos valores; títulos y explicación corregidos | Iguales |
+
+Mapa y Factores no tuvieron cambios de cálculo. No se modificaron `data/raw/`, `data/interim/`, `data/processed/` existentes, `models/` ni `docs/decisiones.md`; tampoco hice commit ni push.

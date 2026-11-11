@@ -4,12 +4,12 @@ Muestra el periodo y tamaño reales de la tabla maestra.
 Expone limitaciones y el hueco de PM sin rellenar sus valores.
 """
 import streamlit as st
-from app.components.ui import cargar_estilos, caja_pendiente, encabezado_pagina
+from app.components.ui import cargar_estilos, encabezado_pagina
 from app.utils.datos import (
     cargar_fechas_aire, cargar_markdown,
     preparar_cobertura_estacion_mes, tabla_decisiones_vigentes, tabla_fuentes,
 )
-from app.utils.fuentes_contexto import ESTACIONES_LISTADAS_SDA
+from app.utils.fuentes_contexto import ESTACIONES_LISTADAS_SDA, TEXTO_DATOS_ICA
 
 cargar_estilos()
 encabezado_pagina("Datos y metodología", "Fuentes, cobertura temporal, decisiones vigentes y límites de interpretación.")
@@ -114,4 +114,4 @@ limitaciones = [
 ]
 for texto in limitaciones:
     st.markdown(f"- {texto}")
-caja_pendiente("Los umbrales oficiales de calidad del aire siguen pendientes de una fuente oficial citada.")
+st.caption(TEXTO_DATOS_ICA)

@@ -10,8 +10,9 @@ import pydeck as pdk
 import streamlit as st
 from app.components.paleta import color_rgb_cuantil, escala_plotly
 from app.components.tema_graficos import aplicar_tema
-from app.components.ui import cargar_estilos, caja_pendiente, encabezado_pagina, nota_metodologica
+from app.components.ui import cargar_estilos, encabezado_pagina, nota_metodologica
 from app.utils.datos import cargar_aire, cargar_geojson_app
+from app.utils.fuentes_contexto import TEXTO_MAPA_ICA_CONTINUA
 
 INICIO_PERIODO = date(2023, 10, 24)
 FIN_PERIODO = date(2026, 10, 23)
@@ -170,7 +171,7 @@ else:
         f"círculos con cobertura menor al {UMBRAL_COBERTURA_BAJA:.0%}: cobertura baja y transparencia</small>",
         unsafe_allow_html=True,
     )
-    caja_pendiente("Los umbrales oficiales para interpretar qué es un valor alto siguen pendientes de fuente verificable.")
+    st.caption(TEXTO_MAPA_ICA_CONTINUA)
     nota_metodologica("El radio de los puntos es fijo. El borde blanco identifica estaciones móviles; el porcentaje de cobertura usa todos los días del rango, incluido el hueco sin mediciones.")
 
     st.subheader("Ranking de estaciones")
