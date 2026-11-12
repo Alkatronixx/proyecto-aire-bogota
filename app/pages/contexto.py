@@ -229,6 +229,28 @@ tabla_ica_estilada = tabla_ica.style.map(
 st.dataframe(tabla_ica_estilada, hide_index=True, width="stretch")
 st.info(NOTA_ERRATA_IDEAM_ICA)
 
+st.subheader("¿Está bien el aire de Bogotá? Depende del estándar")
+pm25_train = datos.loc[datos.fecha.le("2025-10-23"), "pm25"].mean()
+pm25_test = datos.loc[datos.fecha.ge("2025-10-24"), "pm25"].mean()
+carvajal_train = datos.loc[
+    datos.estacion_id.eq("carvajal_sevillana") & datos.fecha.le("2025-10-23"), "pm25"
+].mean()
+pm25_train_texto = f"{pm25_train:.2f}".replace(".", ",")
+pm25_test_texto = f"{pm25_test:.2f}".replace(".", ",")
+carvajal_train_texto = f"{carvajal_train:.2f}".replace(".", ",")
+st.markdown(
+    f"La norma colombiana ([Resolución 2254 de {COLOMBIA_ANIO_RESOLUCION}]({URL_RESOLUCION_2254})) "
+    f"fija {COLOMBIA_PM25_ANUAL_2018_2029} µg/m³ de PM2.5 en promedio anual y "
+    f"{COLOMBIA_PM25_24H_2018_2029} en 24 horas. La guía de la "
+    f"[OMS {OMS_ANIO_GUIA}]({URL_GUIAS_OMS}) es más estricta: {OMS_PM25_ANUAL} anual y "
+    f"{OMS_PM25_24H} en 24 horas. En nuestros datos el PM2.5 medio de las 19 estaciones fue "
+    f"{pm25_train_texto} µg/m³ en entrenamiento y {pm25_test_texto} en prueba: por debajo del límite "
+    f"colombiano en promedio, pero por encima de la guía de la OMS. Algunas estaciones, como "
+    f"Carvajal-Sevillana ({carvajal_train_texto} en entrenamiento), superan el límite colombiano. "
+    "Los promedios ocultan los días malos, y este proyecto solo mide material particulado: "
+    "no incluye otros contaminantes."
+)
+
 st.subheader("Salud: estimaciones poblacionales")
 st.markdown(
     f"{TEXTO_METODOLOGIA_SALUD_PM25} [Ficha técnica de la Secretaría Distrital de Salud]({URL_SALUD_PM25_AIRQ})."

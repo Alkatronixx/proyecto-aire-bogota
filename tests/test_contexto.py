@@ -106,3 +106,25 @@ def test_contexto_carga_sin_excepciones() -> None:
     assert "Cifra pendiente de fuente oficial" not in textos
     assert any("errata (16-150)" in elemento.value for elemento in resultado.info)
     assert any(fuentes.NOTA_INTERPRETACION_SALUD_PM25 == elemento.value for elemento in resultado.caption)
+
+
+def test_bloque_compara_estandares_con_medias_calculadas() -> None:
+    """El texto compara normas oficiales con medias derivadas de la tabla maestra."""
+    datos = cargar_aire()
+    media_train = datos.loc[datos.fecha.le("2025-10-23"), "pm25"].mean()
+    media_test = datos.loc[datos.fecha.ge("2025-10-24"), "pm25"].mean()
+    carvajal = datos.loc[
+        datos.estacion_id.eq("carvajal_sevillana") & datos.fecha.le("2025-10-23"), "pm25"
+    ].mean()
+    media_train = f"{media_train:.2f}".replace(".", ",")
+    media_test = f"{media_test:.2f}".replace(".", ",")
+    carvajal = f"{carvajal:.2f}".replace(".", ",")
+    ruta = ROOT / "app" / "pages" / "contexto.py"
+    resultado = AppTest.from_file(str(ruta), default_timeout=45).run()
+    assert not resultado.exception, str(resultado.exception)
+    textos = "\n".join(elemento.value for elemento in resultado.markdown)
+    assert any("¿Está bien el aire de Bogotá? Depende del estándar" in e.value for e in resultado.subheader)
+    assert f"{media_train} µg/m³ en entrenamiento y {media_test}" in textos
+    assert f"Carvajal-Sevillana ({carvajal} en entrenamiento)" in textos
+    assert fuentes.URL_RESOLUCION_2254 in textos
+    assert fuentes.URL_GUIAS_OMS in textos
