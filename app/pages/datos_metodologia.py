@@ -6,11 +6,10 @@ Expone limitaciones y el hueco de PM sin rellenar sus valores.
 import streamlit as st
 from app.components.ui import cargar_estilos, encabezado_pagina
 from app.utils.datos import (
-    cargar_fechas_aire, cargar_markdown, entradas_decisiones, firma_markdown,
+    APP_DATA, cargar_fechas_aire, cargar_markdown, entradas_decisiones, firma_markdown,
     preparar_cobertura_estacion_mes, tabla_decisiones_vigentes, tabla_fuentes,
 )
 from app.utils.fuentes_contexto import ESTACIONES_LISTADAS_SDA, TEXTO_DATOS_ICA
-from app.utils.graficos import figura_cobertura_estacion_mes
 
 cargar_estilos()
 encabezado_pagina("Datos y metodología", "Fuentes, cobertura temporal, decisiones vigentes y límites de interpretación.")
@@ -33,10 +32,13 @@ c3.metric("Filas", f"{len(df):,}".replace(",", "."))
 with st.expander("Cobertura de PM2.5 · estación × mes", on_change="rerun", key="expander_cobertura_metodologia") as bloque_cobertura:
     if bloque_cobertura.open:
         with st.spinner("Cargando cobertura mensual de las estaciones…"):
-            cobertura, meses, estaciones, matriz = preparar_cobertura_estacion_mes()
-            fig = figura_cobertura_estacion_mes(matriz, meses, estaciones)
-            st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
-            st.caption("El hueco oficial de PM2.5 va del 2025-08-04 al 2025-10-16. Los faltantes permanecen como faltantes.")
+            cobertura, _, _, _ = preparar_cobertura_estacion_mes()
+            st.image(
+                APP_DATA / "cobertura_estacion_mes.png",
+                caption=("El color indica el porcentaje de días del mes con PM2.5 observado por estación. "
+                         "El hueco del 2025-08-04 al 2025-10-16 es real en la fuente; esos días no se imputaron."),
+                width="stretch",
+            )
             st.download_button(
                 "Descargar cobertura mensual completa",
                 cobertura.to_csv(index=False).encode("utf-8-sig"),

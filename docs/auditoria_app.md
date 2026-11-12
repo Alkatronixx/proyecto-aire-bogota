@@ -428,3 +428,24 @@ El parser acepta `- Decisión:`, `- **Decisión:**` y `- *Decisión:*`; las **56
 El script de cobertura, las pruebas de parser/clave de caché y el render en AppTest comprobaron la matriz, la interpretación de énfasis distintos y el aviso para una entrada incompleta. En un clon local del último commit con el árbol de trabajo aplicado, `python -B -m pytest -q` terminó con **47 passed, 19 skipped**; `python -B -m pytest -q tests/test_app.py` dio **15 passed** (incluye AppTest de las siete páginas y navegación). El primer intento completo encontró un test heredado que cargaba `modelo_explicativo.joblib`, no versionado intencionalmente; actualicé el test para validar el Ridge predictivo versionado y el modelo v2 del Simulador. No copié ni cambié artefactos de `models/`. Streamlit headless inició desde el clon y `/_stcore/health` respondió `ok`.
 
 Comparé con la captura AppTest previa `D:\ciencia de datos\app_visible_after_contenido_20261111.json`: las métricas coinciden en las siete páginas; los KPI anteriores de Portada están presentes **4/4** y el KPI de Simulador **1/1**. En Datos y metodología siguen exactamente **2023-10-24 — 2026-10-23**, “Una fila por estación y día” y **20.824** filas. La nueva cifra de control es **56 decisiones interpretadas**; la matriz de cobertura coincide en todas sus celdas. No edité `docs/decisiones.md`, ningún modelo ni dato fuente; no hice commit ni push.
+
+## Cobertura como imagen estática (2026-11-11)
+
+### Cambio
+
+Reemplacé el `go.Heatmap` por el PNG generado con Matplotlib desde la matriz CSV publicada. El gráfico mide **19 estaciones × 37 meses**, usa viridis, muestra etiquetas de mes cada tres meses y nombres de estación, incluye la barra “% de días con dato” y sombrea y rotula el hueco `2025-08-04 a 2025-10-16` como “Hueco de la fuente”. Se generó a **10 × 7 pulgadas, 150 dpi**; el archivo mide **87.089 bytes**, bajo el límite de 400 KB. `app/pages/datos_metodologia.py` usa `st.image(..., width="stretch")` y mantiene la descarga del CSV. El pie explica que el color es cobertura observada y que el hueco es real en la fuente y no se imputó. Eliminé el helper de Plotly que ya no se usa. Matplotlib quedó fijado en `requirements-dev.txt`; no se añadió al entorno runtime de Streamlit.
+
+El script `src/datos/preparar_cobertura_app.py` ahora lee la matriz existente para renderizar la imagen. También puede recalcular la matriz con `--actualizar-matriz`. Al guardar el PNG comprobó píxeles del archivo contra la matriz: Bolivia / 2023-10 = **100,000000 %** y Bolivia / 2024-02 = **0,000000 %**. Los tres pares con menor cobertura son Bolivia / 2024-02, Bolivia / 2024-03 y Bolivia / 2025-09, los tres con **0 %**.
+
+`git check-ignore -v -- data/processed/app/cobertura_estacion_mes.png` no encontró regla de exclusión (código de salida 1, sin coincidencia). Añadí únicamente el PNG con `git add`; quedó staged, sin commit. La descarga y los valores de la matriz no cambiaron.
+
+### Verificación
+
+En un clon local del último commit, al que se aplicó el árbol de trabajo y el PNG, `python -B -m pytest -q -rs` terminó con **48 passed, 19 skipped**. Las 19 omitidas son pruebas de pipeline de datos crudos/intermedios, no de la app:
+
+- `tests/test_aire.py:45, 61, 88, 106`: cuatro dependen de `data/interim/aire_largo.parquet`, que no está en el clon; `tests/test_aire.py:161` depende de Excel en `data/raw/aire/`, ausente.
+- `tests/test_ideam.py:29, 35, 42, 49`: cuatro piden ejecutar `src/datos/limpiar_ideam.py` para producir los intermedios que no se versionan.
+- `tests/test_viento.py:28, 38, 50, 62, 70`: cinco dependen de `data/interim/viento_largo.parquet`, ausente.
+- `tests/test_viento_ciudad.py:28, 35, 42, 48, 55`: cinco piden ejecutar `src/datos/viento_ciudad.py` antes de probar los intermedios.
+
+La corrida separada de AppTest en el clon terminó con **15 passed**, incluyendo las siete páginas. Streamlit headless arrancó y `/_stcore/health` respondió `ok`. La comprobación por píxeles y la prueba del generador pasaron. La comparación AppTest con la captura previa confirmó métricas idénticas en las siete páginas; Portada conserva sus **4/4 KPI** y Simulador su **KPI**. Datos y metodología conserva periodo `2023-10-24 — 2026-10-23`, grano “Una fila por estación y día” y **20.824 filas**. No modifiqué `data/raw`, `data/interim`, `models/` ni `docs/decisiones.md`; no hice commit ni push.

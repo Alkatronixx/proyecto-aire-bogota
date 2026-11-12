@@ -23,6 +23,7 @@ def rutas_lectura_app() -> tuple[Path, ...]:
         PROCESSED / "asignacion_estaciones.csv",
         PROCESSED / "cobertura_maestra.csv",
         APP_DATA / "cobertura_estacion_mes.csv",
+        APP_DATA / "cobertura_estacion_mes.png",
         APP_DATA / "metricas_modelos.csv",
         APP_DATA / "resumen_exploratorio.csv",
         APP_DATA / "predicciones_prueba_v2.parquet",
@@ -103,7 +104,8 @@ def preparar_cobertura_estacion_mes() -> tuple[pd.DataFrame, list[str], list[str
     matriz.index = matriz.index.astype(str)
     meses = matriz.columns.astype(str).tolist()
     estaciones = matriz.index.tolist()
-    return matriz, meses, estaciones, matriz
+    cobertura = matriz.rename_axis("estacion_id").reset_index()
+    return cobertura, meses, estaciones, matriz
 
 
 @st.cache_data(show_spinner=False)

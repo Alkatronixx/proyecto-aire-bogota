@@ -1,16 +1,22 @@
-"""Genera una matriz compacta de cobertura mensual para la aplicación.
-Lee fecha, estación y PM2.5 de la tabla maestra procesada.
-Escribe una matriz de 19 estaciones por mes en data/processed/app.
-Compara celda por celda con la tabla larga previa antes de reemplazarla.
+"""Genera la imagen estática de cobertura mensual que consume la aplicación.
+Lee la matriz publicada y los nombres de estación de la tabla maestra.
+Escribe un PNG de 19 estaciones por mes y comprueba dos píxeles de datos.
+Con --actualizar-matriz también recalcula y valida la matriz CSV existente.
 """
+import argparse
 from pathlib import Path
 
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 MAESTRA = ROOT / "data" / "processed" / "aire_bogota_diario.parquet"
 DESTINO = ROOT / "data" / "processed" / "app" / "cobertura_estacion_mes.csv"
+IMAGEN = ROOT / "data" / "processed" / "app" / "cobertura_estacion_mes.png"
 
 
 def calcular_matriz() -> pd.DataFrame:
@@ -47,13 +53,92 @@ def verificar_matriz_anterior(nueva: pd.DataFrame) -> int:
     return int(iguales.size)
 
 
+def cargar_matriz_publicada() -> pd.DataFrame:
+    """Lee el CSV compacto ya publicado y valida su forma estación-mes."""
+    matriz = pd.read_csv(DESTINO).set_index("estacion_id")
+    matriz.index = matriz.index.astype(str)
+    matriz.columns = matriz.columns.astype(str)
+    if matriz.shape != (19, 37):
+        raise ValueError(f"La matriz publicada debe ser 19 × 37; llegó {matriz.shape}.")
+    return matriz.astype(float)
+
+
+def generar_imagen(matriz: pd.DataFrame, destino: Path = IMAGEN) -> int:
+    """Renderiza la matriz con viridis y confirma que los colores representan los valores."""
+    nombres = pd.read_parquet(MAESTRA, columns=["estacion_id", "estacion"])
+    nombres = nombres.drop_duplicates("estacion_id").set_index("estacion_id").estacion.to_dict()
+    etiquetas = [str(nombres.get(estacion, estacion.replace("_", " ").title())) for estacion in matriz.index]
+    meses = matriz.columns.tolist()
+    valores = matriz.to_numpy(dtype=float)
+
+    figura, eje = plt.subplots(figsize=(10, 7), dpi=150)
+    imagen = eje.imshow(valores, cmap="viridis", vmin=0, vmax=100, aspect="auto", interpolation="nearest")
+    eje.set_title("Cobertura de PM2.5 por estación y mes", fontsize=13, pad=35)
+    eje.set_xlabel("Año-mes", fontsize=10)
+    eje.set_ylabel("Estación", fontsize=10)
+    eje.set_yticks(np.arange(len(etiquetas)), labels=etiquetas, fontsize=8)
+    marcas = np.arange(0, len(meses), 3)
+    eje.set_xticks(marcas, labels=[meses[i] for i in marcas], rotation=45, ha="right", fontsize=8)
+    eje.tick_params(axis="both", length=0)
+    eje.set_xlim(-.5, len(meses) - .5)
+
+    # La banda abarca los meses afectados; la etiqueta conserva las fechas exactas de la fuente.
+    if "2025-08" in meses and "2025-10" in meses:
+        inicio, fin = meses.index("2025-08"), meses.index("2025-10")
+        eje.axvspan(inicio - .5, fin + .5, color="#303846", alpha=.3, zorder=2)
+        eje.text(
+            (inicio + fin) / 2, 1.015,
+            "Hueco de la fuente\n2025-08-04 a 2025-10-16",
+            transform=eje.get_xaxis_transform(), ha="center", va="bottom", fontsize=7.5,
+            color="#20242b", bbox={"facecolor": "white", "edgecolor": "#687080", "alpha": .95, "pad": 2},
+        )
+
+    barra = figura.colorbar(imagen, ax=eje, pad=.025, fraction=.04)
+    barra.set_label("% de días con dato", fontsize=9)
+    barra.ax.tick_params(labelsize=8)
+    figura.subplots_adjust(left=.20, right=.89, bottom=.17, top=.84)
+    figura.savefig(destino, format="png", dpi=150, facecolor="white")
+
+    # Se muestrean celdas fuera de la banda en el PNG ya escrito, no solo en la figura en memoria.
+    figura.canvas.draw()
+    with Image.open(destino) as archivo_png:
+        pixels = np.asarray(archivo_png.convert("RGB"))
+    altura = pixels.shape[0]
+    muestras = []
+    for estacion, mes in ((matriz.index[0], meses[0]), (matriz.index[0], "2024-02")):
+        if mes not in meses:
+            continue
+        fila, columna = matriz.index.get_loc(estacion), meses.index(mes)
+        x, y = eje.transData.transform((columna, fila))
+        rgb = pixels[altura - 1 - round(y), round(x), :3].astype(float)
+        esperado = np.asarray(plt.get_cmap("viridis")(valores[fila, columna])[:3]) * 255
+        if not np.allclose(rgb, esperado, atol=2):
+            plt.close(figura)
+            raise ValueError(f"El píxel de {estacion}/{mes} no corresponde a la matriz CSV.")
+        muestras.append(f"{estacion}/{mes}={valores[fila, columna]:.6f}%")
+    plt.close(figura)
+    print("Celdas reconstruidas en el PNG: " + "; ".join(muestras))
+    return destino.stat().st_size
+
+
 def main() -> None:
-    """Verifica igualdad de cobertura y publica el formato compacto."""
-    matriz = calcular_matriz()
-    celdas = verificar_matriz_anterior(matriz)
-    matriz.rename_axis("estacion_id").to_csv(DESTINO, float_format="%.6f")
-    print(f"Matriz guardada: {matriz.shape[0]} estaciones × {matriz.shape[1]} meses; {celdas} celdas coinciden.")
-    print(f"Archivo: {DESTINO} ({DESTINO.stat().st_size:,} bytes)")
+    """Genera el PNG desde la matriz publicada; permite regenerar el CSV explícitamente."""
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--actualizar-matriz", action="store_true", help="Recalcula la matriz CSV desde la tabla maestra.")
+    argumentos = parser.parse_args()
+    if argumentos.actualizar_matriz:
+        matriz = calcular_matriz()
+        celdas = verificar_matriz_anterior(matriz)
+        matriz.rename_axis("estacion_id").to_csv(DESTINO, float_format="%.6f")
+        print(f"Matriz: {matriz.shape[0]} × {matriz.shape[1]}; {celdas} celdas verificadas.")
+    matriz = cargar_matriz_publicada()
+    peso = generar_imagen(matriz)
+    print(f"PNG: {IMAGEN} ({peso:,} bytes, 10 × 7 pulgadas, 150 dpi)")
+
+    menores = matriz.stack().rename("pct_dias_pm25").sort_values(kind="stable").head(3)
+    print("Tres coberturas menores:")
+    for (estacion, mes), valor in menores.items():
+        print(f"  {estacion} / {mes}: {valor:.6f}%")
 
 
 if __name__ == "__main__":

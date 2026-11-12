@@ -3,23 +3,19 @@ Lee productos procesados y documentación publicada del proyecto.
 Valida igualdad de porcentajes, formatos Markdown y render de la página.
 """
 import pandas as pd
+from PIL import Image
 from streamlit.testing.v1 import AppTest
 
 from app.utils.datos import ROOT, cargar_csv_app, entradas_decisiones, preparar_cobertura_estacion_mes
-from app.utils.graficos import figura_cobertura_estacion_mes
+from src.datos.preparar_cobertura_app import generar_imagen
 
 
 def test_matriz_cobertura_tiene_19_por_37_y_mismos_valores() -> None:
     """Compara las 703 celdas de la matriz publicada con un cálculo independiente."""
-    matriz, meses, estaciones, _ = preparar_cobertura_estacion_mes()
+    _, meses, estaciones, matriz = preparar_cobertura_estacion_mes()
     assert matriz.shape == (19, 37)
     assert len(meses) == 37
     assert len(estaciones) == 19
-    figura = figura_cobertura_estacion_mes(matriz, meses, estaciones)
-    assert len(figura.data) == 1
-    assert len(figura.layout.annotations or []) == 0
-    assert len(figura.data[0].z) * len(figura.data[0].z[0]) == 703
-    assert len(figura.to_json().encode("utf-8")) < 100 * 1024
 
     aire = pd.read_parquet(
         ROOT / "data" / "processed" / "aire_bogota_diario.parquet",
@@ -34,6 +30,17 @@ def test_matriz_cobertura_tiene_19_por_37_y_mismos_valores() -> None:
     esperada = esperada.reindex(index=estaciones, columns=meses).round(6)
     pd.testing.assert_frame_equal(matriz.astype(float), esperada.astype(float), check_names=False)
     assert cargar_csv_app("cobertura_estacion_mes.csv").shape == (19, 38)
+
+
+def test_imagen_cobertura_es_ligera_y_codifica_los_valores_csv(tmp_path) -> None:
+    """Genera el PNG, valida sus dimensiones y verifica píxeles de dos celdas conocidas."""
+    _, _, _, matriz = preparar_cobertura_estacion_mes()
+    destino = tmp_path / "cobertura.png"
+    peso = generar_imagen(matriz, destino)
+    assert peso < 400 * 1024
+    assert Image.open(destino).size == (1500, 1050)
+    assert matriz.loc["bolivia", "2023-10"] == 100.0
+    assert matriz.loc["bolivia", "2024-02"] == 0.0
 
 
 def test_entradas_decisiones_acepta_estilos_y_avisa_si_no_interpreta() -> None:
@@ -92,7 +99,10 @@ def test_registro_lee_decisiones_nuevas_y_renderiza_el_expander() -> None:
 
 
 def test_cobertura_renderiza_al_abrir_su_desplegable() -> None:
-    """Al abrir el mapa compacto, Plotly se renderiza sin excepción."""
+    """La página metodológica carga sin excepción con la cobertura en imagen estática."""
+    imagen = ROOT / "data" / "processed" / "app" / "cobertura_estacion_mes.png"
+    assert imagen.is_file()
+    assert imagen.stat().st_size < 400 * 1024
     pagina = ROOT / "app" / "pages" / "datos_metodologia.py"
     prueba = AppTest.from_file(str(pagina), default_timeout=45).run()
     assert not prueba.exception, str(prueba.exception)
